@@ -22,16 +22,9 @@ a cobra model.
    only interested in the reactions that have an accompanying EC number.'''
 
 def main():
-    handler = open('iCHOv1.xml').read()
+   
     bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
-    soup = Soup(handler, 'xml')
-    reactions = soup.find_all('reaction')
-    
-    
-    
-    
-    
-    model_KEGG_IDs = getKEGG_IDs(reactants)
+    model_KEGG_IDs = getBrendaParametersAndReactants(bigg_model)[1]
     
     writeToJSON('Model_KEGG_IDs.json', model_KEGG_IDs)
         
@@ -41,7 +34,7 @@ def getKEGG_IDs(reactants):
     reactant_no_KEGG = []
     reactant_counter = 0
     
-    for reactant in metabolites[reactant_counter:].name:
+    for reactant in reactants[reactant_counter:].name:
         try:
             if " - reduced" in reactant:
                 reactant = "reduced " + reactant[:-10]
@@ -64,14 +57,17 @@ def getKEGG_IDs(reactants):
     return [reactant_to_KEGG, reactant_no_KEGG]
 
 
-def queryBrenda():
+#def queryBrenda():
     
 def writeToJSON(filename, data):
     inv_data = {v: k for k, v in data.items()}
     with open(filename, 'w') as outfile:  
         json.dump(inv_data, outfile, indent=4)
     
-def getBrendaParametersAndReactants():
+def getBrendaParametersAndReactants(bigg_model):
+    handler = open('iCHOv1.xml').read()
+    soup = Soup(handler, 'xml')
+    reactions = soup.find_all('reaction')
     BRENDA_parameters = {}
     reactant_dict = {}
     
@@ -107,7 +103,7 @@ def getBrendaParametersAndReactants():
 
 
 #Might need a more streamlined definition for later.
-def getReactants():
+#def getReactants():
  
     
 main()
