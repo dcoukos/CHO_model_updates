@@ -12,6 +12,9 @@ import cobra
 from bs4 import BeautifulSoup as Soup
 
 
+def main():
+    writeBRENDA_Parameters()
+    writeKEGG_Ids()
 '''
 Loading the xml into BeautifulSoup allows me to extract data present in the 
 xml (namely the EC numbers for the reactions) which is lost when loaded as a 
@@ -21,20 +24,34 @@ a cobra model.
 '''This is more useful than loading the iCHOv1 as a cobra model, because we are
    only interested in the reactions that have an accompanying EC number.'''
 
-def main():
-   
+def writeBRENDA_Parameters():
+'''
+Obtains BRENDA parameters from the iCHOv1_xml file. Only entries that have an 
+identifiable EC number and BiGG ID are treated and saved. 
+The EC Number, enzyme name, and metabolite names are saved under a BiGG Id to 
+a JSON file: BRENDA_parameters.json
+'''   
     bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
-    model_KEGG_IDs = getBrendaParametersAndReactants(bigg_model)[1]
-    
+    BRENDA_parameters = getBrendaParametersAndReactants(bigg_model)[0]
+    writeToJSON('BRENDA_parameters.json', BRENDA_parameters)
+        
+def writeKEGG_Ids():
+'''
+Obtains KEGG ids for the reactant names given in the bigg model for reactions
+in the iCHO_v1.xml. 
+Metabolite names and the KEGG Ids are saved to a json file: Model_KEGG_IDs.json 
+'''   
+    bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
+    reactants = getBrendaParametersAndReactants(bigg_model)[1]
+    model_KEGG_IDs = getKEGG_IDs(reactants)
     writeToJSON('Model_KEGG_IDs.json', model_KEGG_IDs)
-        
-        
+    
 def getKEGG_IDs(reactants):
     reactant_to_KEGG = {}
     reactant_no_KEGG = []
     reactant_counter = 0
     
-    for reactant in reactants[reactant_counter:].name:
+    for reactant in reactants[reactant_counter:]:
         try:
             if " - reduced" in reactant:
                 reactant = "reduced " + reactant[:-10]
@@ -42,6 +59,7 @@ def getKEGG_IDs(reactants):
             reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)[0]
                                                 ['result'][0])
             reactant_counter = reactant_counter + 1
+            print('Reactant '+ reactant + ' added to KEGG')
         except: 
             #Sometimes the request glitches, so we try again. 
             try:
@@ -49,8 +67,10 @@ def getKEGG_IDs(reactants):
                 if json.loads(cts_output.text)[0]['result']:
                     reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)
                                                     [0]['result'][0])
+                    
                 else: 
                     reactant_no_KEGG.append(reactant)
+                    print('Reactant '+ reactant + ' not added to KEGG')
                 reactant_counter = reactant_counter + 1
             except:
                 continue
@@ -58,12 +78,15 @@ def getKEGG_IDs(reactants):
 
 
 #def queryBrenda():
-    
+  #ERROR: list has no attribute items.   
 def writeToJSON(filename, data):
-    inv_data = {v: k for k, v in data.items()}
-    with open(filename, 'w') as outfile:  
-        json.dump(inv_data, outfile, indent=4)
-    
+    if filename == 'Model_KEGG_IDs.json':
+        inv_data = {v: k for k, v in data.items()}
+        with open(filename, 'w') as outfile:  
+            json.dump(inv_data, outfile, indent=4)
+    else:
+        with open(filename, 'w') as outfile:  
+            json.dump(data, outfile, indent=4)
 def getBrendaParametersAndReactants(bigg_model):
     handler = open('iCHOv1.xml').read()
     soup = Soup(handler, 'xml')
@@ -102,8 +125,4 @@ def getBrendaParametersAndReactants(bigg_model):
     return [BRENDA_parameters, reactants]
 
 
-#Might need a more streamlined definition for later.
-#def getReactants():
- 
-    
-main()
+

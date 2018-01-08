@@ -13,20 +13,21 @@ import hashlib
 import json
 import SOAPpy
 from SOAPpy import SOAPProxy
+from BRENDA_extract import getKEGG_IDs
 
 def main():
-    BRENDA_parameters = import_BRENDA_parameters()
-    BRENDA_output = import_BRENDA_entries(BRENDA_parameters)
-    save_BRENDA_output()
-    treated_BRENDA_output = treat_BRENDA_output(BRENDA_output)
-    save_treated_entries()
+    BRENDA_parameters = importBrendaParameters()
+    BRENDA_output = importBrendaEntries(BRENDA_parameters)
+    saveBrendaOutput()
+    treated_output = treatBrendaOutput(BRENDA_output)
+    saveTreatedEntries()
 
 
-def import_BRENDA_parameters():
+def importBrendaParameters():
     with open('BRENDA_parameters.json', 'r') as json_file:
         return json.load(json_file)
 
-def import_BRENDA_entries(BRENDA_parameters):
+def importBrendaEntries(BRENDA_parameters):
     output = {}
     for ID in BRENDA_parameters:
         EC_number = BRENDA_parameters[ID][0]
@@ -53,11 +54,11 @@ def import_BRENDA_entries(BRENDA_parameters):
         except:
             raise
 
-save_BRENDA_output():
+def saveBrendaOutput():
     with open('BRENDA_output.json', 'w') as outfile:
         json.dump(output, outfile, indent=4)
 
-treat_BRENDA_output(BRENDA_output):
+def treatBrendaOutput(BRENDA_output):
 '''
     Removes unnecessary parameters from entries and
     checks to see if enzymes characterized were
@@ -68,11 +69,11 @@ treat_BRENDA_output(BRENDA_output):
          if len(item.split('*')) > 1}
          for entry in output[ID].split('!')] for ID in output.keys()}
 
-         no_turnover_data = []
+         no_data = []
 
     for ID in treated_output:
         if output[ID] == '':
-            no_turnover_data.append(ID)
+            no_data.append(ID)
         else:
             for entry in treated_output[ID]:
                 commentary_treated = False
@@ -93,8 +94,112 @@ treat_BRENDA_output(BRENDA_output):
                     entry['wild-type'] = True
                 elif not wild_type and commentary_treated:
                     entry['wild-type'] = False
-def save_treated_entries():
+def saveTreatedEntries():
     with open('treated_BRENDA_output.json', 'w') as outfile:
         json.dump(treated_output, outfile, indent=4)
 
+def selectEntries():
+    with open('treated_BRENDA_output.json', 'r') as json_file:
+        treated_output =  json.load(json_file)
+    
+    no_data = []
+    selected_entries = {}
+    model_KEGG_ids = importKeggIds().keys()
+    
+    for ID in treated_output:
+        if treated_output[ID] == [{}]:
+            no_data.append(ID)
+        else: #quick and dirty
+            
+            metabolite_entries = {}
+            for entry in treated_output[ID]:
+                try:
+                    if entry['wild-type'] == True:
+                        has_wild_type == True
+                except:
+                    print('No wild-type attribute.')
+                    
+
+  #----------------Filtering BY METABOLITE----------------------------------------
+                metabolite_entries[entry['metabolite']] = entry              
+      #TODO: Have to account for entries whose EC number has been moved!!!'      
+        
+        '''
+        logic: 
+            if the KEGG exists in both the turnover entries and in the bigg model, 
+            then the metabolites must coincide. 
+            If the KEGG does not exist in both, then one of the entries may not be translatable 
+            we can try to save the entries by seeing if the name of the metabolite is in the 
+            list of metabolites.
+            
+            Entries whose metabolites coincide can be retained, and then further 
+            narrowed down by wild-type, species, and finally, highest-turnover. 
+        
+        '''
+        
+        
+        #Accessing the KEGG database. 
+        [local_KEGG_ids, no_KEGG_id] = getKEGG_IDs(metabolite_entries.keys())
+        #filtering by KEGG ID
+        filtered_metabolite_entries = [entry for entry in treated_output[ID] if
+                                           treated_output[ID]['metabolite'] in 
+                                           local_KEGG_ids and treated_output[ID]
+                                           ['metabolite'] in model_KEGG_ids] 
+            #I don't think this is correct. 
+        #filtering by name 
+                
+ #----------------Filtering BY ORGANISM ----------------------------------------                    
+                
+                if entry['organism'] == 'Cricetulus griseus':
+                    has_Cricetulus_griseus = True
+                    reduced_entries = \
+                        [entry for entry in treated_output[ID] if entry['organism'] 
+                            == 'Cricetulus griseus']
+                elif entry['organism'] == 'Mus musculus':
+                    has_Mus_musculus = True
+                    reduced_entries = \
+                        [entry for entry in treated_output[ID] if entry['organism'] 
+                            == 'Mus musculus']
+                elif entry['organism'] == 'Rattus norvegicus':
+                    has_Rattus_norvegicus = True
+                    reduced_entries = \
+                        [entry for entry in treated_output[ID] if entry['organism'] 
+                            == 'Rattus norvegicus']
+                elif entry['organism'] == 'Homo sapiens':
+                    has_Homo_Sapiens = True
+                    reduced_entries = \
+                        [entry for entry in treated_output[ID] if entry['organism'] 
+                            == 'Homo sapiens']
+                elif entry['organism'] == 'Pan troglodytes':
+                    has_chimp = True
+                    reduced_entries = \
+                        [entry for entry in treated_output[ID] if entry['organism'] 
+                            == 'Pan troglodytes']
+                elif 'Drosophilia' in entry['organism']:
+                    has_fly = True
+                    reduced_entries = \
+                        [entry for entry in treated_output[ID] if 'Drosophilia' 
+                             in entry['organism']]
+                elif 'cerevisiae' in entry['organism']:
+                    has_S_cervisae = True
+                    reduced_entries = \
+                        [entry for entry in treated_output[ID] if 'cerevisiae' 
+                             in entry['organism']]
+                elif 'Escherichia coli' in entry['organism']:
+                    has_E_coli = True
+                    reduced_entries = \
+                        [entry for entry in treated_output[ID] if 'Escherichia coli' 
+                             in entry['organism']]
+
+            selected_entries[ID] = reduced_entries
+            #CHECK IF FOR SAME SUBSTRATE.....
+            
+
+def importKeggIds():
+    with open('Model_KEGG_IDs.json', 'r') as json_file:
+        return json.load(json_file)
+    
+
+selectEntries()
+                
 main()
