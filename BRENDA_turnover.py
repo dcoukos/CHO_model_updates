@@ -94,31 +94,6 @@ def treatBrendaOutput(output):
 
     no_data = []
 
-<<<<<<< HEAD
-    for ID in treated_output:
-        if output[ID] == '':
-            no_data.append(ID)
-        else:
-            for entry in treated_output[ID]:
-                commentary_treated = False
-                wild_type = False
-                for data_point, description in entry.iteritems():
-                    if (data_point == 'commentary') and 'wild' in description:
-                        wild_type = True
-                        commentary_treated = True
-                    elif (data_point == 'commentary') and 'mutant' in description:
-                        wild_type = False
-                        commentary_treated = True
-                print(ID)
-                entry.pop('literature')
-                entry.pop('ligandStructureId')
-                entry.pop('turnoverNumberMaximum')
-                entry.pop('commentary', 'No comment')
-                if wild_type:
-                    entry['wild-type'] = True
-                elif not wild_type and commentary_treated:
-                    entry['wild-type'] = False
-=======
     for ID in treated_output: 
     if output[ID] == '':
         no_turnover_data.append(ID)
@@ -150,7 +125,6 @@ def treatBrendaOutput(output):
                         entry['wild-type'] = False
 
 
->>>>>>> a4b3a762a3779e890a107588f85cf9bd9f426fe3
 def saveTreatedEntries():
     with open('treated_BRENDA_output.json', 'w') as outfile:
         json.dump(treated_output, outfile, indent=4)
