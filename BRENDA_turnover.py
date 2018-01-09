@@ -135,51 +135,40 @@ def selectEntries():
     
     no_data = []
     selected_entries = {}
-    model_KEGG_ids = importKeggIds().keys()
-    
-    for ID in treated_output:
-        if treated_output[ID] == [{}]:
-            no_data.append(ID)
-        else: #quick and dirty
-            
-            metabolite_entries = {}
-            for entry in treated_output[ID]:
-                try:
-                    if entry['wild-type'] == True:
-                        has_wild_type == True
-                except:
-                    print('No wild-type attribute.')
+    model_KEGG_ids = getKeggIds().keys()
                     
 
   #----------------Filtering BY METABOLITE----------------------------------------
-                metabolite_entries[entry['metabolite']] = entry              
       
         '''
-        logic: 
-            if the KEGG exists in both the turnover entries and in the bigg model, 
-            then the metabolites must coincide. 
-            If the KEGG does not exist in both, then one of the entries may not be translatable 
-            we can try to save the entries by seeing if the name of the metabolite is in the 
-            list of metabolites.
-            
-            Entries whose metabolites coincide can be retained, and then further 
-            narrowed down by wild-type, species, and finally, highest-turnover. 
-        
+        TODO: 1st. Filter metabolites. Does the KEGG match a KEGG already in the 
+            model? If it does:
+                -->Accept the metabolite dictionary. 
+            If it doesn't:
+                -->Use bigg ID to get names of metabolites from bigg. If the match
+                with very high similarity
+                --> accept
+            Else:
+                -->Reject.
+        TODO: 2nd Select for organisms. 
+                --> Sequential discard.
+        TODO: 3rd Select for wild-type.
+                --> If there is a wild-type, discard the mutant entries. 
+        TODO: 4th Select for highest turnover number. 
         '''
         
+    for reaction in treated_output:
+        [brenda_kegg_ids, brenda_no_kegg] = getKeggIds(treated_output['ADA'].keys())
+        discard = []
+        for metabolite in brenda_kegg_ids:
+            if metabolite not in model_KEGG_ids:
+                discard.append(metab)
         
-        #Accessing the KEGG database. 
-        [local_KEGG_ids, no_KEGG_id] = getKeggIds(metabolite_entries.keys())
-        #filtering by KEGG ID
-        filtered_metabolite_entries = [entry for entry in treated_output[ID] if
-                                           treated_output[ID]['metabolite'] in 
-                                           local_KEGG_ids and treated_output[ID]
-                                           ['metabolite'] in model_KEGG_ids] 
-            #I don't think this is correct. 
-        #filtering by name 
-                
  #----------------Filtering BY ORGANISM ----------------------------------------                    
-                
+           
+
+
+'''     
                 if entry['organism'] == 'Cricetulus griseus':
                     has_Cricetulus_griseus = True
                     reduced_entries = \
@@ -222,8 +211,7 @@ def selectEntries():
                              in entry['organism']]
 
             selected_entries[ID] = reduced_entries
-            #CHECK IF FOR SAME SUBSTRATE.....
-            
+   '''         
 
 def importKeggIds():
     with open('Model_KEGG_IDs.json', 'r') as json_file:

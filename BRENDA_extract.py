@@ -25,56 +25,61 @@ a cobra model.
    only interested in the reactions that have an accompanying EC number.'''
 
 def writeBrendaParameters():
-'''
-Obtains BRENDA parameters from the iCHOv1_xml file. Only entries that have an 
-identifiable EC number and BiGG ID are treated and saved. 
-The EC Number, enzyme name, and metabolite names are saved under a BiGG Id to 
-a JSON file: BRENDA_parameters.json
-'''   
+    '''
+    Obtains BRENDA parameters from the iCHOv1_xml file. Only entries that have an 
+    identifiable EC number and BiGG ID are treated and saved. 
+    The EC Number, enzyme name, and metabolite names are saved under a BiGG Id to 
+    a JSON file: BRENDA_parameters.json
+    '''   
     bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
     BRENDA_parameters = getBrendaParametersAndReactants(bigg_model)[0]
     writeToJson('BRENDA_parameters.json', BRENDA_parameters)
         
 def writeKeggIds():
-'''
-Obtains KEGG ids for the reactant names given in the bigg model for reactions
-in the iCHO_v1.xml. 
-Metabolite names and the KEGG Ids are saved to a json file: Model_KEGG_IDs.json 
-'''   
+    '''
+    Obtains KEGG ids for the reactant names given in the bigg model for reactions
+    in the iCHO_v1.xml. 
+    Metabolite names and the KEGG Ids are saved to a json file: Model_KEGG_IDs.json 
+    '''   
     bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
     reactants = getBrendaParametersAndReactants(bigg_model)[1]
     model_KEGG_IDs = getKeggIds(reactants)
     writeToJson('Model_KEGG_IDs.json', model_KEGG_IDs)
     
-def getKeggIds(reactants):
-    reactant_to_KEGG = {}
-    reactant_no_KEGG = []
-    reactant_counter = 0
+def getKeggIds(*reactants):
+    if not reactants: 
+        with open('Model_KEGG_IDs.json', 'r') as infile:  
+            return json.load(infile)
     
-    for reactant in reactants[reactant_counter:]:
-        try:
-            if " - reduced" in reactant:
-                reactant = "reduced " + reactant[:-10]
-            cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/service/convert/Chemical%20Name/KEGG/"+reactant)
-            reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)[0]
-                                                ['result'][0])
-            reactant_counter = reactant_counter + 1
-            print('Reactant '+ reactant + ' added to KEGG')
-        except: 
-            #Sometimes the request glitches, so we try again. 
+    else: 
+        reactant_to_KEGG = {}
+        reactant_no_KEGG = []
+        reactant_counter = 0
+        
+        for reactant in reactants[reactant_counter:]:
             try:
+                if " - reduced" in reactant:
+                    reactant = "reduced " + reactant[:-10]
                 cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/service/convert/Chemical%20Name/KEGG/"+reactant)
-                if json.loads(cts_output.text)[0]['result']:
-                    reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)
-                                                    [0]['result'][0])
-                    
-                else: 
-                    reactant_no_KEGG.append(reactant)
-                    print('Reactant '+ reactant + ' not added to KEGG')
+                reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)[0]
+                                                    ['result'][0])
                 reactant_counter = reactant_counter + 1
-            except:
-                continue
-    return [reactant_to_KEGG, reactant_no_KEGG]
+                print('Reactant '+ reactant + ' added to KEGG')
+            except: 
+                #Sometimes the request glitches, so we try again. 
+                try:
+                    cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/service/convert/Chemical%20Name/KEGG/"+reactant)
+                    if json.loads(cts_output.text)[0]['result']:
+                        reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)
+                                                        [0]['result'][0])
+                        
+                    else: 
+                        reactant_no_KEGG.append(reactant)
+                        print('Reactant '+ reactant + ' not added to KEGG')
+                    reactant_counter = reactant_counter + 1
+                except:
+                    continue
+        return [reactant_to_KEGG, reactant_no_KEGG]
 
 
 #def queryBrenda():
