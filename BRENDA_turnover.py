@@ -13,12 +13,12 @@ import hashlib
 import json
 import SOAPpy
 from SOAPpy import SOAPProxy
-from BRENDA_extract import getKEGG_IDs
+from BRENDA_extract import getKeggIds
 
 def main():
     BRENDA_parameters = importBrendaParameters()
     BRENDA_output = importBrendaEntries(BRENDA_parameters)
-    saveBrendaOutput()
+    saveBrendaOutput(BRENDA_output)
     treated_output = treatBrendaOutput(BRENDA_output)
     saveTreatedEntries()
 
@@ -26,8 +26,9 @@ def main():
 def importBrendaParameters():
     with open('BRENDA_parameters.json', 'r') as json_file:
         return json.load(json_file)
+    
 
-def importBrendaEntries(BRENDA_parameters):
+def importBrendaTurnovers(BRENDA_parameters):
     output = {}
     for ID in BRENDA_parameters:
         EC_number = BRENDA_parameters[ID][0]
@@ -51,25 +52,26 @@ def importBrendaEntries(BRENDA_parameters):
             password = hashlib.sha256("Feynman").hexdigest()
             parameters = 'cossio@cim.sld.cu,'+password+',ecNumber*'+EC_number
             output[ID] = proxy.getTurnoverNumber(parameters)
+            return output
         except:
             raise
 
-def saveBrendaOutput():
+def saveBrendaOutput(output):
     with open('BRENDA_output.json', 'w') as outfile:
         json.dump(output, outfile, indent=4)
 
-def treatBrendaOutput(BRENDA_output):
-'''
+def treatBrendaOutput(output):
+    '''
     Removes unnecessary parameters from entries and
     checks to see if enzymes characterized were
     wild-type or mutant.
-'''
+    '''
     treated_output = {}
     treated_output = {ID: [{item.split('*')[0]: item.split('*')[1] for item in entry.split('#')
          if len(item.split('*')) > 1}
          for entry in output[ID].split('!')] for ID in output.keys()}
 
-         no_data = []
+    no_data = []
 
     for ID in treated_output:
         if output[ID] == '':
@@ -85,7 +87,7 @@ def treatBrendaOutput(BRENDA_output):
                     elif (data_point == 'commentary') and 'mutant' in description:
                         wild_type = False
                         commentary_treated = True
-                print ID
+                print(ID)
                 entry.pop('literature')
                 entry.pop('ligandStructureId')
                 entry.pop('turnoverNumberMaximum')
@@ -122,8 +124,7 @@ def selectEntries():
 
   #----------------Filtering BY METABOLITE----------------------------------------
                 metabolite_entries[entry['metabolite']] = entry              
-      #TODO: Have to account for entries whose EC number has been moved!!!'      
-        
+      
         '''
         logic: 
             if the KEGG exists in both the turnover entries and in the bigg model, 
@@ -139,7 +140,7 @@ def selectEntries():
         
         
         #Accessing the KEGG database. 
-        [local_KEGG_ids, no_KEGG_id] = getKEGG_IDs(metabolite_entries.keys())
+        [local_KEGG_ids, no_KEGG_id] = getKeggIds(metabolite_entries.keys())
         #filtering by KEGG ID
         filtered_metabolite_entries = [entry for entry in treated_output[ID] if
                                            treated_output[ID]['metabolite'] in 

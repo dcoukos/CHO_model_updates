@@ -13,8 +13,8 @@ from bs4 import BeautifulSoup as Soup
 
 
 def main():
-    writeBRENDA_Parameters()
-    writeKEGG_Ids()
+    writeBrendaParameters()
+    writeKeggIds()
 '''
 Loading the xml into BeautifulSoup allows me to extract data present in the 
 xml (namely the EC numbers for the reactions) which is lost when loaded as a 
@@ -24,7 +24,7 @@ a cobra model.
 '''This is more useful than loading the iCHOv1 as a cobra model, because we are
    only interested in the reactions that have an accompanying EC number.'''
 
-def writeBRENDA_Parameters():
+def writeBrendaParameters():
 '''
 Obtains BRENDA parameters from the iCHOv1_xml file. Only entries that have an 
 identifiable EC number and BiGG ID are treated and saved. 
@@ -33,9 +33,9 @@ a JSON file: BRENDA_parameters.json
 '''   
     bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
     BRENDA_parameters = getBrendaParametersAndReactants(bigg_model)[0]
-    writeToJSON('BRENDA_parameters.json', BRENDA_parameters)
+    writeToJson('BRENDA_parameters.json', BRENDA_parameters)
         
-def writeKEGG_Ids():
+def writeKeggIds():
 '''
 Obtains KEGG ids for the reactant names given in the bigg model for reactions
 in the iCHO_v1.xml. 
@@ -43,10 +43,10 @@ Metabolite names and the KEGG Ids are saved to a json file: Model_KEGG_IDs.json
 '''   
     bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
     reactants = getBrendaParametersAndReactants(bigg_model)[1]
-    model_KEGG_IDs = getKEGG_IDs(reactants)
-    writeToJSON('Model_KEGG_IDs.json', model_KEGG_IDs)
+    model_KEGG_IDs = getKeggIds(reactants)
+    writeToJson('Model_KEGG_IDs.json', model_KEGG_IDs)
     
-def getKEGG_IDs(reactants):
+def getKeggIds(reactants):
     reactant_to_KEGG = {}
     reactant_no_KEGG = []
     reactant_counter = 0
@@ -79,7 +79,7 @@ def getKEGG_IDs(reactants):
 
 #def queryBrenda():
   #ERROR: list has no attribute items.   
-def writeToJSON(filename, data):
+def writeToJson(filename, data):
     if filename == 'Model_KEGG_IDs.json':
         inv_data = {v: k for k, v in data.items()}
         with open(filename, 'w') as outfile:  
