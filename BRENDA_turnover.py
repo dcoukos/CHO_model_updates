@@ -50,9 +50,17 @@ def importBrendaEntries(BRENDA_parameters):
             #proxy = SOAPProxy(endpointURL)
             password = hashlib.sha256("Feynman").hexdigest()
             parameters = 'cossio@cim.sld.cu,'+password+',ecNumber*'+EC_number
+            new_EC = proxy.getEcNumber(parameters)
+            if('transferred to' in new_EC):
+                new_EC = new_EC.rsplit(' ', 1)[1]
+                new_EC = new_EC[:-1]
+                EC_number = new_EC
+                BRENDA_parameters[ID][0] = new_EC
             output[ID] = proxy.getTurnoverNumber(parameters)
         except:
             raise
+    with open('BRENDA_parameters_v2.json', 'w') as outfile:
+        json.dump(output, outfile, indent=4)
 
 def saveBrendaOutput():
     with open('BRENDA_output.json', 'w') as outfile:
@@ -65,35 +73,56 @@ def treatBrendaOutput(BRENDA_output):
     wild-type or mutant.
 '''
     treated_output = {}
-    treated_output = {ID: [{item.split('*')[0]: item.split('*')[1] for item in entry.split('#')
-         if len(item.split('*')) > 1}
-         for entry in output[ID].split('!')] for ID in output.keys()}
+    treated_output = {ID: [{item.split('*')[0]: item.split('*')[1] 
+        for item in entry.split('#') 
+        if len(item.split('*')) > 1} 
+        for entry in output[ID].split('!')] for ID in output.keys()}
+
+    treated_output_by_substrate = treated_output
+    for ID in treated_output:
+        new_entry = {}
+        for entry in treated_output[ID]:
+            for data_point, description in entry.iteritems():
+                if data_point == 'substrate':
+                    if description in new_entry:
+                        new_entry[description].append(entry)
+                    else:
+                        new_entry[description] = []
+        treated_output[ID] = new_entry
 
          no_data = []
 
-    for ID in treated_output:
-        if output[ID] == '':
-            no_data.append(ID)
-        else:
-            for entry in treated_output[ID]:
-                commentary_treated = False
-                wild_type = False
-                for data_point, description in entry.iteritems():
-                    if (data_point == 'commentary') and 'wild' in description:
-                        wild_type = True
-                        commentary_treated = True
-                    elif (data_point == 'commentary') and 'mutant' in description:
-                        wild_type = False
-                        commentary_treated = True
-                print ID
-                entry.pop('literature')
-                entry.pop('ligandStructureId')
-                entry.pop('turnoverNumberMaximum')
-                entry.pop('commentary', 'No comment')
-                if wild_type:
-                    entry['wild-type'] = True
-                elif not wild_type and commentary_treated:
-                    entry['wild-type'] = False
+    for ID in treated_output: 
+    if output[ID] == '':
+        no_turnover_data.append(ID)
+    else:
+        empty = bool
+        for substrate in treated_output[ID]:        
+            commentary_treated = False
+            wild_type = False
+            for entry in treated_output[ID][substrate]:
+                if entry == [] :
+                    continue
+                else:
+                    for key,value in entry.iteritems():
+                        if (key == 'commentary') and 'wild' in value:
+                            wild_type = True
+                            commentary_treated = True
+                        elif (key == 'commentary') and 'mutant' in value:
+                            wild_type = False
+                            commentary_treated = True
+                    print ID
+                    entry.pop('literature')
+                    entry.pop('substrate')
+                    entry.pop('ligandStructureId')
+                    entry.pop('turnoverNumberMaximum')
+                    entry.pop('commentary', 'No comment')
+                    if wild_type:
+                        entry['wild-type'] = True
+                    elif not wild_type and commentary_treated:
+                        entry['wild-type'] = False
+
+
 def saveTreatedEntries():
     with open('treated_BRENDA_output.json', 'w') as outfile:
         json.dump(treated_output, outfile, indent=4)
