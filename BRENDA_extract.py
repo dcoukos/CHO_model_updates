@@ -9,7 +9,7 @@ to obtain the correct information for a given EC number.
 import requests
 import json
 import cobra
-from bs4 import BeautifulSoup as Soup
+from BeautifulSoup import BeautifulSoup as Soup
 
 
 def main():
@@ -44,42 +44,38 @@ def writeKeggIds():
     bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
     reactants = getBrendaParametersAndReactants(bigg_model)[1]
     model_KEGG_IDs = getKeggIds(reactants)
-    writeToJson('Model_KEGG_IDs.json', model_KEGG_IDs)
+    writeToJson('Model_KEGG_IDs.json', model_KEGG_IDs)    
     
-def getKeggIds(*reactants):
-    if not reactants: 
-        with open('Model_KEGG_IDs.json', 'r') as infile:  
-            return json.load(infile)
-    
-    else: 
-        reactant_to_KEGG = {}
-        reactant_no_KEGG = []
-        reactant_counter = 0
-        
-        for reactant in reactants[reactant_counter:]:
+def getKeggIds(reactants):
+
+    reactant_to_KEGG = {}
+    reactant_no_KEGG = []
+    reactant_counter = 0
+
+    for reactant in reactants[reactant_counter:]:
+        try:
+            if " - reduced" in reactant:
+                reactant = "reduced " + reactant[:-10]
+            cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/service/convert/Chemical%20Name/KEGG/"+reactant)
+            reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)[0]
+                                                ['result'][0])
+            reactant_counter = reactant_counter + 1
+            print('Reactant '+ reactant + ' added to KEGG')
+        except: 
+            #Sometimes the request glitches, so we try again. 
             try:
-                if " - reduced" in reactant:
-                    reactant = "reduced " + reactant[:-10]
                 cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/service/convert/Chemical%20Name/KEGG/"+reactant)
-                reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)[0]
-                                                    ['result'][0])
+                if json.loads(cts_output.text)[0]['result']:
+                    reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)
+                                                    [0]['result'][0])
+
+                else: 
+                    reactant_no_KEGG.append(reactant)
+                    print('Reactant '+ reactant + ' not added to KEGG')
                 reactant_counter = reactant_counter + 1
-                print('Reactant '+ reactant + ' added to KEGG')
-            except: 
-                #Sometimes the request glitches, so we try again. 
-                try:
-                    cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/service/convert/Chemical%20Name/KEGG/"+reactant)
-                    if json.loads(cts_output.text)[0]['result']:
-                        reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)
-                                                        [0]['result'][0])
-                        
-                    else: 
-                        reactant_no_KEGG.append(reactant)
-                        print('Reactant '+ reactant + ' not added to KEGG')
-                    reactant_counter = reactant_counter + 1
-                except:
-                    continue
-        return [reactant_to_KEGG, reactant_no_KEGG]
+            except:
+                continue
+    return [reactant_to_KEGG, reactant_no_KEGG]
 
 
 #def queryBrenda():
