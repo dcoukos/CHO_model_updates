@@ -31,20 +31,20 @@ def writeBrendaParameters():
     The EC Number, enzyme name, and metabolite names are saved under a BiGG Id to
     a JSON file: BRENDA_parameters.json
     '''
-    bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
+    bigg_model = cobra.io.load_json_model('JSONs/BIGG_master_modle.json')
     BRENDA_parameters = getBrendaParametersAndReactants(bigg_model)[0]
-    writeToJson('BRENDA_parameters.json', BRENDA_parameters)
+    writeToJson('JSONs/BRENDA_parameters.json', BRENDA_parameters)
 
 def writeKeggIds():
     '''
     Obtains KEGG ids for the reactant names given in the bigg model for reactions
     in the iCHO_v1.xml.
-    Metabolite names and the KEGG Ids are saved to a json file: Model_KEGG_IDs.json
+    Metabolite names and the KEGG Ids are saved to a json file: JSONs/Model_KEGG_IDs.json
     '''
-    bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
+    bigg_model = cobra.io.load_json_model('JSONs/BIGG_master_modle.json')
     reactants = getBrendaParametersAndReactants(bigg_model)[1]
     model_KEGG_IDs = getKeggIds(reactants)
-    writeToJson('Model_KEGG_IDs.json', model_KEGG_IDs)
+    writeToJson('JSONs/Model_KEGG_IDs.json', model_KEGG_IDs)
 
 def getKeggIds(reactants):
 
@@ -56,17 +56,23 @@ def getKeggIds(reactants):
         try:
             if " - reduced" in reactant:
                 reactant = "reduced " + reactant[:-10]
-            cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/service/convert/Chemical%20Name/KEGG/"+reactant)
-            reactant_to_KEGG[str(json.loads(cts_output.text)[0]['result'][0])] = reactant
+            cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/"
+                                      "service/convert/Chemical%20Name/"
+                                      "KEGG/"+reactant)
+            reactant_to_KEGG[str(json.loads(cts_output.text)[0]['result']
+                                    [0])] = reactant
             reactant_counter = reactant_counter + 1
             print('Reactant '+ reactant + ' added to KEGG')
         except:
             #Sometimes the request glitches, so we try again.
             try:
-                cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/service/convert/Chemical%20Name/KEGG/"+reactant)
+                cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/"
+                                          "service/convert/Chemical%20Name/"
+                                          "KEGG/" + reactant)
                 if json.loads(cts_output.text)[0]['result']:
-                    reactant_to_KEGG[reactant] = str(json.loads(cts_output.text)
-                                                    [0]['result'][0])
+                    reactant_to_KEGG[reactant] = str(json.loads(
+                                                        cts_output.text)
+                                                        [0]['result'][0])
 
                 else:
                     reactant_no_KEGG.append(reactant)
@@ -80,13 +86,9 @@ def getKeggIds(reactants):
 #def queryBrenda():
   #ERROR: list has no attribute items.
 def writeToJson(filename, data):
-    if filename == 'Model_KEGG_IDs.json':
-        inv_data = {v: k for k, v in data.items()}
-        with open(filename, 'w') as outfile:
-            json.dump(inv_data, outfile, indent=4)
-    else:
         with open(filename, 'w') as outfile:
             json.dump(data, outfile, indent=4)
+
 def getBrendaParametersAndReactants(bigg_model):
     handler = open('iCHOv1.xml').read()
     soup = Soup(handler, 'xml')
