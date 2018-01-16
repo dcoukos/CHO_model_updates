@@ -25,13 +25,13 @@ def BrendaToKegg():
     One contains the output of the translation service for metabolites with a KEGG Id,
     and the second contains the name of metabolites for which an Id was not found.
 '''
-    bigg_model = cobra.io.load_json_model('BIGG_master_modle.json')
+    bigg_model = cobra.io.load_json_model('JSON/BIGG_master_modle.json')
     
     def getModelKegg():
-        with open('Model_KEGG_IDs.json', 'r') as infile:
+        with open('JSON/Model_KEGG_IDs.json', 'r') as infile:
                 return json.load(infile)
     
-    with open('treated_BRENDA_output.json', 'r') as json_file:
+    with open('JSON/treated_BRENDA_output.json', 'r') as json_file:
         treated_output =  json.load(json_file)
     
     no_data = []
@@ -43,12 +43,12 @@ def BrendaToKegg():
         kegg_data = {}
         no_kegg_data = []
         try:
-            with open('BRENDA_KEGG_IDs.json') as kegg:
+            with open('JSON/BRENDA_KEGG_IDs.json') as kegg:
                 kegg_data_r = json.load(kegg)
         except ValueError:
             kegg_data_r = {}
         try:
-            with open('BRENDA_no_KEGG.json') as no_kegg:
+            with open('JSON/BRENDA_no_KEGG.json') as no_kegg:
                 no_kegg_data_r = json.load(no_kegg)
         except ValueError:
             no_kegg_data_r = {}
@@ -62,8 +62,8 @@ def BrendaToKegg():
     
         kegg_data_r.update({reaction:kegg_data})
         no_kegg_data_r.update({reaction:no_kegg_data})
-        with open('BRENDA_KEGG_IDs.json', 'w') as kegg:
+        with open('JSON/BRENDA_KEGG_IDs.json', 'w') as kegg:
             json.dump(kegg_data_r, kegg, indent = 4)
     
-        with open('BRENDA_no_KEGG.json', 'w') as no_kegg:
+        with open('JSON/BRENDA_no_KEGG.json', 'w') as no_kegg:
             json.dump(no_kegg_data_r, no_kegg, indent = 4)
