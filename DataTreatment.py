@@ -5,12 +5,18 @@
     to keep only the necessary information for improving the model. 
 '''
 
-
-import cobra
 import json
 import requests
-
-
+import pickle
+import cobra
+#from enum import Enum, auto  #Enum breaks spyder autocomplete
+'''
+class DataType(Enum):
+    turnover = auto()
+    specific_activity = auto()
+    mol_weight = auto()
+ '''   
+    
 class Enzyme():
     '''Class containing reactions and metabolites pertaining to an enzyme. 
     
@@ -23,13 +29,14 @@ class Enzyme():
         with_kegg: a dict of metabolites with a KEGG identifier, where the KEGG
             is the key, and the metabolite is the valye. 
     '''
-    def _init_(self, bigg, EC = None, metabolites = {}, forward = {}, backward = {}):
+    def __init__(self, bigg):
         self.bigg = bigg
-        self.EC = EC
-        self.metabolites = metabolites
-        self.forward = forward
-        self.backwards = backwards
+        self.EC = ''
+        self.forward = {}
+        self.backward = {}
         self.with_kegg = {}
+        self.forward_turnover = None
+        self.backward_turnover = None
     
     def returnWithKegg():
         '''Returns a dict of metabolites by their KEGG ids.'''
@@ -38,6 +45,14 @@ class Enzyme():
         '''iterates through all metabolites. If they have a Kegg ID, they are 
         added to '''
         pass
+    
+    def chooseBiggestTurnovers():
+        '''Chooses best value from forward metabolites.
+        
+            This function sets the value of forward_tunover and 
+            backward_turnover. 
+        '''
+    
     
     
 class Metabolite():
@@ -54,17 +69,36 @@ class Metabolite():
         molw: molecular weight 
     '''
 
-    def _init_(self, name, bigg = None, kegg = None, turnover = None, 
+    def __init__(self, name, bigg = None, kegg = None, turnover = None, 
                specific_activity = None, molecular_weight = None):
+        
         self.name = name
-        self.bigg = bigg
-        self.kegg = kegg
-        self.turn = turnover
-        self.spec = specific_activity
-        self.molw = molecular_weight
-
-def TreatTurnoverData():
+        if bigg == None:
+            self.bigg = ''
+        else: 
+            self.bigg = bigg
+        if kegg == None:
+            self.kegg = ''
+        else:
+            self.kegg = kegg
+        if turnover == None:
+            self.turn = 0
+        else: 
+            self.turn = turnover
+        if specific_activity == None:
+            self.spec = 0
+        else: 
+            self.spec = specific_activity
+        if molecular_weight == None:
+            self.molw = 0
+        else:
+            self.molw = molecular_weight
     
+def treatTurnoverData():
+    '''Filters and eliminates unnecessary data, choosing best turnover data.
+    
+    '''
+    storeBiggRepresentation()
     eliminateUnmatchable()
     selectBestData()
     
@@ -102,7 +136,6 @@ def eliminateUnmatchable(brenda_data):
     treated_output = openJson('JSONs/treated_BRENDA_output.json')
     brendaToKegg(treated_output)
     brenda_keggs = correctJson('JSONs/treated_BRENDA_output.json')
-    bigg_model = cobra.io.load_json_model('JSONs/BIGG_master_modle.json')
     [directional_model, unmatched] = matchById(brenda_keggs, bigg_model)
     
     
@@ -221,16 +254,17 @@ def matchById(brenda_keggs, bigg_model):
     
     TODO: add new_model structure to this docstring
     '''
-    bigg_representation = {}
-    for reaction in bigg_model.reactions:
-        bigg_representation[reaction.name] = {}
-        for bigg_model.reactions:
-            pass
-        '''TODO: finish restructuring of classes: Enzyme and Metabolite, and then 
-        restructure the new data structures accordingly. '''
-    for reaction in brenda_keggs:
+    #Why are we using bigg_model? Ahhh.... to check direction. 
+    
+    #TODO: construct this function in a way that makes sense.
+    
+
+    for reaction in brenda_keggs:  #Checking for matches for each reaction.
         for metabolite in brenda_keggs[reaction]:
-            
+            try: 
+                pass
+            except:
+                pass
         
         
     
@@ -238,7 +272,7 @@ def cleanMetaboliteNames(brenda_metabolites):
     '''
         TODO: fill out function
     '''
-    return 1
+    pass
     
 def getKeggIds(reactants):
     '''
@@ -278,3 +312,86 @@ def getKeggIds(reactants):
             except:
                 continue
     return [reactant_to_KEGG, reactant_no_KEGG]
+
+
+def storeBiggRepresentation():
+    '''Creates and stores a representation of the BiGG Model. 
+    
+        This creates and pickles a representation of the BiGG Model which 
+        should be a little bit easier to work with. 
+        
+    #TODO: Make this method or preferably other method store the model via a 
+        pickle request. 
+    '''
+    global BIGG_MODEL
+    bigg_model = cobra.io.load_json_model('JSONs/BIGG_master_modle.json')
+     
+    for reaction in bigg_model.reactions:
+        BIGG_MODEL[reaction.id] = Enzyme(reaction.id)
+        
+        for reactant in reaction.reactants: 
+            BIGG_MODEL[reaction.id].forward[reactant.name] = Metabolite(
+                                                            reactant.name, 
+                                                            bigg = reactant.id)
+        for reactant in reaction.products: 
+            BIGG_MODEL[reaction.id].backward[reactant.name] = Metabolite(
+                                                            reactant.name, 
+                                                            bigg = reactant.id)
+def downloadModelKeggs():
+    '''Downloads kegg IDs of metabolites in BiGG model.
+
+
+    #TODO: Make sure that the metabolites are added to the dict of metabolites
+        that are matched with a KEGG ID. 
+    '''
+    global BIGG_MODEL
+
+    for reaction in BIGG_MODEL:
+        for reactant in BIGG_MODEL[reaction].forward:
+            addKeggToMetabolites(reactant)
+        for product in BIGG_MODEL[reaction].backward:
+            addKeggToMetabolites(product)
+    
+    saveBiggModel()
+
+def addKeggToMetabolites(metabolite):
+    '''Adds the kegg id to the local representation of the BiGG Model. 
+    
+    Uses requests to query the chemical translation service for the kegg id of 
+    the metabolite, which is then added to the kegg attribute of the Metabolite.
+    
+    
+    '''
+    request_counter = 0
+    
+    while request_counter < 3:
+        try:
+            metabolite_name = metabolite.name
+            if " - reduced" in metabolite_name:
+                metabolite_name = "reduced " + metabolite_name[:-10]
+            cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/"
+                                      "service/convert/Chemical%20Name/"
+                                      "KEGG/"+metabolite_name)
+            metabolite.kegg = [str(json.loads(cts_output.text)[0]['result']
+                                    [0])]
+            print('Metabolite ' + metabolite_name + 'kegg found.')
+            break
+        except:
+            print('EXCEPTED')
+            request_counter = request_counter + 1
+            continue
+                
+def saveBiggModel():
+    '''Stores model using pickle module.
+    
+    '''
+    global BIGG_MODEL
+    pickle_out = open('BiGG_model.pickle', 'wb')
+    pickle.dump(BIGG_MODEL, pickle_out)
+    pickle_out.close()
+    
+    
+BIGG_MODEL = {} #Probably not the best way to do this...
+MODEL_UPDATE = {}
+    
+
