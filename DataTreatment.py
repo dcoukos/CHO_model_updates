@@ -11,100 +11,32 @@ import pickle
 import cobra
 from fuzzywuzzy import fuzz
 #from enum import Enum, auto  #Enum breaks spyder autocomplete
-'''
-class DataType(Enum):
-    turnover = auto()
-    specific_activity = auto()
-    mol_weight = auto()
- '''   
-    
-class Enzyme():
-    '''Class containing reactions and metabolites pertaining to an enzyme. 
-    
-    Attributes:
-        ID: the BiGG idenitifier of the enzyme
-        EC: Enzyme commision number
-        metabolites: a dict of metabolites
-        forward: a dict of metabolites participating in the forward reaction
-        backward: a dict of metabolites participating in the backward reaction
-        with_kegg: a dict of metabolites with a KEGG identifier, where the KEGG
-            is the key, and the metabolite is the valye. 
-    '''
-    def __init__(self, bigg):
-        self.bigg = bigg
-        self.EC = ''
-        self.forward = {}
-        self.backward = {}
-        self.with_kegg = {}
-        self.forward_turnover = None
-        self.backward_turnover = None
-    
-    def returnWithKegg():
-        '''Returns a dict of metabolites by their KEGG ids.'''
-        
-    def updateKegg():
-        '''iterates through all metabolites. If they have a Kegg ID, they are 
-        added to '''
-        pass
-    
-    def chooseBiggestTurnovers():
-        '''Chooses best value from forward metabolites.
-        
-            This function sets the value of forward_tunover and 
-            backward_turnover. 
-        '''
-    
-    
-    
-class Metabolite():
-    '''Class containing all information of interest pertaining to a metabolite. 
-        
-    
-    Attributes:
-        name: the name of the metabolite
-        bigg: BiGG identifier
-        kegg: kegg identifier
-        turn: turnover number 
-        spec: specific activity (turnover number divided by the 
-              molecular weight)
-        molw: molecular weight 
-    '''
 
-    def __init__(self, name, bigg = None, kegg = None, turnover = None, 
-               specific_activity = None, molecular_weight = None):
-        
-        self.name = name
-        if bigg == None:
-            self.bigg = ''
-        else: 
-            self.bigg = bigg
-        if kegg == None:
-            self.kegg = ''
-        else:
-            self.kegg = kegg
-        if turnover == None:
-            self.turn = 0
-        else: 
-            self.turn = turnover
-        if specific_activity == None:
-            self.spec = 0
-        else: 
-            self.spec = specific_activity
-        if molecular_weight == None:
-            self.molw = 0
-        else:
-            self.molw = molecular_weight
-    
+def auto():
+    '''TODO: delete class. Is here only so auto-complete will work in spyder while
+    working on project with ENUM class. '''   
+    return None
+
+
 def treatTurnoverData():
     '''Filters and eliminates unnecessary data, choosing best turnover data.
     
+    #TODO: Write a docstring that's a little more complete. 
+    #TODO: Where does brenda_data get passed in from? 
     '''
+    potential_updates = {} #This will store new data for the model, dict of Enzymes
+    
     storeBiggRepresentation()
-    eliminateUnmatchable()
-    #selectBestData()
+    treated_output = openJson('JSONs/treated_BRENDA_output.json')
+    brenda_keggs = correctJson('JSONs/BRENDA_KEGG_IDs.json')
+    brenda_no_kegg = openJson('JSONs/BRENDA_no_KEGG.json')
+    matched_data = eliminateUnmatchable(potential_updates,
+                                        treated_output, brenda_keggs, 
+                                        brenda_no_kegg)
+    selectBestData(model_updates, matched_data, DataType.turnover)
     
 
-def eliminateUnmatchable(brenda_data):
+def eliminateUnmatchable(treated_brenda_output, brenda_keggs, brenda_no_kegg):
     '''Eliminates entries from BRENDA which cannot be matched to model data. 
     
     The return from BRENDA is quite large, and only useful if pertinent to 
@@ -112,10 +44,13 @@ def eliminateUnmatchable(brenda_data):
     matches are found they are added to a new data structure, which is also 
     organized for forward and backwards reactions. 
     
+    
+    #TODO: add complete args
     Args:
         brenda_data: This is a dict containing data from BRENDA. Keys are 
                         reaction Ids.
-        
+      
+    #TODO: Write correct return
     Returns: 
         pruned_data: Data from brenda with unmatchable entries removed. 
     
@@ -128,28 +63,33 @@ def eliminateUnmatchable(brenda_data):
         }
     
     '''
+    global BIGG_MODEL
     
-    treated_output = openJson('JSONs/treated_BRENDA_output.json')
-    brendaToKegg(treated_output)
-    brenda_keggs = correctJson('JSONs/treated_BRENDA_output.json')
+    
+    
+    brendaToKegg(treated_brenda_output)
+    
     
     #Is trying to save them by name really even worth it? 
     [matched_by_id, unmatched] = matchById(brenda_keggs)
     [matched_by_name, unmatched] = matchByName(unmatched)
     
-    brenda_no_kegg = openJson('JSONs/BRENDA_no_KEGG.json')
     [matched_no_kegg, unmatched_no_kegg] = matchByName(brenda_no_kegg)
     
+    #TIME TO CHOOSE WHICH TURNOVER DATA TO KEEP
+
+    return matched_by_id, matched_by_name, matched_no_kegg    
     
-     
-    
-    
+ 
     
 def matchByName(unmatched):
     '''Tries to fuzzy match metabolite names that cannot be matched via KEGG.
         
+    TODO: fill out docstring
     
     '''
+    #TODO: Rewrite so that return has structure similar to the updated model.
+    #       i.e. directionality
     
     global BIGG_MODEL
     
@@ -173,6 +113,24 @@ def matchByName(unmatched):
                     
     return matched_data, unmatched
 
+def selectBestData(model_updates, matched_data, data_type):
+    '''Selects best data to add to model based on selection criteria
+    
+    This function selects the best data based on Organism, wild-type, and the 
+    magnitude of the data. 
+    
+    Args:
+        model_updates: contains new data for the model, is filled out by this 
+            function.
+        matched_data: a list which contains the data matched by different 
+            methods in matchById() and matchByName()
+        data_type: instance of DataType Enum, describing where new data is to 
+            be placed
+    '''
+    
+    #TODO: combine matched data into one single dict. 
+    matches = {}
+    #for 
 
 
 def brendaToKegg(data): 
@@ -295,8 +253,9 @@ def matchById(brenda_keggs):
             - Sort the turnover values. 
             - touch the BIGG_MODEL.
     '''
-    #Why are we using bigg_model? Ahhh.... to check direction. 
       
+    #TODO: Rewrite so that return has structure similar to the updated model. i.e. directionality   
+
     matched_data = {}
     no_match = {}
     global BIGG_MODEL
@@ -455,3 +414,87 @@ BIGG_MODEL = {} #Probably not the best way to do this...
 MODEL_UPDATE = {}
     
 
+class DataType('''Enum'''):
+    turnover = auto()
+    specific_activity = auto()
+    mol_weight = auto()
+  
+
+    
+class Enzyme():
+    '''Class containing reactions and metabolites pertaining to an enzyme. 
+    
+    Attributes:
+        ID: the BiGG idenitifier of the enzyme
+        EC: Enzyme commision number
+        metabolites: a dict of metabolites
+        forward: a dict of metabolites participating in the forward reaction
+        backward: a dict of metabolites participating in the backward reaction
+        with_kegg: a dict of metabolites with a KEGG identifier, where the KEGG
+            is the key, and the metabolite is the valye. 
+    '''
+    def __init__(self, bigg):
+        self.bigg = bigg
+        self.EC = ''
+        self.forward = {}
+        self.backward = {}
+        self.with_kegg = {}
+        self.forward_turnover = None
+        self.backward_turnover = None
+    
+    def returnWithKegg():
+        '''Returns a dict of metabolites by their KEGG ids.'''
+        
+    def updateKegg():
+        '''iterates through all metabolites. If they have a Kegg ID, they are 
+        added to '''
+        pass
+    
+    def chooseBiggestTurnovers():
+        '''Chooses best value from forward metabolites.
+        
+            This function sets the value of forward_tunover and 
+            backward_turnover. 
+        '''
+    
+    
+    
+class Metabolite():
+    '''Class containing all information of interest pertaining to a metabolite. 
+        
+    
+    Attributes:
+        name: the name of the metabolite
+        bigg: BiGG identifier
+        kegg: kegg identifier
+        turn: turnover number 
+        spec: specific activity (turnover number divided by the 
+              molecular weight)
+        molw: molecular weight 
+    '''
+
+    def __init__(self, name, bigg = None, kegg = None, turnover = None, 
+               specific_activity = None, molecular_weight = None):
+        
+        self.name = name
+        if bigg == None:
+            self.bigg = ''
+        else: 
+            self.bigg = bigg
+        if kegg == None:
+            self.kegg = ''
+        else:
+            self.kegg = kegg
+        if turnover == None:
+            self.turn = 0
+        else: 
+            self.turn = turnover
+        if specific_activity == None:
+            self.spec = 0
+        else: 
+            self.spec = specific_activity
+        if molecular_weight == None:
+            self.molw = 0
+        else:
+            self.molw = molecular_weight
+    
