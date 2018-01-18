@@ -10,13 +10,14 @@ import requests
 import pickle
 import cobra
 from fuzzywuzzy import fuzz
-#from enum import Enum, auto  #Enum breaks spyder autocomplete
+from enum import Enum, auto  #Enum breaks spyder autocomplete
 
+'''
 def auto():
-    '''TODO: delete class. Is here only so auto-complete will work in spyder while
-    working on project with ENUM class. '''   
+    ''TODO: delete class. Is here only so auto-complete will work in spyder while
+    working on project with ENUM class. '   
     return None
-
+'''
 
 def treatTurnoverData():
     '''Filters and eliminates unnecessary data, choosing best turnover data.
@@ -30,13 +31,15 @@ def treatTurnoverData():
     treated_output = openJson('JSONs/treated_BRENDA_output.json')
     brenda_keggs = correctJson('JSONs/BRENDA_KEGG_IDs.json')
     brenda_no_kegg = openJson('JSONs/BRENDA_no_KEGG.json')
-    matched_data = eliminateUnmatchable(potential_updates,
-                                        treated_output, brenda_keggs, 
-                                        brenda_no_kegg)
-    selectBestData(model_updates, matched_data, DataType.turnover)
+    
+    
+    eliminateUnmatchable(potential_updates,treated_output, brenda_keggs, 
+                         brenda_no_kegg)
+    selectBestData(potential_updates, DataType.turnover)
     
 
-def eliminateUnmatchable(treated_brenda_output, brenda_keggs, brenda_no_kegg):
+def eliminateUnmatchable(potential_updates,treated_brenda_output, 
+                         brenda_keggs, brenda_no_kegg):
     '''Eliminates entries from BRENDA which cannot be matched to model data. 
     
     The return from BRENDA is quite large, and only useful if pertinent to 
@@ -63,29 +66,28 @@ def eliminateUnmatchable(treated_brenda_output, brenda_keggs, brenda_no_kegg):
         }
     
     '''
-    global BIGG_MODEL
-    
-    
-    
+    # TODO: why is the brendaToKegg function here, and not outside? 
     brendaToKegg(treated_brenda_output)
-    
+  
+    '''TODO: Rewrite below functions to reflect treatement of potential 
+                data within the functions, instead of outside''' 
     
     #Is trying to save them by name really even worth it? 
-    [matched_by_id, unmatched] = matchById(brenda_keggs)
-    [matched_by_name, unmatched] = matchByName(unmatched)
-    
-    [matched_no_kegg, unmatched_no_kegg] = matchByName(brenda_no_kegg)
-    
-    #TIME TO CHOOSE WHICH TURNOVER DATA TO KEEP
+    unmatched = matchById(potential_updates, brenda_keggs, 
+                          treated_brenda_output, DataType.turnover)
+    matchByName(potential_updates, unmatched, treated_brenda_output, 
+                DataType.turnover)
+    matchByName(potential_updates, brenda_no_kegg, treated_brenda_output, 
+                DataType.turnover)
 
-    return matched_by_id, matched_by_name, matched_no_kegg    
+    return potential_updates    
     
- 
     
-def matchByName(unmatched):
+def matchByName(potential_updates, unmatched, treated_brenda_output):
     '''Tries to fuzzy match metabolite names that cannot be matched via KEGG.
         
     TODO: fill out docstring
+    TODO: update args
     
     '''
     #TODO: Rewrite so that return has structure similar to the updated model.
@@ -113,24 +115,37 @@ def matchByName(unmatched):
                     
     return matched_data, unmatched
 
-def selectBestData(model_updates, matched_data, data_type):
+def selectBestData(model_updates, data_type):
     '''Selects best data to add to model based on selection criteria
     
     This function selects the best data based on Organism, wild-type, and the 
     magnitude of the data. 
     
+    #TODO: Rewrite docstring. 
+    
     Args:
         model_updates: contains new data for the model, is filled out by this 
             function.
-        matched_data: a list which contains the data matched by different 
-            methods in matchById() and matchByName()
         data_type: instance of DataType Enum, describing where new data is to 
             be placed
     '''
-    
-    #TODO: combine matched data into one single dict. 
-    matches = {}
-    #for 
+    #First select by organism. 
+    data_selected_by_organism = {}
+    has_hamster = False
+    has_mouse = False
+    has_rat = False
+    has_human = False
+    has_fly = False
+    has_yeast = False
+    has_e_coli = False
+    for reaction in model_updates:
+        for metabolite_name in model_updates[reaction].forward:
+            for metabolite in model_updates[reaction].forward[metabolite_name]:
+                if metabolite.organism == 'Cricetulus griseus':
+                    has_hamster = True
+            
+ 
+     
 
 
 def brendaToKegg(data): 
@@ -155,6 +170,8 @@ def brendaToKegg(data):
     
     Note: I have already run this from Cossio's computer, and the JSON files
             are already populated. 
+            
+     TODO:       ARE NOT POPULATED CORRECTLY
         
     '''
     
@@ -230,28 +247,16 @@ def is_number(s):
 
     return False
 
-def matchById(brenda_keggs):
+def matchById(potential_updates, brenda_keggs, treated_brenda_output, 
+              data_type):
     '''Tries to match metabolites by KEGG Id. 
     
     Args:
+    #TODO: add potential_updates as arg
         brenda_keggs: dict of KEGG codes (keys) and corresponding names (values)
     
-    Return: 
-        matched_data: dict where keys are the BiGG names and the values are the
-            BRENDA names.  
+    Return:  
         no_match: dict of BRENDA metabolites that could not be matched by name. 
-        
-        
-    Notes to Self:
-        This function should:
-            - match BRENDA names with BiGG names via kegg ids 
-            - Return brenda metabolites for which no match could be found. 
-            - Be applicable to later data types. 
-            
-        This function should not: 
-            - Deal with matching them by name. 
-            - Sort the turnover values. 
-            - touch the BIGG_MODEL.
     '''
       
     #TODO: Rewrite so that return has structure similar to the updated model. i.e. directionality   
@@ -263,15 +268,82 @@ def matchById(brenda_keggs):
     for reaction in brenda_keggs:  #Checking for matches for each reaction.
         matched_data[reaction] = {}
         no_match[reaction] = []
+        if reaction not in potential_updates:
+            potential_updates[reaction] = Enzyme(reaction, getEcNumber(
+                                                treated_brenda_output[
+                                                        reaction]))             
         for ID, name in brenda_keggs[reaction].items():
-            if ID in BIGG_MODEL[reaction].with_kegg:
-                matched_data[reaction][BIGG_MODEL[reaction].with_kegg[ID]] = \
-                    name
-            else:
-                no_match[reaction].append(name)
+            try: 
+                #Search for directionality and append new metabolite
+                #did I use the bigg name or ID here? Name, because its a metabolite
+                bigg_name = BIGG_MODEL[reaction].with_kegg(ID) #This is the positive check.
                 
-    return matched_data, no_match   
-        
+                data = getData(treated_brenda_output[reaction], name, data_type)
+                
+                if bigg_name in BIGG_MODEL[reaction].forward: #i.e. forward reaction
+                    #Remember the potential updates are a lists of metabolites!
+                    
+                    '''TODO: write separate function to extract data. This must 
+                        be done after checkthing that they match!'''
+                    if bigg_name not in potential_updates[reaction].forward:
+                        potential_updates[reaction].forward[bigg_name] = []
+                    potential_updates[reaction].forward[bigg_name].append(
+                        Metabolite(bigg_name, kegg = ID, data = data))
+                elif bigg_name in BIGG_MODEL[reaction].backward:
+                    if bigg_name not in potential_updates[reaction].backward:
+                        potential_updates[reaction].backward[bigg_name] = []
+                    potential_updates[reaction].backward[bigg_name].append(
+                        Metabolite(bigg_name, kegg = ID, data = data))
+                else:
+                    raise DataMissingError()
+                
+            except KeyError:
+                no_match[reaction].append(name)
+            except DataMissingError:
+                print('Metabolite not added correctly to BIGG_MODEL.')              
+    return no_match   
+
+def getData(reaction, metabolite, data_type):
+    '''Chooses data to give to matchers. 
+    
+    This function is intended to improve code reusability so that the parent 
+    functions can treat the data without knowing what type of data it is. 
+    
+    Args:
+        reaction: treated brenda output for one EC number
+        metabolite: metabolite name
+        data_type: instance of DataType Enum. 
+    '''
+    metabolite_data = {}
+    
+    if data_type is DataType.turnover:
+        metabolite_data['turnover'] =  reaction[metabolite]['turnoverNumber']
+    elif data_type is DataType.specific_activity:
+        metabolite_data['specific activity'] = reaction[metabolite] \
+                                                   ['specificActivity']
+    else:
+        metabolite_data['molecular weight'] = reaction[metabolite] \
+                                                   ['molecularWeight']
+    try:
+        metabolite_data['wild-type'] = reaction[metabolite]['wild-type']
+    except:
+        pass
+    metabolite_data['organism'] = reaction[metabolite]['organism']
+    
+    return metabolite_data
+    
+
+def getEcNumber(reaction):
+    '''Gets EC number to make new Enzyme object. "Flat is better than nested"
+    '''    
+    for metabolite in reaction:
+        for entry in reaction[metabolite]:
+            try: 
+                return entry['ecNumber']
+            except KeyError:
+                continue
+            except:
+                raise
     
 def cleanMetaboliteNames(brenda_metabolites):
     '''
@@ -414,12 +486,19 @@ BIGG_MODEL = {} #Probably not the best way to do this...
 MODEL_UPDATE = {}
     
 
-class DataType('''Enum'''):
+class DataType(Enum):
     turnover = auto()
     specific_activity = auto()
-    mol_weight = auto()
+    molecular_weight = auto()
   
-
+class Organism(Enum):
+    hamster = auto()
+    mouse = auto()
+    rat = auto()
+    human = auto()
+    fly = auto()
+    yeast = auto()
+    coli = auto()
     
 class Enzyme():
     '''Class containing reactions and metabolites pertaining to an enzyme. 
@@ -473,9 +552,11 @@ class Metabolite():
         molw: molecular weight 
     '''
 
-    def __init__(self, name, bigg = None, kegg = None, turnover = None, 
-               specific_activity = None, molecular_weight = None):
-        
+    def __init__(self, name, bigg = None, kegg = None, **kwdata):
+        '''TODO: Some info on this constructor'''
+        self.turnover = None
+        self.molecular_weight = None
+        self.specific_activity = None
         self.name = name
         if bigg == None:
             self.bigg = ''
@@ -485,16 +566,33 @@ class Metabolite():
             self.kegg = ''
         else:
             self.kegg = kegg
-        if turnover == None:
-            self.turn = 0
-        else: 
-            self.turn = turnover
-        if specific_activity == None:
-            self.spec = 0
-        else: 
-            self.spec = specific_activity
-        if molecular_weight == None:
-            self.molw = 0
-        else:
-            self.molw = molecular_weight
+        if kwdata is not None:
+            for identifier, data in kwdata.items(): 
+                if identifier == 'turnover':
+                    self.turn = data
+                if identifier == 'specific activity':
+                    self.specific_activity = data
+                if identifier == 'molecular weight':
+                    self.molecular_weight = data
+   
+class MetaboliteCandidate(Metabolite):
+    '''Metabolite class intended to be used for data selection.
     
+    On top of the actual values, selection of the potential metabolites data
+        is based on the organism that data is provenant from, and whether the 
+        molecule tested was wild-type or not
+    ''' 
+    
+    def __init__(self, name, bigg=None, kegg=None, **kwdata):
+        self.organism == None
+        self.wild_type == None
+        super().__init__(self, name, bigg, kegg, **kwdata)
+        if kwdata is not None:
+            for identifier, value in kwdata.items():
+                if identifier == 'organism':
+                    self.organism = value
+                if identifier == 'wild-type':
+                    self.wild_type = value
+    
+class DataMissingError(Exception):
+    pass
