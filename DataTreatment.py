@@ -9,6 +9,7 @@ import json
 import requests
 import pickle
 import cobra
+from fuzzywuzzy import fuzz
 #from enum import Enum, auto  #Enum breaks spyder autocomplete
 '''
 class DataType(Enum):
@@ -100,13 +101,8 @@ def treatTurnoverData():
     '''
     storeBiggRepresentation()
     eliminateUnmatchable()
-    selectBestData()
+    #selectBestData()
     
-  
-    
-def organizeForwardsBackwards(Data):
-    '''
-    '''
 
 def eliminateUnmatchable(brenda_data):
     '''Eliminates entries from BRENDA which cannot be matched to model data. 
@@ -136,13 +132,48 @@ def eliminateUnmatchable(brenda_data):
     treated_output = openJson('JSONs/treated_BRENDA_output.json')
     brendaToKegg(treated_output)
     brenda_keggs = correctJson('JSONs/treated_BRENDA_output.json')
-    [directional_model, unmatched] = matchById(brenda_keggs, bigg_model)
+    
+    #Is trying to save them by name really even worth it? 
+    [matched_by_id, unmatched] = matchById(brenda_keggs)
+    [matched_by_name, unmatched] = matchByName(unmatched)
+    
+    brenda_no_kegg = openJson('JSONs/BRENDA_no_KEGG.json')
+    [matched_no_kegg, unmatched_no_kegg] = matchByName(brenda_no_kegg)
+    
+    
+     
     
     
     
-def fuzzyMatchNames():
-    '''Tries to match metabolite names that cannot be matched via KEGG.'''
-   
+def matchByName(unmatched):
+    '''Tries to fuzzy match metabolite names that cannot be matched via KEGG.
+        
+    
+    '''
+    
+    global BIGG_MODEL
+    
+    matched_data = {}
+    unmatched = {}
+    
+    for reaction in unmatched:
+        matched_data[reaction] = {}
+        unmatched[reaction] = []
+        for metabolite in unmatched[reaction]:
+            for reactant in BIGG_MODEL[reaction].forward:
+                if fuzz.token_set_ratio(metabolite, reactant.name) > 0.85:
+                    matched_data[reaction][reactant.name] = metabolite
+                else:
+                    unmatched[reaction].append(metabolite)
+            for product in BIGG_MODEL[reaction].backward:
+                if fuzz.token_set_ratio(metabolite, product.name) > 0.85:
+                    matched_data[reaction][product.name] = metabolite
+                else:
+                    unmatched[reaction].append(metabolite)
+                    
+    return matched_data, unmatched
+
+
 
 def brendaToKegg(data): 
     '''Tries to match BRENDA metabolite names to KEGG ids. 
@@ -241,31 +272,46 @@ def is_number(s):
 
     return False
 
-def matchById(brenda_keggs, bigg_model):
+def matchById(brenda_keggs):
     '''Tries to match metabolites by KEGG Id. 
     
     Args:
         brenda_keggs: dict of KEGG codes (keys) and corresponding names (values)
-        bigg_model: cobra model of CHO downloaded from BiGG database. 
     
     Return: 
-        new_model: dict of model with matched metabolites. 
+        matched_data: dict where keys are the BiGG names and the values are the
+            BRENDA names.  
         no_match: dict of BRENDA metabolites that could not be matched by name. 
-    
-    TODO: add new_model structure to this docstring
+        
+        
+    Notes to Self:
+        This function should:
+            - match BRENDA names with BiGG names via kegg ids 
+            - Return brenda metabolites for which no match could be found. 
+            - Be applicable to later data types. 
+            
+        This function should not: 
+            - Deal with matching them by name. 
+            - Sort the turnover values. 
+            - touch the BIGG_MODEL.
     '''
     #Why are we using bigg_model? Ahhh.... to check direction. 
-    
-    #TODO: construct this function in a way that makes sense.
-    
+      
+    matched_data = {}
+    no_match = {}
+    global BIGG_MODEL
 
     for reaction in brenda_keggs:  #Checking for matches for each reaction.
-        for metabolite in brenda_keggs[reaction]:
-            try: 
-                pass
-            except:
-                pass
-        
+        matched_data[reaction] = {}
+        no_match[reaction] = []
+        for ID, name in brenda_keggs[reaction].items():
+            if ID in BIGG_MODEL[reaction].with_kegg:
+                matched_data[reaction][BIGG_MODEL[reaction].with_kegg[ID]] = \
+                    name
+            else:
+                no_match[reaction].append(name)
+                
+    return matched_data, no_match   
         
     
 def cleanMetaboliteNames(brenda_metabolites):
@@ -340,17 +386,24 @@ def storeBiggRepresentation():
 def downloadModelKeggs():
     '''Downloads kegg IDs of metabolites in BiGG model.
 
-
-    #TODO: Make sure that the metabolites are added to the dict of metabolites
-        that are matched with a KEGG ID. 
+    This function is responsible for calling addKeggToMetabolites, which will 
+    try to query the chemical translation service for the kegg ids. It handles 
+    forward and reverse reactions separately, and if a kegg is found, it 
+    updates the with_kegg attribute of the enzyme. 
+    
     '''
     global BIGG_MODEL
-
+    
+    
     for reaction in BIGG_MODEL:
         for reactant in BIGG_MODEL[reaction].forward:
-            addKeggToMetabolites(reactant)
+            kegg_found, kegg_id = addKeggToMetabolites(reactant)[0] 
+            if kegg_found:    
+                BIGG_MODEL[reaction].with_kegg[kegg_id] = reactant.name
         for product in BIGG_MODEL[reaction].backward:
-            addKeggToMetabolites(product)
+            kegg_found, kegg_id = addKeggToMetabolites(product)[0] 
+            if kegg_found:
+                BIGG_MODEL[reaction].with_kegg[kegg_id] = product.name
     
     saveBiggModel()
 
@@ -360,7 +413,11 @@ def addKeggToMetabolites(metabolite):
     Uses requests to query the chemical translation service for the kegg id of 
     the metabolite, which is then added to the kegg attribute of the Metabolite.
     
-    
+    Returns: 
+        bool: True if metabolite kegg was found, false if it was not found. 
+            This allows the calling function to add the metabolite to the dict
+            of metabolites with a corresponding KEGG ID. 
+        kegg: This is the kegg code of the 
     '''
     request_counter = 0
     
@@ -372,14 +429,17 @@ def addKeggToMetabolites(metabolite):
             cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/"
                                       "service/convert/Chemical%20Name/"
                                       "KEGG/"+metabolite_name)
-            metabolite.kegg = [str(json.loads(cts_output.text)[0]['result']
+            kegg = [str(json.loads(cts_output.text)[0]['result']
                                     [0])]
+            metabolite.kegg = kegg
             print('Metabolite ' + metabolite_name + 'kegg found.')
-            break
+            return True, kegg
         except:
             print('EXCEPTED')
             request_counter = request_counter + 1
             continue
+    
+    return False, None
                 
 def saveBiggModel():
     '''Stores model using pickle module.
