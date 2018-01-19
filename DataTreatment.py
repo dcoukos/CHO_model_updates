@@ -145,7 +145,21 @@ def selectBestData(model_updates, data_type):
                                 metabolite_name].append(indices[closest_organism]
                                 [index])
                         if organism is closest_organism:
-                            best_found = True        
+                            best_found = True   
+                            
+        for metabolite_name in model_updates[reaction].backward:
+            data_selected_by_organism[reaction].backward[metabolite_name] = []
+            closest_organism, indices = findClosestOrganism(model_updates[
+                    reaction].backward[metabolite_name])
+            best_found = False
+            for organism in Organism:
+                while not best_found:
+                    for index in indices[organism]:
+                        data_selected_by_organism[reaction].backward[
+                                metabolite_name].append(indices[closest_organism]
+                                [index])
+                        if organism is closest_organism:
+                            best_found = True    
             
 def findClosestOrganism(metabolite_entries):
     '''finds which organism closest to hamster is in list of MetaboliteCandidate
