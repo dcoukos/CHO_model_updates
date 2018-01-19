@@ -5,8 +5,12 @@
     to keep only the necessary information for improving the model. 
 '''
 
+#TODO: WRITE TESTS FOR THIS CODE
+
+import os
 import json
 import requests
+import copy
 import pickle
 import cobra
 from fuzzywuzzy import fuzz
@@ -18,17 +22,29 @@ def auto():
     working on project with ENUM class. '   
     return None
 '''
+def initializeModelUpdate():
+    '''Creates deep copy of BiGG Model representation, to which updated 
+        information will be added. '''
+    global MODEL_UPDATE
+    global BIGG_MODEL
+    MODEL_UPDATE = copy.deepcopy(BIGG_MODEL)
 
 def treatTurnoverData():
     '''Filters and eliminates unnecessary data, choosing best turnover data.
     
-    #TODO: Write a docstring that's a little more complete. 
-    #TODO: Where does brenda_data get passed in from? 
+    This function is meant specifically for data of the DataType.turnover Enum. 
+    All of the selection processes (filtering by organism, direction, 
+    wild-type, and magnitude) occur in functions called by 
+    treatTurnoverData().
     '''
-    potential_updates = {} #This will store new data for the model, dict of Enzymes
+    
+    global MODEL_UPDATE
+    potential_updates = {} 
     
     storeBiggRepresentation()
     treated_output = openJson('JSONs/treated_BRENDA_output.json')
+    if os.stat('JSONs/BRENDA_KEGG_IDs.json') == 0:
+        brendaToKegg(treated_output) 
     brenda_keggs = correctJson('JSONs/BRENDA_KEGG_IDs.json')
     brenda_no_kegg = openJson('JSONs/BRENDA_no_KEGG.json')
     
@@ -36,8 +52,9 @@ def treatTurnoverData():
     eliminateUnmatchable(potential_updates,treated_output, brenda_keggs, 
                          brenda_no_kegg)
     selectBestData(potential_updates, DataType.turnover)
+    applyNewData(potential_updates, DataType.turnover)
     
-
+    
 def eliminateUnmatchable(potential_updates,treated_brenda_output, 
                          brenda_keggs, brenda_no_kegg):
     '''Eliminates entries from BRENDA which cannot be matched to model data. 
@@ -47,32 +64,32 @@ def eliminateUnmatchable(potential_updates,treated_brenda_output,
     matches are found they are added to a new data structure, which is also 
     organized for forward and backwards reactions. 
     
-    
-    #TODO: add complete args
     Args:
-        brenda_data: This is a dict containing data from BRENDA. Keys are 
-                        reaction Ids.
-      
-    #TODO: Write correct return
-    Returns: 
-        pruned_data: Data from brenda with unmatchable entries removed. 
+        potential_updates: empty dict which will contain Enzyme entries. This
+            dict is where the incoming data will be processed and selected. 
+        treated_brenda_output: This is a dict containing data from BRENDA. Keys are 
+            reaction Ids. First order of keys are BiGG reaction Ids, and the second order 
+            keys are the names of metabolites in BRENDA. Thereafter there is a 
+            list of outputs, obtained programatically from BRENDA.
+        brenda_keggs: dict containing KEGG ids and metabolite names in BRENDA. 
+            First order of keys are BiGG reaction Ids, and the second order 
+            keys are the names of metabolites in BRENDA.
+        brenda_no_kegg: dict containing metabolites for which no KEGG id was 
+            found. 
     
-    Data passed to this function must at least have this format:
-        { reaction1:{ metabolite1: ..., 
-                      metabolite2: ...,
-                      metabolite3: ...,
-                     },
-            ...     
-        }
+    Note:
+        Data passed to this function as treated_brenda_output, brenda_keggs, 
+        and brenda_no_kegg must at least have this format:
+            { reaction1:{ metabolite1: ..., 
+                          metabolite2: ...,
+                          metabolite3: ...,
+                         },
+                ...     
+            }
     
     '''
-    # TODO: why is the brendaToKegg function here, and not outside? 
-    brendaToKegg(treated_brenda_output)
-  
-    '''TODO: Rewrite below functions to reflect treatement of potential 
-                data within the functions, instead of outside''' 
-    
-    #Is trying to save them by name really even worth it? 
+    #TODO: determine whether matching by name is even worth it. 
+
     unmatched = matchById(potential_updates, brenda_keggs, 
                           treated_brenda_output, DataType.turnover)
     matchByName(potential_updates, unmatched, treated_brenda_output, 
@@ -81,39 +98,109 @@ def eliminateUnmatchable(potential_updates,treated_brenda_output,
                 DataType.turnover)
 
     return potential_updates    
+
+def matchById(potential_updates, brenda_keggs, treated_brenda_output, 
+              data_type):
+    '''Tries to match metabolites by KEGG Id. 
     
+    Args:
+        potential_updates: empty dict which will contain Enzyme entries. This
+            dict is where the incoming data will be processed and selected. Is 
+            updated by this function. 
+        brenda_keggs: dict of KEGG codes (keys) and corresponding names 
+            (values)
+        treated_brenda_output: This is a dict containing data from BRENDA. 
+            Keys are reaction Ids. First order of keys are BiGG reaction Ids, 
+            and the second order keys are the names of metabolites in BRENDA. 
+            Thereafter there is a list of outputs, obtained programatically 
+            from BRENDA.
+        data_type: DataType which tells matchById how to add new data to the 
+            potential_updates dict.
     
-def matchByName(potential_updates, unmatched, treated_brenda_output):
+    Return:  
+        unmatched: dict of BRENDA metabolites that could not be matched by name. 
+    '''
+    unmatched = {}
+    global BIGG_MODEL
+
+    for reaction in brenda_keggs:  #Checking for matches for each reaction.
+        unmatched[reaction] = []
+        if reaction not in potential_updates:
+            potential_updates[reaction] = Enzyme(reaction, getEcNumber(
+                                                treated_brenda_output[
+                                                        reaction]))             
+        for ID, name in brenda_keggs[reaction].items():
+            try: 
+                bigg_name = BIGG_MODEL[reaction].with_kegg(ID) # = checked.
+                if bigg_name in BIGG_MODEL[reaction].forward: 
+                    data = getData(treated_brenda_output[reaction], name, 
+                               'forward', data_type)                    
+                    if bigg_name not in potential_updates[reaction].forward:
+                        potential_updates[reaction].forward[bigg_name] = []
+                    for entry in data:
+                        potential_updates[reaction].forward[bigg_name].append(
+                            MetaboliteCandidate(bigg_name, kegg=ID,
+                                                data=entry))
+                elif bigg_name in BIGG_MODEL[reaction].backward:
+                    data = getData(treated_brenda_output[reaction], name, 
+                               'forward', data_type)
+                    if bigg_name not in potential_updates[reaction].backward:
+                        potential_updates[reaction].backward[bigg_name] = []
+                    for entry in data:
+                        potential_updates[reaction].backward[bigg_name].append(
+                            MetaboliteCandidate(bigg_name, kegg=ID, 
+                                                data=entry))
+                else:
+                    raise DataMissingError()
+                
+            except KeyError:
+                unmatched[reaction].append(name)
+            except DataMissingError:
+                print('Metabolite not added correctly to BIGG_MODEL.')              
+    return unmatched
+  
+    
+def matchByName(potential_updates, unmatched, treated_brenda_output, 
+                data_type):
     '''Tries to fuzzy match metabolite names that cannot be matched via KEGG.
         
-    TODO: fill out docstring
-    TODO: update args
+    Args:
+        potential_updates: dict which will contain Enzyme entries. This
+            dict is where the incoming data will be processed and selected. 
+            Metabolite entries which are matched are added here.
+        unmatched: dict of the metabolite entries from BRENDA which have not 
+            yet been matched to BiGG metabolite by previous function calls.
+        treated_brenda_output: This is a dict containing data from BRENDA. 
+            Keys are reaction Ids. First order of keys are BiGG reaction Ids, 
+            and the second order keys are the names of metabolites in BRENDA. 
+            Thereafter there is a list of outputs, obtained programatically 
+            from BRENDA.
+        data_type: DataType which tells matchById how to add new data to the 
+            potential_updates dict.
     
     '''
-    #TODO: Rewrite so that return has structure similar to the updated model.
-    #       i.e. directionality
-    
+
     global BIGG_MODEL
     
-    matched_data = {}
-    unmatched = {}
-    
     for reaction in unmatched:
-        matched_data[reaction] = {}
-        unmatched[reaction] = []
         for metabolite in unmatched[reaction]:
+            #REACTANT IS A KEY TO MATCH WITH METABOLITE
             for reactant in BIGG_MODEL[reaction].forward:
                 if fuzz.token_set_ratio(metabolite, reactant.name) > 0.85:
-                    matched_data[reaction][reactant.name] = metabolite
-                else:
-                    unmatched[reaction].append(metabolite)
+                    data = getData(treated_brenda_output[reaction], metabolite, 
+                               'forward', data_type)
+                    for entry in data:
+                        potential_updates[reaction].forward[
+                            reactant.name].append(MetaboliteCandidate(
+                            reactant.name, data=entry))
             for product in BIGG_MODEL[reaction].backward:
                 if fuzz.token_set_ratio(metabolite, product.name) > 0.85:
-                    matched_data[reaction][product.name] = metabolite
-                else:
-                    unmatched[reaction].append(metabolite)
-                    
-    return matched_data, unmatched
+                    data = getData(treated_brenda_output[reaction], metabolite, 
+                               'forward', data_type)
+                    for entry in data:
+                        potential_updates[reaction].backward[
+                            product.name].append(MetaboliteCandidate(
+                            product.name, data=entry))
 
 def selectBestData(model_updates, data_type):
     '''Selects best data to add to model based on selection criteria
@@ -121,46 +208,108 @@ def selectBestData(model_updates, data_type):
     This function selects the best data based on Organism, wild-type, and the 
     magnitude of the data. 
     
-    #TODO: Rewrite docstring. 
-    
     Args:
-        model_updates: contains new data for the model, is filled out by this 
-            function.
+        model_updates: contains new data for the model, is filtered by this 
+            function. The final candidates are returned through this arg.
         data_type: instance of DataType Enum, describing where new data is to 
-            be placed
+            be placed.
+            
     '''
-    data_selected_by_organism = {}    
+    #first the data must be filtered by organism. 
+    
+    filtered_by_organism = {}    
     for reaction in model_updates:
-        data_selected_by_organism[reaction] = Enzyme.copyOnlyEnzyme(
-                model_updates[reaction])
+        filtered_by_organism[reaction] = Enzyme.copyOnlyEnzyme(model_updates
+                            [reaction])
         for metabolite_name in model_updates[reaction].forward:
-            data_selected_by_organism[reaction].forward[metabolite_name] = []
+            filtered_by_organism[reaction].forward[metabolite_name] = []
             closest_organism, indices = findClosestOrganism(model_updates[
                     reaction].forward[metabolite_name])
             best_found = False
             for organism in Organism:
                 while not best_found:
                     for index in indices[organism]:
-                        data_selected_by_organism[reaction].forward[
-                                metabolite_name].append(indices[closest_organism]
-                                [index])
+                        filtered_by_organism[reaction].forward[
+                                metabolite_name].append(indices[
+                                closest_organism][index])
                         if organism is closest_organism:
                             best_found = True   
-                            
+        
+        #SAME as above but for reverse reaction                    
         for metabolite_name in model_updates[reaction].backward:
-            data_selected_by_organism[reaction].backward[metabolite_name] = []
+            filtered_by_organism[reaction].backward[metabolite_name] = []
             closest_organism, indices = findClosestOrganism(model_updates[
                     reaction].backward[metabolite_name])
             best_found = False
             for organism in Organism:
                 while not best_found:
                     for index in indices[organism]:
-                        data_selected_by_organism[reaction].backward[
-                                metabolite_name].append(indices[closest_organism]
-                                [index])
+                        filtered_by_organism[reaction].backward[
+                                metabolite_name].append(indices[
+                                closest_organism][index])
                         if organism is closest_organism:
                             best_found = True    
+    
+    filtered_by_wild_type = {}
+    for reaction in filtered_by_organism:
+        filtered_by_wild_type[reaction] = Enzyme.copyOnlyEnzyme(
+                filtered_by_organism[reaction])
+        for metabolite_name in filtered_by_organism[reaction].forward:
+            wild_type = []
+            for entry in model_updates[reaction].forward[metabolite_name]:
+                if entry.wild_type is not None:
+                    wild_type.append(entry)
+            if wild_type != []:
+                filtered_by_wild_type[reaction].forward[
+                        metabolite_name] = wild_type
+            else:
+                filtered_by_wild_type[reaction].forward[
+                        metabolite_name] = copy.copy(filtered_by_organism
+                        [reaction].forward[metabolite_name])
             
+        #SAME as above but for reverse reactions
+        for metabolite_name in filtered_by_organism[reaction].backward:
+            wild_type = []
+            for entry in model_updates[reaction].backward[metabolite_name]:
+                if entry.wild_type is not None:
+                    wild_type.append(entry)
+            if wild_type != []:
+                filtered_by_wild_type[reaction].backward[metabolite_name] = \
+                wild_type
+            else:
+                filtered_by_wild_type[reaction].backward[
+                        metabolite_name] = copy.copy(filtered_by_organism
+                        [reaction].backward[metabolite_name])
+    
+    #-----Choose data according to magnitude preference.-----------------
+    #work on filtered_by_wild_type)
+    
+    if data_type is DataType.turnover:
+        for reaction in filtered_by_wild_type:
+            for metabolite in filtered_by_wild_type[reaction].forward:
+                model_updates[reaction].forward = chooseHighestTurnover(
+                        filtered_by_wild_type[reaction].forward[metabolite])
+            for metabolite in filtered_by_wild_type[reaction].backward:
+                model_updates[reaction].backward = chooseHighestTurnover(
+                        filtered_by_wild_type[reaction].backward[metabolite])
+  
+def chooseHighestTurnover(metabolite_entries):
+    '''Selects entry with highest turnover
+    
+    Args:
+        metabolite_entries: list of selected entries for a metabolite.
+    
+    Returns:
+        entry with the highest turnover
+    '''
+    highest_index = 0
+    highest_turnover = 0
+    for index, entry in enumerate(metabolite_entries):
+        if entry.turnover > highest_turnover:
+            highest_index = index
+    
+    return metabolite_entries[highest_index]          
+        
 def findClosestOrganism(metabolite_entries):
     '''finds which organism closest to hamster is in list of MetaboliteCandidate
     
@@ -250,7 +399,7 @@ def brendaToKegg(data):
     Note: I have already run this from Cossio's computer, and the JSON files
             are already populated. 
             
-     TODO:       ARE NOT POPULATED CORRECTLY
+     TODO: ARE NOT POPULATED CORRECTLY
         
     '''
     
@@ -326,91 +475,60 @@ def is_number(s):
 
     return False
 
-def matchById(potential_updates, brenda_keggs, treated_brenda_output, 
-              data_type):
-    '''Tries to match metabolites by KEGG Id. 
-    
-    Args:
-    #TODO: add potential_updates as arg
-        brenda_keggs: dict of KEGG codes (keys) and corresponding names (values)
-    
-    Return:  
-        no_match: dict of BRENDA metabolites that could not be matched by name. 
-    '''
-      
-    #TODO: Rewrite so that return has structure similar to the updated model. i.e. directionality   
 
-    matched_data = {}
-    no_match = {}
-    global BIGG_MODEL
-
-    for reaction in brenda_keggs:  #Checking for matches for each reaction.
-        matched_data[reaction] = {}
-        no_match[reaction] = []
-        if reaction not in potential_updates:
-            potential_updates[reaction] = Enzyme(reaction, getEcNumber(
-                                                treated_brenda_output[
-                                                        reaction]))             
-        for ID, name in brenda_keggs[reaction].items():
-            try: 
-                #Search for directionality and append new metabolite
-                #did I use the bigg name or ID here? Name, because its a metabolite
-                bigg_name = BIGG_MODEL[reaction].with_kegg(ID) #This is the positive check.
-                
-                data = getData(treated_brenda_output[reaction], name, data_type)
-                
-                if bigg_name in BIGG_MODEL[reaction].forward: #i.e. forward reaction
-                    #Remember the potential updates are a lists of metabolites!
-                    
-                    '''TODO: write separate function to extract data. This must 
-                        be done after checkthing that they match!'''
-                    if bigg_name not in potential_updates[reaction].forward:
-                        potential_updates[reaction].forward[bigg_name] = []
-                    potential_updates[reaction].forward[bigg_name].append(
-                        Metabolite(bigg_name, kegg = ID, data = data))
-                elif bigg_name in BIGG_MODEL[reaction].backward:
-                    if bigg_name not in potential_updates[reaction].backward:
-                        potential_updates[reaction].backward[bigg_name] = []
-                    potential_updates[reaction].backward[bigg_name].append(
-                        Metabolite(bigg_name, kegg = ID, data = data))
-                else:
-                    raise DataMissingError()
-                
-            except KeyError:
-                no_match[reaction].append(name)
-            except DataMissingError:
-                print('Metabolite not added correctly to BIGG_MODEL.')              
-    return no_match   
-
-def getData(reaction, metabolite, data_type):
+def getData(reaction, metabolite, directionality, data_type):
     '''Chooses data to give to matchers. 
     
     This function is intended to improve code reusability so that the parent 
     functions can treat the data without knowing what type of data it is. 
     
     Args:
-        reaction: treated brenda output for one EC number
+        reaction: treated brenda output for one EC number. This is a dict
+            where the keys are metabolites, and the values are lists of entries
+            pertaining to that metabolite name. 
         metabolite: metabolite name
-        data_type: instance of DataType Enum. 
+        directionality: string indicating whether .forward or .backward 
+            attribute is being assessed. 
+        data_type: instance of DataType Enum. Tells the function which data is 
+            pertinent. 
+        
+    Returns:
+        metabolite_data: a list containing data which is used to construct
+            MetaboliteCandidate instances. 
     '''
-    metabolite_data = {}
     
-    if data_type is DataType.turnover:
-        metabolite_data['turnover'] =  reaction[metabolite]['turnoverNumber']
-    elif data_type is DataType.specific_activity:
-        metabolite_data['specific activity'] = reaction[metabolite] \
-                                                   ['specificActivity']
-    else:
-        metabolite_data['molecular weight'] = reaction[metabolite] \
-                                                   ['molecularWeight']
-    try:
-        metabolite_data['wild-type'] = reaction[metabolite]['wild-type']
-    except:
-        pass
-    metabolite_data['organism'] = reaction[metabolite]['organism']
+    metabolite_data = []    
     
+    for entry in getattr(reaction, directionality):
+        metabolite_entry  = {}
+        if data_type is DataType.turnover:
+            metabolite_entry['turnover'] =  reaction[metabolite]['turnoverNumber']
+        elif data_type is DataType.specific_activity:
+            metabolite_entry['specific activity'] = reaction[metabolite] \
+                                                       ['specificActivity']
+        else:
+            metabolite_entry['molecular weight'] = reaction[metabolite] \
+                                                       ['molecularWeight']
+        try:
+            metabolite_entry['wild-type'] = reaction[metabolite]['wild-type']
+        except:
+            pass
+        metabolite_entry['organism'] = reaction[metabolite]['organism']
+        metabolite_data.append(metabolite_entry)
     return metabolite_data
+
+def applyNewData(updates, data_type):
+    '''Adds updated data to global MODEL_UPDATES variable
     
+    Args: 
+        updates: updated model information. dict of Enzymes.
+        data_type: type of data being added to model.   
+    '''
+    global MODEL_UPDATE
+    for reaction in updates:
+        for metabolite in updates[reaction].forward:
+            try:
+                MODEL_UPDATE[reaction].forward[metabolite] = 
 
 def getEcNumber(reaction):
     '''Gets EC number to make new Enzyme object. "Flat is better than nested"
@@ -475,9 +593,6 @@ def storeBiggRepresentation():
     
         This creates and pickles a representation of the BiGG Model which 
         should be a little bit easier to work with. 
-        
-    #TODO: Make this method or preferably other method store the model via a 
-        pickle request. 
     '''
     global BIGG_MODEL
     bigg_model = cobra.io.load_json_model('JSONs/BIGG_master_modle.json')
@@ -493,6 +608,12 @@ def storeBiggRepresentation():
             BIGG_MODEL[reaction.id].backward[reactant.name] = Metabolite(
                                                             reactant.name, 
                                                             bigg = reactant.id)
+    pickle.dump(BIGG_MODEL, 'bigg_model_object.pickle', protocol = -1)
+    
+def loadGlobalBigg():
+    global BIGG_MODEL
+    BIGG_MODEL = pickle.load('bigg_model_object.pickle')
+
 def downloadModelKeggs():
     '''Downloads kegg IDs of metabolites in BiGG model.
 
@@ -600,6 +721,8 @@ class Enzyme():
         self.with_kegg = {}
         self.forward_turnover = None
         self.backward_turnover = None
+        self.has_f_wild_type = None
+        self.has_b_wild_type = None
     
     def returnWithKegg():
         '''Returns a dict of metabolites by their KEGG ids.'''
