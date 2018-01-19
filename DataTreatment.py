@@ -129,24 +129,89 @@ def selectBestData(model_updates, data_type):
         data_type: instance of DataType Enum, describing where new data is to 
             be placed
     '''
-    #First select by organism. 
-    data_selected_by_organism = {}
+    data_selected_by_organism = {}    
+    for reaction in model_updates:
+        data_selected_by_organism[reaction] = Enzyme.copyOnlyEnzyme(
+                model_updates[reaction])
+        for metabolite_name in model_updates[reaction].forward:
+            data_selected_by_organism[reaction].forward[metabolite_name] = []
+            closest_organism, indices = findClosestOrganism(model_updates[
+                    reaction].forward[metabolite_name])
+            best_found = False
+            for organism in Organism:
+                while not best_found:
+                    for index in indices[organism]:
+                        data_selected_by_organism[reaction].forward[
+                                metabolite_name].append(indices[closest_organism]
+                                [index])
+                        if organism is closest_organism:
+                            best_found = True        
+            
+def findClosestOrganism(metabolite_entries):
+    '''finds which organism closest to hamster is in list of MetaboliteCandidate
+    
+    Args:
+        metabolite_entries: list of MetaboliteCandidate
+        
+    Returns: 
+        Organism: enum of closest organism closest to hamster
+        dict: dictionary of Organism and indices matching to the organism
+    '''
     has_hamster = False
     has_mouse = False
     has_rat = False
     has_human = False
     has_fly = False
     has_yeast = False
-    has_e_coli = False
-    for reaction in model_updates:
-        for metabolite_name in model_updates[reaction].forward:
-            for metabolite in model_updates[reaction].forward[metabolite_name]:
-                if metabolite.organism == 'Cricetulus griseus':
-                    has_hamster = True
-            
- 
-     
+    has_coli = False
+    indices = {
+        Organism.hamster : [],
+        Organism.mouse: [],
+        Organism.rat: [],
+        Organism.human: [],
+        Organism.fly: [],
+        Organism.yeast: [],
+        Organism.coli: []}
 
+    for index, metabolite in enumerate(metabolite_entries):
+        if metabolite.organism == 'Cricetulus griseus':
+            indices[Organism.hamster].append(index)
+            has_hamster = True
+        elif metabolite.organism == 'Mus musculus':
+            has_mouse = True
+            indices[Organism.mouse].append(index)
+        elif metabolite.organism == 'Rattus norvegicus':
+            has_rat = True
+            indices[Organism.rat].append(index)
+        elif metabolite.organism == 'Homo sapiens':
+            has_human = True
+            indices[Organism.human].append(index)
+        elif metabolite.organism == 'Drosophila melanogaster':
+            has_fly = True
+            indices[Organism.fly].append(index)
+        elif metabolite.organism == 'Saccharomyces cerevisiae':
+            has_yeast = True
+            indices[Organism.yeast].append(index)
+        elif metabolite.organism == 'Escherichia coli':
+            has_coli = True
+            indices[Organism.coli].append(index)
+    
+    if has_hamster:
+        return Organism.hamster, indices
+    elif has_mouse:
+        return Organism.mouse, indices
+    elif has_rat:
+        return Organism.rat, indices
+    elif has_human:
+        return Organism.human, indices
+    elif has_fly:
+        return Organism.fly, indices
+    elif has_yeast:
+        return Organism.yeast, indices
+    elif has_coli:
+        return Organism.coli, indices
+    else:
+        return None
 
 def brendaToKegg(data): 
     '''Tries to match BRENDA metabolite names to KEGG ids. 
@@ -512,9 +577,10 @@ class Enzyme():
         with_kegg: a dict of metabolites with a KEGG identifier, where the KEGG
             is the key, and the metabolite is the valye. 
     '''
-    def __init__(self, bigg):
+    def __init__(self, bigg, ec = None):
         self.bigg = bigg
-        self.EC = ''
+        if ec is not None:
+            self.EC = ec
         self.forward = {}
         self.backward = {}
         self.with_kegg = {}
@@ -528,6 +594,10 @@ class Enzyme():
         '''iterates through all metabolites. If they have a Kegg ID, they are 
         added to '''
         pass
+    
+    def copyOnlyEnzyme(enzyme):
+        enz = Enzyme(enzyme.bigg, enzyme.EC)
+        return enz
     
     def chooseBiggestTurnovers():
         '''Chooses best value from forward metabolites.
