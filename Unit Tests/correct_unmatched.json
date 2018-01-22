@@ -1,15 +1,8 @@
 {
 "CSND": [
-        "3-oxauracil",     
-        "5-Azacytosine", 
-        "2-thiocytosine", 
-        "6-azacytosine"
+        "3-oxauracil"
         ], 
 "DHPM1": [ 
-        "D-5-methylthioethylhydantoin",  
-        "L-5-methylthioethylhydantoin", 
-        "hydantoin", 
-        "dihydrouracil", 
         "D-5-ethylhydantoin", 
         "DL-hydroxyphenylhydantoin", 
         "L-5-ethylhydantoin"

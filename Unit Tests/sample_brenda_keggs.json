@@ -2,11 +2,13 @@
     "CSND": {
         "D00323": "5-fluorocytosine", 
         "C00380": "cytosine", 
-        "C00791": "creatinine"
+        "C00791": "creatinine",
+        "D02456": "3-oxauracil"
     }, 
     "DHPM1": {
         "C00148": "DL-p-hydroxyphenylhydantoin", 
         "C14916": "L-5-ethylhydantoin", 
-        "C14916": "D-5-ethylhydantoin"
+        "C14916": "D-5-ethylhydantoin",
+        "C00124": "L-5-ethylhydantoin"
     }   
 }
