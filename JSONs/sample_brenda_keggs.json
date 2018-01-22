@@ -1,0 +1,65 @@
+{
+    "CSND": {
+        "D00323": "5-fluorocytosine", 
+        "C00380": "cytosine", 
+        "C00791": "creatinine"
+    }, 
+    "LEUTAm": {}, 
+    "DHPM1": {
+        "C00148": "DL-p-hydroxyphenylhydantoin", 
+        "C00906": "Hydrothymine", 
+        "C05146": "hydantoin", 
+        "C00429": "hydrouracil", 
+        "C14916": "L-5-ethylhydantoin", 
+        "D06272": "DL-6-methyldihydrouracil", 
+        "C14916": "D-5-ethylhydantoin"
+    }, 
+    "r0604": {}, 
+    "RE1538C": {
+        "C00612": "N1-acetylspermidine", 
+        "C00750": "spermine", 
+        "C02567": "N1-acetylspermine"
+    }, 
+    "NDP7g": {
+        "C00008": "ADP"
+    }, 
+    "GDRm": {
+        "D03774": "diethyl [2,5-bis(aziridin-1-yl)-3,6-dioxocyclohexa-1,4-diene-1,4-diyl]biscarbamate", 
+        "C03170": "trypanothione", 
+        "C02617": "1,4-Naphthoquinone", 
+        "C00127": "glutathione disulfide", 
+        "C16758": "(E)-ajoene", 
+        "C00005": "NADPH", 
+        "C16757": "(Z)-ajoene", 
+        "C00004": "NADH", 
+        "C05377": "2-methyl-1,4-naphthoquinone", 
+        "C10312": "1,8-dihydroxy-9,10-anthraquinone", 
+        "C03840": "5-hydroxy-1,4-naphthoquinone", 
+        "C03243": "9,10-phenanthrene quinone"
+    }, 
+    "UROLACer": {}, 
+    "RE1538X": {
+        "C00612": "N1-acetylspermidine", 
+        "C00750": "spermine", 
+        "C02567": "N1-acetylspermine"
+    }, 
+    "NTD10": {
+        "C00364": "5'-dUMP", 
+        "C03360": "p-nitrophenyl phosphate", 
+        "C00362": "5'-dGMP", 
+        "C00020": "5'-AMP", 
+        "C00360": "5'-dAMP", 
+        "C00008": "ADP", 
+        "C05822": "3'-CMP", 
+        "C06196": "5'-dIMP", 
+        "C00294": "Inosine", 
+        "C00144": "5'-GMP", 
+        "C00130": "5'-IMP", 
+        "C00002": "ATP", 
+        "C00055": "5'-CMP", 
+        "C01367": "3'-AMP", 
+        "C00105": "5'-UMP", 
+        "C00239": "5'-dCMP", 
+        "D00423": "ribavirin"
+    }
+}

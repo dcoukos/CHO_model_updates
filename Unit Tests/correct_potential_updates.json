@@ -1,0 +1,300 @@
+{
+    "CSND": {
+        "5-fluorocytosine": [
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "0.005", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "5.5", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "9.5", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "16", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "17", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "17", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "18.8", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "19.71", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "21", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "29.5", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "31.7", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "71", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "74.3", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "75.6", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "75.6", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "83.68", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "97.7", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "101.7", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "115.2", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "137", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "137.4", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "233", 
+                "ecNumber": "3.5.4.1"
+            }
+        ],  
+        "cytosine": [
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "0.18", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "1.69", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "2.13", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "2.98", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "9.5", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "26.4", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "29.5", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "31.7", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "36.8", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "49.68", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "91", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "104", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "104", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "132", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "165", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "165", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "170", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "185", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "185", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "189", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "279", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "1030", 
+                "ecNumber": "3.5.4.1"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "2286", 
+                "ecNumber": "3.5.4.1"
+            }
+        ]
+    }, 
+    "DHPM1": {
+        "DL-p-hydroxyphenylhydantoin": [
+            {
+                "wild-type": true, 
+                "organism": "Geobacillus stearothermophilus", 
+                "turnoverNumber": "18", 
+                "ecNumber": "3.5.2.2"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Geobacillus stearothermophilus", 
+                "turnoverNumber": "59", 
+                "ecNumber": "3.5.2.2"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Geobacillus stearothermophilus", 
+                "turnoverNumber": "62", 
+                "ecNumber": "3.5.2.2"
+            }
+        ]
+    }
+}

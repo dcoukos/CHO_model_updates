@@ -1,0 +1,226 @@
+{
+    "CSND": [
+        "isocytosine", 
+        "3-oxauracil", 
+        "5-Azacytosine", 
+        "2-thiocytosine", 
+        "6-azacytosine"
+    ], 
+    "DHPM1": [
+        "DL-5-(p-hydroxyphenyl)hydantoin", 
+        "D-5-propylhydantoin", 
+        "D-5-butylhydantoin", 
+        "D-5-methylthioethylhydantoin", 
+        "D-5-methylhydantoin", 
+        "L-5-methylthioethylhydantoin", 
+        "DL-5-methyldihydrouracil", 
+        "D-5-benzylhydantoin", 
+        "DL-hydroxyphenylhydantoin", 
+        "D-5-isobutylhydantoin", 
+        "D-5-methyl-thio-ethylhydantoin"
+    ], 
+    "RE1538C": [
+        "N1,N12-bis(ethyl)-spermine", 
+        "N1,N11-bis(ethyl)-norspermine", 
+        "N1,N11-diacetylnorspermine"
+    ], 
+    "GDRm": [
+        "trimethyl-1,4-benzoquinone", 
+        "diallyl trisulfide", 
+        "quinoline-5,8-dione", 
+        "6-methylquinoline-5,8-dione", 
+        "5,8-Dihydroxy-1,4-naphthoquinone", 
+        "7-methylquinoline-5,8-dione", 
+        "2,6-dimethyl-1,4-benzoquinone", 
+        "more", 
+        "1,4-dihydroxy-9,10-anthraquinone", 
+        "2,5-bis(aziridin-1-yl)cyclohexa-2,5-diene-1,4-dione", 
+        "quinoxaline-5,8-dione", 
+        "tetramethyl-1,4-benzoquinone", 
+        "5,5'-dithiobis(2-nitrobenzoic acid)"
+    ], 
+    "RE1538X": [
+        "N1,N12-bis(ethyl)-spermine", 
+        "N1,N11-bis(ethyl)-norspermine", 
+        "N1,N11-diacetylnorspermine"
+    ], 
+    "NTD10": [
+        "Polyphosphate"
+    ], 
+    "NTD11": [], 
+    "C160CPT2": [], 
+    "C160CPT1": [], 
+    "ILETAm": [
+        "trimethylpyruvate", 
+        "2-oxocaproate", 
+        "glyoxylate", 
+        "4,4-dimethyl-2-oxopentanoate", 
+        "DL-2-aminooctanoate"
+    ], 
+    "STS3r": [], 
+    "r1262": [], 
+    "PGAM1_PhosHydro": [], 
+    "G5SDym": [], 
+    "GTHOm": [
+        "trimethyl-1,4-benzoquinone", 
+        "diallyl trisulfide", 
+        "quinoline-5,8-dione", 
+        "6-methylquinoline-5,8-dione", 
+        "5,8-Dihydroxy-1,4-naphthoquinone", 
+        "7-methylquinoline-5,8-dione", 
+        "2,6-dimethyl-1,4-benzoquinone", 
+        "more", 
+        "1,4-dihydroxy-9,10-anthraquinone", 
+        "2,5-bis(aziridin-1-yl)cyclohexa-2,5-diene-1,4-dione", 
+        "quinoxaline-5,8-dione", 
+        "tetramethyl-1,4-benzoquinone", 
+        "5,5'-dithiobis(2-nitrobenzoic acid)"
+    ], 
+    "KYN": [
+        "3-chloro-DL-kynurenine", 
+        "5-bromo-3-chloro-DL-kynurenine", 
+        "3-methyl-DL-kynurenine", 
+        "O-benzoyl-L-serine", 
+        "5-chloro-L-kynurenine", 
+        "2-fluorobenzoyl-DL-alanine", 
+        "5-bromo-L-kynurenine", 
+        "2-amino-4-(2-methoxyphenyl)-4-oxobutanoic acid", 
+        "2-amino-4-(2-chlorophenyl)-4-oxobutanoic acid", 
+        "3-fluoro-DL-kynurenine", 
+        "2-amino-4-(4-methoxyphenyl)-4-oxobutanoic acid", 
+        "3-bromo-L-kynurenine"
+    ], 
+    "SPR": [
+        "2,3-dimethoxynaphthalene-1,4-dione"
+    ], 
+    "ITCOAL1m": [], 
+    "SLDx": [], 
+    "OPAH": [], 
+    "PHYHx": [], 
+    "P5CR": [
+        "3,4-dehydro-L-proline"
+    ], 
+    "SPRMS": [], 
+    "CAT2p": [], 
+    "PETHCT": [], 
+    "GULNDer": [
+        "Hexanal", 
+        "2-butanol", 
+        "p-nitrobenzaldehyde", 
+        "4-Pyridinecarboxaldehyde", 
+        "pentanal", 
+        "(R)-1-phenyl-2-propanol", 
+        "4-Cyanobenzaldehyde", 
+        "Hexanol", 
+        "(S)-1-phenyl-2-propanol", 
+        "phenylethanediol", 
+        "1,5-pentanediol", 
+        "4-carboxybenzaldehyde", 
+        "(+)-Camphorquinone", 
+        "3-methyl-1,5-pentanediol", 
+        "4-Nitrobenzaldehyde"
+    ], 
+    "GTHOr": [
+        "trimethyl-1,4-benzoquinone", 
+        "diallyl trisulfide", 
+        "quinoline-5,8-dione", 
+        "6-methylquinoline-5,8-dione", 
+        "5,8-Dihydroxy-1,4-naphthoquinone", 
+        "7-methylquinoline-5,8-dione", 
+        "2,6-dimethyl-1,4-benzoquinone", 
+        "more", 
+        "1,4-dihydroxy-9,10-anthraquinone", 
+        "2,5-bis(aziridin-1-yl)cyclohexa-2,5-diene-1,4-dione", 
+        "quinoxaline-5,8-dione", 
+        "tetramethyl-1,4-benzoquinone", 
+        "5,5'-dithiobis(2-nitrobenzoic acid)", 
+        "6,7-dimethylquinoline-5,8-dione"
+    ], 
+    "GCPNn": [], 
+    "NTD1m": [], 
+    "G6PDH2er": [
+        "thio-NAD+", 
+        "deamino-NADP+", 
+        "thio-NADP+", 
+        "2-deoxyglucose 6-phosphate"
+    ], 
+    "HAtly": [], 
+    "TRIODTHYSULT": [
+        "daidzein 7-sulfate", 
+        "5-hydroxyindole", 
+        "daidzein 4'-sulfate", 
+        "genistein", 
+        "more"
+    ], 
+    "NACASPAH": [
+        "N-trifluoroacetylaspartic acid"
+    ], 
+    "NADPN": [], 
+    "ASPTA": [
+        "more"
+    ], 
+    "PRO1xm": [], 
+    "GBA_cho": [
+        "4-O-beta-D-galactopyranosyl-D-glucopyranoside", 
+        "genistein-7-glucoside", 
+        "quercetin-4'-glucoside", 
+        "C6-7-nitro-2,1,3-benzoxadiazole-glucosylceramide"
+    ], 
+    "LACZly": [
+        "o-nitrophenyl-beta-D-galactoside", 
+        "3,4-dinitrophenyl beta-D-galactopyranoside", 
+        "phenyl-beta-D-galactoside", 
+        "4-nitrophenyl-alpha-L-arabinopyranoside", 
+        "2-nitrophenyl-beta-D-fucopyranoside", 
+        "2-nitrophenyl-beta-D-galactopyranoside", 
+        "o-nitrophenyl beta-D-galactopyranoside", 
+        "2-nitrophenyl beta-D-galactopyranoside", 
+        "4-methylumbelliferyl beta-D-galactoside", 
+        "p-nitrophenyl-alpha-L-arabinoside", 
+        "more"
+    ], 
+    "r0113": [], 
+    "XYLTD_D": [
+        "D-ribulose", 
+        "ribitol", 
+        "D-fructose", 
+        "xylitol"
+    ], 
+    "UGT1A7r": [], 
+    "LEUTA": [], 
+    "NADPNe": [], 
+    "PUNP5": [], 
+    "SBPP1": [
+        "1-myristoyl-sn-glycerol 3-phosphate"
+    ], 
+    "PUNP3": [], 
+    "G3PD1ir": [], 
+    "FTCD": [], 
+    "RE1860E": [
+        "cyclic 2',3'-AMP", 
+        "diphosphate"
+    ], 
+    "TMABADH": [], 
+    "r0596": [
+        "more"
+    ], 
+    "r0598": [], 
+    "MTHFCm": [
+        "methenyltetrahydrofolate"
+    ], 
+    "DHPM2": [
+        "D-5-isopropylhydantoin", 
+        "DL-5-(p-hydroxyphenyl)hydantoin", 
+        "D-5-propylhydantoin", 
+        "D-5-butylhydantoin", 
+        "D-5-methylthioethylhydantoin", 
+        "D-5-methylhydantoin", 
+        "L-5-methylthioethylhydantoin", 
+        "DL-5-methyldihydrouracil", 
+        "D-5-benzylhydantoin", 
+        "DL-hydroxyphenylhydantoin", 
+        "D-5-isobutylhydantoin", 
+        "D-5-methyl-thio-ethylhydantoin"
+    ], 
+    "G12MT1_cho": []
+}

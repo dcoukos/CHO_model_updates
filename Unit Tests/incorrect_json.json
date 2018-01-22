@@ -1,0 +1,40 @@
+{
+    "CSND": {
+        "D00323": "5-fluorocytosine", 
+        "C00380": "cytosine", 
+        "C00791": "creatinine"
+    }, 
+    "LEUTAm": {}, 
+    "DHPM1": {
+        "C00148": "DL-p-hydroxyphenylhydantoin", 
+        "C00906": "Hydrothymine", 
+        "C05146": "hydantoin", 
+        "C00429": "hydrouracil", 
+        "C14916": "L-5-ethylhydantoin", 
+        "D06272": "DL-6-methyldihydrouracil", 
+        "D-5-ethylhydantoin": "C14916"
+    }, 
+    "r0604": {}, 
+    "RE1538C": {
+        "C00612": "N1-acetylspermidine", 
+        "C00750": "spermine", 
+        "C02567": "N1-acetylspermine"
+    }, 
+    "NDP7g": {
+        "C00008": "ADP"
+    }, 
+    "GDRm": {
+        "D03774": "diethyl [2,5-bis(aziridin-1-yl)-3,6-dioxocyclohexa-1,4-diene-1,4-diyl]biscarbamate", 
+        "C03170": "trypanothione", 
+        "C02617": "1,4-Naphthoquinone", 
+        "C00127": "glutathione disulfide", 
+        "C16758": "(E)-ajoene", 
+        "C00005": "NADPH", 
+        "C16757": "(Z)-ajoene", 
+        "C00004": "NADH", 
+        "C05377": "2-methyl-1,4-naphthoquinone", 
+        "C10312": "1,8-dihydroxy-9,10-anthraquinone", 
+        "C03840": "5-hydroxy-1,4-naphthoquinone", 
+        "9,10-phenanthrene quinone": "C03243"
+    }
+}
