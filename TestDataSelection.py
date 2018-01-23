@@ -27,7 +27,6 @@ class MatchById(unittest.TestCase):
             This function, based on DataTreatment.storeBiGGRepresentation is for 
             testing purposes, and allows to load a made up model.
         '''
-        #path = 'Unit Tests/simple_test_model.json'
         made_up_model = cobra.io.load_json_model(path)
         local_repr = {}
         for reaction in made_up_model.reactions:
@@ -52,33 +51,16 @@ class MatchById(unittest.TestCase):
     simple_test_model['CSND'].with_kegg['C00380'] = 'cyt' #reactant, forward
     simple_test_model['CSND'].with_kegg['D00323'] = '5-fluorocyt'# product, backward
     simple_test_model['DHPM1'].with_kegg['C00148'] = 'DL-p'  #product, backward  
-    #simple_test_model['CSND']
     correct_potential_updates = {}
     for reaction in potential_updates_dict:
         correct_potential_updates.update({reaction:Enzyme(reaction)})
-        if correct_potential_updates[reaction]:
-            print('Added reaction to correct_potential_updates : ' + reaction)
-        #the metabolite read here is the metabolite name in cobra, not the 
-        #metabolite id.
         if reaction in brenda_keggs:
             for kegg in brenda_keggs[reaction]: 
                 brenda_name = brenda_keggs[reaction][kegg]                
-                #BUG: something funky is going on below. 'CSND' 's metabolites are 
-                #not being run through
-                print('Checking conditions')
-                print('For kegg in reaction, following conditions met:')
                 if kegg in simple_test_model[reaction].with_kegg:
-                    print('\t* kegg in biggmodel['+reaction+'].with_kegg')
-                    '''simple_test_model[reaction].with_kegg[kegg] is added above. 
-                        The problem must lie in adding reactions to the .forward or .backward 
-                        collection'''
-                    print('kegg: '+kegg)
                     if simple_test_model[reaction].with_kegg[kegg] in\
                     simple_test_model[reaction].forward: 
-                        print('\t* bigg name for reactant in bigg model['+reaction+'].forward')
                         if treated_brenda_output[reaction][brenda_keggs[reaction][kegg]]!=[]:
-                            #TODO: Should this be searched by BRENDA Name
-                            print('\t* brenda_output for this reactant is not null (searched by brenda name)')
                             name = simple_test_model[reaction].with_kegg[kegg]
                             correct_potential_updates[reaction].forward[name] = []
                             for entry in treated_brenda_output[reaction][brenda_name]:
@@ -93,12 +75,6 @@ class MatchById(unittest.TestCase):
                     elif simple_test_model[reaction].with_kegg[kegg] in\
                     simple_test_model[reaction].backward:
                         name = simple_test_model[reaction].with_kegg[kegg]
-                        print('\t* bigg name for '+name+' in bigg model['+reaction+'].backward')
-                        if treated_brenda_output[reaction][brenda_keggs[reaction][kegg]]!=[]:
-                            print('\t* brenda_output for '+brenda_keggs[reaction][kegg]+' is not null (searched by brenda name)')
-                    
-                    
-                    
                     correct_potential_updates[reaction].backward[name] = []                    
                     for entry in treated_brenda_output[reaction][brenda_name]:
                         data = {

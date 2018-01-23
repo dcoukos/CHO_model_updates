@@ -145,9 +145,7 @@ def matchById(potential_updates, brenda_keggs, treated_brenda_output,
         unmatched: dict of BRENDA metabolites that could not be matched by name.
     '''
     unmatched = {}
-    
-    
-#--------------------- NEW FUNCTION DEFINITION --------------------------'''
+       
     for bigg_ID in BIGG_MODEL:
         unmatched[bigg_ID] = []
         potential_updates[bigg_ID] = Enzyme(bigg_ID)
@@ -194,62 +192,6 @@ def matchById(potential_updates, brenda_keggs, treated_brenda_output,
                     unmatched[bigg_ID].append(brenda_keggs[bigg_ID][kegg])   
 
     return unmatched
-
-
-
-#---------------------------------------------------------------------------
-    
-    
-    
-    
-    
-''' -------------------- OLD FUNCTION DEFINITION: -------------------------
-    
-    for reaction in brenda_keggs:  #Checking for matches for each reaction.
-        unmatched[reaction] = []
-        if reaction not in potential_updates:
-            if treated_brenda_output[reaction]  == {}:
-                continue
-            else:
-                potential_updates[reaction] = Enzyme(reaction, getEcNumber(
-                    treated_brenda_output[reaction]))
-        for ID, name in brenda_keggs[reaction].items():
-            if treated_brenda_output[reaction][name] == []:
-                continue
-            #TODO: figure out what continue does because it does not exit this loop...
-            else:
-                try:
-                    bigg_name = BIGG_MODEL[reaction].with_kegg[ID] # = checked.
-                    if bigg_name in BIGG_MODEL[reaction].forward:
-                        data = getData(treated_brenda_output[reaction], name,
-                                       data_type)
-                        if bigg_name not in potential_updates[reaction].forward:
-                            potential_updates[reaction].forward[bigg_name] = []
-                        for entry in data:
-                            potential_updates[reaction].forward[
-                                bigg_name].append(MetaboliteCandidate(
-                                    bigg_name, kegg=ID,data=entry))
-                    elif bigg_name in BIGG_MODEL[reaction].backward:
-                        data = getData(treated_brenda_output[reaction], name,
-                                       data_type)
-                        if bigg_name not in potential_updates[
-                            reaction].backward:
-                            potential_updates[reaction].backward[
-                                bigg_name] = []
-                        for entry in data:
-                            potential_updates[reaction].backward[
-                                bigg_name].append(MetaboliteCandidate(
-                                    bigg_name, kegg=ID,data=entry))
-                    else:
-                        raise DataMissingError()
-
-                except KeyError:
-                    unmatched[reaction].append(name)
-                    #raise
-                except DataMissingError:
-                    print('Metabolite ' + name + ' not added correctly to BIGG_MODEL.')
-    return unmatched
-----------------------------------------------------------------------------'''
 
 def matchByName(potential_updates, unmatched, treated_brenda_output,
                 data_type):
