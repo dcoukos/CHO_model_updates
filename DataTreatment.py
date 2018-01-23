@@ -714,6 +714,8 @@ def loadGlobalBigg():
 
 def downloadModelKeggs():
     #TODO: how to check this method? 
+    #TODO: Make sure that this is loading the CHO model from the xml, and not 
+        # the general bigg database!
     '''Downloads kegg IDs of metabolites in BiGG model.
 
     This function is responsible for calling addKeggToMetabolites, which will

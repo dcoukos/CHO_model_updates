@@ -52,6 +52,7 @@ class MatchById(unittest.TestCase):
     simple_test_model['CSND'].with_kegg['C00380'] = 'cyt' #reactant, forward
     simple_test_model['CSND'].with_kegg['D00323'] = '5-fluorocyt'# product, backward
     simple_test_model['DHPM1'].with_kegg['C00148'] = 'DL-p'  #product, backward  
+    #simple_test_model['CSND']
     correct_potential_updates = {}
     for reaction in potential_updates_dict:
         correct_potential_updates.update({reaction:Enzyme(reaction)})
@@ -111,7 +112,7 @@ class MatchById(unittest.TestCase):
     correct_unmatched = openJson('Unit Tests/correct_unmatched.json')
    
    
-    def test_matchByName_potential_updates(self):
+    def test_matchById_potential_updates(self):
         '''matchByName should match BiGG metabolites with BRENDA metabolites 
         given a file containing their respective KEGG Ids.
         '''
@@ -134,7 +135,7 @@ class MatchById(unittest.TestCase):
                              correct_potential_updates_as_dict,
                              msg='Potential updates incorrect.')
    
-    def test_matchByName_unmatched(self):
+    def test_matchById_unmatched(self):
         '''Tests that the unmatched dict returns correctly. '''
         potential_updates = {}
         unmatched = matchById(potential_updates, 
@@ -147,8 +148,10 @@ class MatchById(unittest.TestCase):
         #unmatched only needs to return the BRENDA names of the unmatched 
         #metabolites. matchByName will look for the data. (Maintains code 
         #similarity.)
-        self.assertDictEqual(MatchById.correct_unmatched, unmatched, msg='Unmatched '
-                            'return incorrect.')
+        for reaction in MatchById.correct_unmatched:
+            self.assertListEqual(sorted(MatchById.correct_unmatched[reaction]),
+                                 sorted(unmatched[reaction]), msg='Unmatched '
+                                 'return incorrect.')
        
        
 if __name__ == '__main__':
