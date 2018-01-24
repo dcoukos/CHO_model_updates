@@ -114,10 +114,14 @@ def eliminateUnmatchable(potential_updates, treated_brenda_output,
     
     unmatched = matchById(potential_updates, brenda_keggs,
                           treated_brenda_output, DataType.turnover, BIGG_MODEL)
+    
+    '''
+    We will not match by name, as the risk of unwanted matches between related, 
+    but distinct metabolites is too high. The match by name function is untested.
     matchByName(potential_updates, unmatched, treated_brenda_output,
                 DataType.turnover)
     matchByName(potential_updates, brenda_no_kegg, treated_brenda_output,
-                DataType.turnover)
+                DataType.turnover)'''
 
     return potential_updates
 
@@ -159,33 +163,32 @@ def matchById(potential_updates, brenda_keggs, treated_brenda_output,
                         name = brenda_keggs[bigg_ID][kegg]
                         bigg_name = BIGG_MODEL[bigg_ID].with_kegg[kegg]
                         potential_updates[bigg_ID].forward[bigg_name] = []
-                        for entry in treated_brenda_output[bigg_ID][
-                        brenda_keggs[bigg_ID][kegg]]:
-                            
-                            data = getData(treated_brenda_output[bigg_ID], 
+                        data = getData(treated_brenda_output[bigg_ID], 
                                        name, data_type)
+                        for index, entry in enumerate(treated_brenda_output[bigg_ID][
+                        brenda_keggs[bigg_ID][kegg]]):
                             potential_updates[bigg_ID].forward[
                                 bigg_name].append(
                                 MetaboliteCandidate(
                                         brenda_keggs[bigg_ID][kegg],
                                         kegg=kegg,
-                                        kwargs = data))
+                                        **data[index]))
                     elif BIGG_MODEL[bigg_ID].with_kegg[kegg] in BIGG_MODEL[
                     bigg_ID].backward and treated_brenda_output[bigg_ID][
                     brenda_keggs[bigg_ID][kegg]] != []:
                         name = brenda_keggs[bigg_ID][kegg]
                         bigg_name = BIGG_MODEL[bigg_ID].with_kegg[kegg]
                         potential_updates[bigg_ID].backward[bigg_name] = []
-                        for entry in treated_brenda_output[bigg_ID][
-                        brenda_keggs[bigg_ID][kegg]]:
-                            data = getData(treated_brenda_output[bigg_ID], 
+                        data = getData(treated_brenda_output[bigg_ID], 
                                        name, data_type)
+                        for index,entry in enumerate(treated_brenda_output[bigg_ID][
+                        brenda_keggs[bigg_ID][kegg]]):
                             potential_updates[bigg_ID].backward[
                                 bigg_name].append(
                                 MetaboliteCandidate(
                                         brenda_keggs[bigg_ID][kegg],
                                         kegg=kegg,
-                                        kwargs = data))
+                                        **data[index]))
                     elif treated_brenda_output[bigg_ID][brenda_keggs[bigg_ID][kegg]] != []:
                         unmatched[bigg_ID].append(brenda_keggs[bigg_ID][kegg])
                 elif treated_brenda_output[bigg_ID][brenda_keggs[bigg_ID][kegg]] != []:
@@ -249,47 +252,58 @@ def selectBestData(model_updates, data_type):
 
     '''
     #first the data must be filtered by organism.
-
     filtered_by_organism = {}
     for reaction in model_updates:
+        #checked
         filtered_by_organism[reaction] = model_updates[
                 reaction].copyOnlyEnzyme()
+        #try: 
         for metabolite_name in model_updates[reaction].forward:
+            print(metabolite_name)
             filtered_by_organism[reaction].forward[metabolite_name] = []
-            closest_organism, indices = findClosestOrganism(model_updates[
+            (closest_organism, indices) = findClosestOrganism(model_updates[
                 reaction].forward[metabolite_name])
             best_found = False
             for organism in Organism:
-                while not best_found:
+                if best_found == False and closest_organism is not None:
                     for index in indices[organism]:
                         filtered_by_organism[reaction].forward[
-                            metabolite_name].append(indices[
-                                closest_organism][index])
+                            metabolite_name].append(model_updates[
+                            reaction].forward[metabolite_name][index])
+                        print(model_updates[
+                            reaction].forward[metabolite_name][index].turnover)
                         if organism is closest_organism:
                             best_found = True
-
+       # except TypeError:
+       #     pass
         #SAME as above but for reverse reaction
-        for metabolite_name in model_updates[reaction].backward:
-            filtered_by_organism[reaction].backward[metabolite_name] = []
-            closest_organism, indices = findClosestOrganism(model_updates[
-                reaction].backward[metabolite_name])
-            best_found = False
-            for organism in Organism:
-                while not best_found:
-                    for index in indices[organism]:
-                        filtered_by_organism[reaction].backward[
-                            metabolite_name].append(indices[
-                                closest_organism][index])
-                        if organism is closest_organism:
-                            best_found = True
-
+        
+        try:
+            for metabolite_name in model_updates[reaction].backward:
+                print(metabolite_name)
+                filtered_by_organism[reaction].backward[metabolite_name] = []
+                closest_organism, indices = findClosestOrganism(model_updates[
+                    reaction].backward[metabolite_name])
+                best_found = False
+                for organism in Organism:
+                    if best_found == False and closest_organism is not None: 
+                        for index in indices[organism]:
+                            filtered_by_organism[reaction].backward[
+                                metabolite_name].append(model_updates[
+                                reaction].backward[metabolite_name][index])
+                            if organism is closest_organism:
+                                best_found = True
+        except TypeError:
+            pass
+        
     filtered_by_wild_type = {}
     for reaction in filtered_by_organism:
         filtered_by_wild_type[reaction] = filtered_by_organism[
                 reaction].copyOnlyEnzyme()
+       # try:
         for metabolite_name in filtered_by_organism[reaction].forward:
             wild_type = []
-            for entry in model_updates[reaction].forward[metabolite_name]:
+            for entry in filtered_by_organism[reaction].forward[metabolite_name]:
                 if entry.wild_type is not None:
                     wild_type.append(entry)
             if wild_type != []:
@@ -300,50 +314,60 @@ def selectBestData(model_updates, data_type):
                     metabolite_name] = copy.copy(filtered_by_organism
                                                  [reaction].forward[
                                                      metabolite_name])
-
+        #except TypeError:
+         #   pass
         #SAME as above but for reverse reactions
-        for metabolite_name in filtered_by_organism[reaction].backward:
-            wild_type = []
-            for entry in model_updates[reaction].backward[metabolite_name]:
-                if entry.wild_type is not None:
-                    wild_type.append(entry)
-            if wild_type != []:
-                filtered_by_wild_type[reaction].backward[metabolite_name] = \
-                wild_type
-            else:
-                filtered_by_wild_type[reaction].backward[
-                    metabolite_name] = copy.copy(filtered_by_organism
-                                                 [reaction].backward[
-                                                     metabolite_name])
-
+        try:
+            for metabolite_name in filtered_by_organism[reaction].backward:
+                wild_type = []
+                for entry in filtered_by_organism[reaction].backward[metabolite_name]:
+                    if entry.wild_type is not None:
+                        wild_type.append(entry)
+                if wild_type != []:
+                    filtered_by_wild_type[reaction].backward[metabolite_name]=\
+                    wild_type
+                else:
+                    filtered_by_wild_type[reaction].backward[
+                        metabolite_name] = copy.copy(filtered_by_organism
+                                                     [reaction].backward[
+                                                         metabolite_name])
+        except TypeError:
+            pass
+        
     #-----Choose data according to magnitude preference.-----------------
     #work on filtered_by_wild_type)
 
     if data_type is DataType.turnover:
         for reaction in filtered_by_wild_type:
-            for metabolite in filtered_by_wild_type[reaction].forward:
+            if filtered_by_wild_type[reaction].forward != {}:
                 model_updates[reaction].forward = chooseHighestTurnover(
-                    filtered_by_wild_type[reaction].forward[metabolite])
-            for metabolite in filtered_by_wild_type[reaction].backward:
+                    filtered_by_wild_type[reaction].forward)
+            if filtered_by_wild_type[reaction].backward != {}:
                 model_updates[reaction].backward = chooseHighestTurnover(
-                    filtered_by_wild_type[reaction].backward[metabolite])
-
+                    filtered_by_wild_type[reaction].backward)
+                
 def chooseHighestTurnover(metabolite_entries):
     '''Selects entry with highest turnover
 
     Args:
-        metabolite_entries: list of selected entries for a metabolite.
+        metabolite_entries: dict of selected entries for a reaction direction.
 
     Returns:
         entry with the highest turnover
     '''
     highest_index = 0
     highest_turnover = 0
-    for index, entry in enumerate(metabolite_entries):
-        if entry.turnover > highest_turnover:
-            highest_index = index
-
-    return metabolite_entries[highest_index]
+    highest_metabolite = ''
+    for metabolite in metabolite_entries:
+        for index, entry in enumerate(metabolite_entries[metabolite]):
+            if float(entry.turnover) > highest_turnover:
+                highest_index = index
+                highest_turnover = float(entry.turnover)
+                highest_metabolite = metabolite
+                
+    if highest_metabolite == '':
+        return None
+    return metabolite_entries[highest_metabolite][highest_index]
 
 def findClosestOrganism(metabolite_entries):
     '''finds which organism closest to hamster is in list of MetaboliteCandidate
@@ -370,7 +394,6 @@ def findClosestOrganism(metabolite_entries):
         Organism.fly: [],
         Organism.yeast: [],
         Organism.coli: []}
-
     for index, metabolite in enumerate(metabolite_entries):
         if metabolite.organism == 'Cricetulus griseus':
             indices[Organism.hamster].append(index)
@@ -394,22 +417,23 @@ def findClosestOrganism(metabolite_entries):
             has_coli = True
             indices[Organism.coli].append(index)
 
+
     if has_hamster:
-        return Organism.hamster, indices
+        return (Organism.hamster, indices)
     elif has_mouse:
-        return Organism.mouse, indices
+        return (Organism.mouse, indices)
     elif has_rat:
-        return Organism.rat, indices
+        return (Organism.rat, indices)
     elif has_human:
-        return Organism.human, indices
+        return (Organism.human, indices)
     elif has_fly:
-        return Organism.fly, indices
+        return (Organism.fly, indices)
     elif has_yeast:
-        return Organism.yeast, indices
+        return (Organism.yeast, indices)
     elif has_coli:
-        return Organism.coli, indices
-    else:
-        return None
+        return (Organism.coli, indices)
+    
+    return None, None
 
 def brendaToKegg(data):
     '''Tries to match BRENDA metabolite names to KEGG ids.
@@ -734,6 +758,7 @@ class DataType(Enum):
     specific_activity = auto()
     molecular_weight = auto()
 
+
 class Organism(Enum):
     hamster = auto()
     mouse = auto()
@@ -765,6 +790,8 @@ class Enzyme():
                 except:
                     raise NotNumericError
             self.EC = ec
+        else:
+            self.EC = None
         self.forward = {}
         self.backward = {}
         self.with_kegg = {}
@@ -774,7 +801,10 @@ class Enzyme():
         self.has_b_wild_type = None
 
     def copyOnlyEnzyme(self):
-        enz = Enzyme(self.bigg, self.EC)
+        if self.EC:
+            enz = Enzyme(self.bigg, self.EC)
+        else:
+            enz = Enzyme(self.bigg)
         return enz
 
     def chooseHighestTurnovers(self):
@@ -786,25 +816,10 @@ class Enzyme():
         Note: The data must already be narrowed down to one entry per
             metabolite. Otherwise, this function will break
         '''
-
-        highest_forward_turnover = 0
-        highest_backward_turnover = 0
-        try:
-            for metabolite in self.forward:
-                if self.forward[metabolite].turnover > \
-                    highest_forward_turnover:
-                    self.forward[metabolite].turnover = \
-                    highest_forward_turnover
-            for metabolite in self.backward:
-                if self.backward[metabolite].turnover > \
-                    highest_forward_turnover:
-                    self.backward[metabolite].turnover = \
-                    highest_forward_turnover
-            self.forward_turnover = highest_forward_turnover
-            self.backward_turnover = highest_backward_turnover
-        except DataNotRefinedError:
-            raise
-
+        if self.forward is not None:
+            self.forward_turnover = self.forward.turnover
+        if self.backward is not None:
+            self.backward_turnover = self.backward.turnover
 
     def getDict(self):
         '''
@@ -812,21 +827,68 @@ class Enzyme():
             testing for equality, as well as writing to a JSON format. 
         '''
         return_dict = {}
-        for metabolite in self.forward:
-            return_dict[metabolite] = []
-            for entry in self.forward[metabolite]:
-                met_representation = {}
-                met_representation['name'] = entry.name
-                met_representation['bigg'] = entry.bigg
-                met_representation['kegg'] = entry.kegg
-                met_representation['turnover'] = entry.turnover
-                met_representation['specific activity'] = entry.specific_activity
-                met_representation['molecular weight'] = entry.molecular_weight
-                met_representation['organism'] = entry.organism
-                met_representation['wild-type'] = entry.wild_type
+        try:
+            for metabolite in self.forward:
+                return_dict[metabolite] = []
+                for entry in self.forward[metabolite]:
+                    met_representation = {}
+                    met_representation['name'] = entry.name
+                    met_representation['bigg'] = entry.bigg
+                    met_representation['kegg'] = entry.kegg
+                    met_representation['turnover'] = entry.turnover
+                    met_representation['specific activity'] = entry.specific_activity
+                    met_representation['molecular weight'] = entry.molecular_weight
+                    met_representation['organism'] = entry.organism
+                    met_representation['wild-type'] = entry.wild_type
+        except TypeError:
+            pass
+        try:
+            for metabolite in self.backward:
+                return_dict[metabolite] = []
+                for entry in self.backward[metabolite]:
+                    met_representation = {}
+                    met_representation['name'] = entry.name
+                    met_representation['bigg'] = entry.bigg
+                    met_representation['kegg'] = entry.kegg
+                    met_representation['turnover'] = entry.turnover
+                    met_representation['specific activity'] = entry.specific_activity
+                    met_representation['molecular weight'] = entry.molecular_weight
+                    met_representation['organism'] = entry.organism
+                    met_representation['wild-type'] = entry.wild_type
+        except TypeError:
+            pass
         return return_dict
 
-
+    def getSimpleDict(self):
+        '''Function only meant for testing purposes, to be compared against 
+        JSON files.'''
+        return_dict = {}
+        try:
+            return_dict[self.forward.name] = {
+                'name': self.forward.name,
+                'bigg': self.forward.bigg,
+                'kegg': self.forward.kegg,
+                'turnover': self.forward.turnover,
+                'specific activity': self.forward.specific_activity,
+                'molecular weight': self.forward.molecular_weight,
+                'organism': self.forward.organism
+                }
+        except:
+            pass
+        try:
+            return_dict[self.backward.name] = {
+                'name': self.backward.name,
+                'bigg': self.backward.bigg,
+                'kegg': self.backward.kegg,
+                'turnover': self.backward.turnover,
+                'specific activity': self.backward.specific_activity,
+                'molecular weight': self.backward.molecular_weight,
+                'organism': self.backward.organism
+                }
+        except:
+            pass
+        return return_dict
+    
 class Metabolite():
     '''Class containing all information of interest pertaining to a metabolite.
 
@@ -841,7 +903,7 @@ class Metabolite():
         molecular_weight: molecular weight
     '''
 
-    def __init__(self, name, bigg=None, kegg=None, **kwdata):
+    def __init__(self, name, bigg=None, kegg=None, **kwargs):
         '''TODO: Some info on this constructor'''
         self.turnover = None
         self.molecular_weight = None
@@ -855,10 +917,10 @@ class Metabolite():
             self.kegg = None
         else:
             self.kegg = kegg
-        if kwdata is not None:
-            for identifier, data in kwdata.items():
+        if kwargs is not None:
+            for identifier, data in kwargs.items():
                 if identifier == 'turnover':
-                    self.turn = data
+                    self.turnover = data
                 if identifier == 'specific activity':
                     self.specific_activity = data
                 if identifier == 'molecular weight':
@@ -880,12 +942,12 @@ class MetaboliteCandidate(Metabolite):
         molecule tested was wild-type or not
     '''
 
-    def __init__(self, name, bigg=None, kegg=None, **kwdata):
+    def __init__(self, name, bigg=None, kegg=None, **kwargs):
         self.organism = None
         self.wild_type = None
-        super().__init__(name, bigg, kegg, **kwdata)
-        if kwdata is not None:
-            for identifier, value in kwdata.items():
+        super().__init__(name, bigg, kegg, **kwargs)
+        if kwargs is not None:
+            for identifier, value in kwargs.items():
                 if identifier == 'organism':
                     self.organism = value
                 if identifier == 'wild-type':

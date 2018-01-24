@@ -1,0 +1,1301 @@
+{    "DHFR": {
+        "dihydrofolate": [
+            {
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "18.4", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Streptococcus pneumoniae", 
+                "turnoverNumber": "31.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "51", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Moritella yayanosii", 
+                "turnoverNumber": "83.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Shewanella violacea", 
+                "turnoverNumber": "90", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Moritella japonica", 
+                "turnoverNumber": "144", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Photobacterium profundum", 
+                "turnoverNumber": "156", 
+                "ecNumber": "1.5.1.3"
+            }
+        ], 
+        "7,8-dihydrofolate": [
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "0.2", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "0.22", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mus musculus", 
+                "turnoverNumber": "0.243", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "0.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "0.37", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "0.38", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "0.49", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "0.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Cricetulus griseus", 
+                "turnoverNumber": "0.65", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "0.65", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "0.69", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium avium", 
+                "turnoverNumber": "0.86", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "0.89", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Glycine max", 
+                "turnoverNumber": "0.95", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "0.98", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "1", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "1.1", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "1.15", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "1.23", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "1.24", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "1.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "1.31", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "1.39", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "1.42", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "1.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium avium", 
+                "turnoverNumber": "1.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "1.59", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium tuberculosis", 
+                "turnoverNumber": "1.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "1.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "1.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "1.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Bacillus anthracis", 
+                "turnoverNumber": "1.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "1.78", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "1.9", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "1.9", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "2", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "2", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium tuberculosis", 
+                "turnoverNumber": "2.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "2.41", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "2.43", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "2.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Pneumocystis carinii", 
+                "turnoverNumber": "3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Lactobacillus casei", 
+                "turnoverNumber": "3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "3.05", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Trypanosoma brucei", 
+                "turnoverNumber": "3.11", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Haloferax volcanii", 
+                "turnoverNumber": "3.14", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "3.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium avium", 
+                "turnoverNumber": "3.58", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Trypanosoma brucei", 
+                "turnoverNumber": "3.75", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "3.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Lactobacillus casei", 
+                "turnoverNumber": "4", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "4.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Trypanosoma brucei", 
+                "turnoverNumber": "4.54", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "4.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Mus musculus", 
+                "turnoverNumber": "4.67", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "4.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Bacillus anthracis", 
+                "turnoverNumber": "4.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "4.9", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Haloferax volcanii", 
+                "turnoverNumber": "4.97", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Gallus gallus", 
+                "turnoverNumber": "5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Trypanosoma brucei", 
+                "turnoverNumber": "5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium avium", 
+                "turnoverNumber": "5.03", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "5.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "5.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "5.4", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "5.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "5.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Moritella profunda", 
+                "turnoverNumber": "5.9", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "6.4", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Human herpesvirus 8", 
+                "turnoverNumber": "7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium avium", 
+                "turnoverNumber": "7.2", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Leishmania major", 
+                "turnoverNumber": "7.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Moritella profunda", 
+                "turnoverNumber": "8.2", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "8.33", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "8.63", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Bacillus anthracis", 
+                "turnoverNumber": "9.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "9.4", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Haloferax volcanii", 
+                "turnoverNumber": "9.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "10", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "10", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Moritella profunda", 
+                "turnoverNumber": "10.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "11.4", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "11.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "12", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "12.4", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "12.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "13", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Sus scrofa", 
+                "turnoverNumber": "13.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "13.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "13.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "14", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Moritella profunda", 
+                "turnoverNumber": "14.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Enterococcus faecium", 
+                "turnoverNumber": "15", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "15.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "15.9", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "16.2", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium avium", 
+                "turnoverNumber": "16.2", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "16.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "16.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "16.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "18", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "18.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium avium", 
+                "turnoverNumber": "18.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Moritella profunda", 
+                "turnoverNumber": "18.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "18.9", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Mycobacterium avium", 
+                "turnoverNumber": "20.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "21", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium avium", 
+                "turnoverNumber": "21", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "22.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "23", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "23.1", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "24", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "24", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "24.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "24.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "24.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "24.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "25.2", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Moritella profunda", 
+                "turnoverNumber": "25.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "25.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "26.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "27", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "28.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Moritella profunda", 
+                "turnoverNumber": "28.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Leishmania major", 
+                "turnoverNumber": "29", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "30.4", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "31.9", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Moritella profunda", 
+                "turnoverNumber": "32.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "34.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "35", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "36", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "36.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "37", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "38.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Moritella profunda", 
+                "turnoverNumber": "39.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "40", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "40.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "40.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "40.8", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "41.1", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "41.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "43", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "43.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "45.5", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "47", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "48", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "52.7", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Pneumocystis jirovecii", 
+                "turnoverNumber": "53", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "72", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "88", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "89", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "92", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "96.3", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Enterococcus faecium", 
+                "turnoverNumber": "100", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Haloferax volcanii", 
+                "turnoverNumber": "100", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "104.6", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Pneumocystis carinii", 
+                "turnoverNumber": "108", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Stenotrophomonas maltophilia", 
+                "turnoverNumber": "123", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Enterococcus faecium", 
+                "turnoverNumber": "133", 
+                "ecNumber": "1.5.1.3"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Pneumocystis carinii", 
+                "turnoverNumber": "284", 
+                "ecNumber": "1.5.1.3"
+            }
+        ]
+        },
+	"NDP8": {
+        "dTTP": [
+            {
+                "organism": "Leishmania major", 
+                "turnoverNumber": "8.6", 
+                "ecNumber": "3.6.1.23"
+            }
+        ],
+        "dUTP": [
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "0.007", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium tuberculosis", 
+                "turnoverNumber": "0.024", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Human herpesvirus 4", 
+                "turnoverNumber": "0.04", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Human herpesvirus 4", 
+                "turnoverNumber": "0.06", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Human herpesvirus 4", 
+                "turnoverNumber": "0.18", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "0.32", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium tuberculosis", 
+                "turnoverNumber": "0.88", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Mycobacterium tuberculosis", 
+                "turnoverNumber": "1.2", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Human herpesvirus 4", 
+                "turnoverNumber": "1.2", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Mycobacterium tuberculosis", 
+                "turnoverNumber": "1.22", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "1.3", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Human herpesvirus 4", 
+                "turnoverNumber": "1.4", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Human herpesvirus 4", 
+                "turnoverNumber": "1.6", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Human herpesvirus 4", 
+                "turnoverNumber": "1.7", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Trypanosoma cruzi", 
+                "turnoverNumber": "2.8", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Human herpesvirus 4", 
+                "turnoverNumber": "3.3", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "3.3", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "3.4", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Mycobacterium tuberculosis", 
+                "turnoverNumber": "3.7", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "4.5", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Human herpesvirus 1", 
+                "turnoverNumber": "5", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "5.8", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "5.8", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "6", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "6.3", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "6.58", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Paramecium bursaria Chlorella virus 1", 
+                "turnoverNumber": "6.8", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "6.8", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "7.4", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "8", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Homo sapiens", 
+                "turnoverNumber": "9.17", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Saccharomyces cerevisiae", 
+                "turnoverNumber": "9.6", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Trypanosoma brucei", 
+                "turnoverNumber": "9.7", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "11", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "11.33", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "11.67", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": true, 
+                "organism": "Drosophila melanogaster", 
+                "turnoverNumber": "12", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Plasmodium falciparum", 
+                "turnoverNumber": "12", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Campylobacter jejuni", 
+                "turnoverNumber": "12.3", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "14.7", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Bacillus phage SPbeta", 
+                "turnoverNumber": "18", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "24.2", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "equine infectious anemia virus", 
+                "turnoverNumber": "25", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "27.3", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "38.3", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Leishmania major", 
+                "turnoverNumber": "49", 
+                "ecNumber": "3.6.1.23"
+            }, 
+            {
+                "wild-type": false, 
+                "organism": "Escherichia coli", 
+                "turnoverNumber": "58.3", 
+                "ecNumber": "3.6.1.23"
+            }
+        ]
+}
+}

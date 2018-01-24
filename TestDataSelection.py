@@ -8,8 +8,10 @@ Created on Sat Jan 20 14:26:03 2018
 
 import unittest
 import cobra
+import json
 from DataTreatment import DataType, openJson, matchById, write,\
-    Enzyme, Metabolite, MetaboliteCandidate, writeEnzymes
+    Enzyme, Metabolite, MetaboliteCandidate, writeEnzymes, selectBestData,\
+    getData
 
 class MatchById(unittest.TestCase):
     '''Contains functions to test Match By Id
@@ -128,7 +130,85 @@ class MatchById(unittest.TestCase):
             self.assertListEqual(sorted(MatchById.correct_unmatched[reaction]),
                                  sorted(unmatched[reaction]), msg='Unmatched '
                                  'return incorrect.')
-       
+
+class SelectBestData(unittest.TestCase):
+    '''contains unit tests for selectBestData
+    
+    TODO: 
+    Organism:
+        * Write test with many options. 
+        * Write test with incorrect options. 
+        * Write test with one option.
+        * Write test with no options.
+    * Write test with wild type, and no wild type. 
+    * Write test with negative turnover etc... 
+    '''   
+    
+    def toEnzymeStructure_f(data_dict):
+        '''Converts dictionary structure to DataTreatment.Enzyme based 
+            structure to be able to test data selection functions.'''
+        organized_data = {}
+        for enzyme in data_dict:
+            organized_data[enzyme] = Enzyme(enzyme)
+            for metabolite in data_dict[enzyme]:
+                organized_data[enzyme].forward[metabolite] = []
+                data = getData(data_dict[enzyme], metabolite, 
+                               DataType.turnover)        
+                for index,entry in enumerate(data_dict[enzyme][metabolite]):
+                    organized_data[enzyme].forward[metabolite].append(
+                            MetaboliteCandidate(metabolite, **data[index]))
+        return organized_data
+    
+    def toEnzymeStructure_b(data_dict):
+        '''Converts dictionary structure to DataTreatment.Enzyme based 
+            structure to be able to test data selection functions.'''
+        organized_data = {}
+        for enzyme in data_dict:
+            organized_data[enzyme] = Enzyme(enzyme, '1.1.1.1')
+            for metabolite in data_dict[enzyme]:
+                organized_data[enzyme].backward[metabolite] = []
+                data = getData(data_dict[enzyme], metabolite, 
+                               DataType.turnover)
+                for index,entry in enumerate(data_dict[enzyme][metabolite]):
+                    organized_data[enzyme].backward[metabolite].append(
+                            MetaboliteCandidate(metabolite, **data[index]))
+        return organized_data
+    
+    def test_selectBestData_many_options(self):
+        self.maxDiff = None
+        correct_data_dict  = openJson('Unit Tests/selectData_many_organisms'
+                                      '_correct.json')
+        data = openJson('Unit Tests/selectData_many_organisms.json')
+        data_test_forward = SelectBestData.toEnzymeStructure_f(data)
+        data_test_backward = SelectBestData.toEnzymeStructure_b(data)
+        
+        selectBestData(data_test_forward, DataType.turnover)
+        selectBestData(data_test_backward, DataType.turnover)
+        data_test_forward_dict = {}
+        data_test_backward_dict = {}
+        for enzyme in data_test_forward:
+            enzyme_dict = data_test_forward[
+                    enzyme].getSimpleDict()
+            if enzyme_dict !={}:
+                data_test_forward_dict[enzyme] = enzyme_dict
+        for enzyme in data_test_backward:
+            enzyme_dict = data_test_backward[
+                    enzyme].getSimpleDict()
+            if enzyme_dict !={}:
+                data_test_backward_dict[enzyme] = enzyme_dict
+                
+        '''
+        one_is_equal = (correct_data_dict == data_test_forward_dict) or\
+            (correct_data_dict == data_test_backward_dict)
+        self.assertTrue(one_is_equal)
+        '''
+        with open('Unit Tests/test_data_selection_output.json', 'w') as outfile:
+            json.dump(data_test_forward_dict, outfile, indent=4)
+        with open('Unit Tests/test_data_selection_output_2.json', 'w') as outfile:
+            json.dump(data_test_backward_dict, outfile, indent=4)
+        self.assertDictEqual(correct_data_dict, data_test_forward_dict)
+        self.assertDictEqual(correct_data_dict, data_test_backward_dict)
+        
        
 if __name__ == '__main__':
     unittest.main()

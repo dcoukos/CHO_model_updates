@@ -1,6 +1,9 @@
 {
     "CSND": {
-        "cyt": []
+        "cyt": [],
+        "5-fluorocyt": []
     },
-    "DHPM1": {}
+    "DHPM1": {
+        "DL-p": []
+    }
 }

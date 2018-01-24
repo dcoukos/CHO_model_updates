@@ -1,0 +1,24 @@
+{
+    "DHFR": {
+        "dihydrofolate": {
+            "name": "dihydrofolate",
+            "bigg": null,
+            "kegg": null,
+            "turnover": "51",
+            "specific activity": null,
+            "molecular weight": null,
+            "organism": "Homo sapiens"
+        }
+    },
+    "NDP8": {
+        "dUTP": {
+            "name": "dUTP",
+            "bigg": null,
+            "kegg": null,
+            "turnover": "9.17",
+            "specific activity": null,
+            "molecular weight": null,
+            "organism": "Homo sapiens"
+        }
+    }
+}
