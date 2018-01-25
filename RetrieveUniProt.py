@@ -50,7 +50,7 @@ def returnBestAddress(gene_list, loop):
                 gene_dict['CGE'][index] = 'cge: ' + entry
             return gene_dict['CGE']
         elif 'MMU' in gene_dict:
-            for index, entry in enumerate(gene_dict['CGE']):
+            for index, entry in enumerate(gene_dict['MMU']):
                 gene_dict['MMU'][index] = 'mmu: ' + entry
             return gene_dict['MMU']
         elif 'RNO' in gene_dict:
@@ -151,43 +151,20 @@ def fillData(mol_weights, bigg_id, address, genes, loop):
 
 
 if __name__ == '__main__':
-    mol_weights = {}
-    brenda_parameters = openJson('JSONs/brenda_parameters.json')
-    for bigg_id in brenda_parameters:
-        # TODO: restructure area to feed loop arguments.
-        # TODO: implement dict data structure.
-        # TODO: implement control methods for incomplete data.
-        mol_weights[bigg_id] = {}
-        print('Currently processing BiGG id: ' + bigg_id)
-        try:
-            ec_number = brenda_parameters[bigg_id][0]
-            mol_weights[bigg_id]['ec_number'] = ec_number
-            print(ec_number)
-            text = REST.kegg_get('ec:' + ec_number).read()
+    try:
+        mol_weights = {}
+        brenda_parameters = openJson('JSONs/brenda_parameters.json')
+        for bigg_id in brenda_parameters:
+            # TODO: restructure area to feed loop arguments.
+            # TODO: implement dict data structure.
+            # TODO: implement control methods for incomplete data.
+            mol_weights[bigg_id] = {}
+            print('Currently processing BiGG id: ' + bigg_id)
             try:
-                start_index = text.index('GENES') + 5
-                end_index = text.index('DBLINKS')
-            except ValueError:
-                continue
-            gene_string = text[start_index: end_index]
-            genes = gene_string.split('\n')
-            for index, gene in enumerate(genes):
-                genes[index] = gene.strip()
-        # CHANGED: no need to select closest organism here. Done in
-        # returnBestAddress.
-        except HTTPError as err:
-            if err.code == 404:
-                print('Excepted: Error 1')
-                continue
-            else:
-                raise
-        except ValueError:
-            start_index = text.index('Now EC ')
-            print('New EC')
-            new_ec = text[start_index+6: start_index+20].split(',')[0]
-            mol_weights[bigg_id]['ec_number'] = new_ec
-            try:
-                text = REST.kegg_get('ec:' + new_ec).read()
+                ec_number = brenda_parameters[bigg_id][0]
+                mol_weights[bigg_id]['ec_number'] = ec_number
+                print(ec_number)
+                text = REST.kegg_get('ec:' + ec_number).read()
                 try:
                     start_index = text.index('GENES') + 5
                     end_index = text.index('DBLINKS')
@@ -197,26 +174,53 @@ if __name__ == '__main__':
                 genes = gene_string.split('\n')
                 for index, gene in enumerate(genes):
                     genes[index] = gene.strip()
-            except:
-                print(new_ec)
-                raise
-        loop = 'best'
-        searching = True
-        while searching:
-            try:
-                loopHandler(mol_weights, bigg_id, genes, loop)
-                searching = False
+            # CHANGED: no need to select closest organism here. Done in
+            # returnBestAddress.
             except HTTPError as err:
-                if err.code == 404 and loop == 'csm':
+                if err.code == 404:
+                    print('Excepted: Error 1')
+                    continue
+                else:
+                    raise
+            except ValueError:
+                start_index = text.index('Now EC ')
+                print('New EC')
+                new_ec = text[start_index+6: start_index+20].split(',')[0]
+                mol_weights[bigg_id]['ec_number'] = new_ec
+                try:
+                    text = REST.kegg_get('ec:' + new_ec).read()
+                except HTTPError as err:
+                    if err.code == 404:
+                        print('Excepted: Error 1')
+                        continue
+                    else:
+                        raise
+                try:
+                    start_index = text.index('GENES') + 5
+                    end_index = text.index('DBLINKS')
+                except ValueError:
+                    continue
+                gene_string = text[start_index: end_index]
+                genes = gene_string.split('\n')
+                for index, gene in enumerate(genes):
+                    genes[index] = gene.strip()
+            loop = 'best'
+            searching = True
+            while searching:
+                try:
+                    loopHandler(mol_weights, bigg_id, genes, loop)
                     searching = False
-            except TypeError as err:
-                if loop == 'best':
-                    loop = 'mammals'
-                if loop == 'mammals':
-                    loop = 'vertebrates'
-                if loop == 'vertebrates':
-                    loop = 'csm'
-                if loop == 'csm':
-                    searching = False
-
-write('JSONs/molecular_weights.json', mol_weights)
+                except HTTPError as err:
+                    if err.code == 404 and loop == 'csm':
+                        searching = False
+                except TypeError as err:
+                    if loop == 'best':
+                        loop = 'mammals'
+                    if loop == 'mammals':
+                        loop = 'vertebrates'
+                    if loop == 'vertebrates':
+                        loop = 'csm'
+                    if loop == 'csm':
+                        searching = False
+    finally:
+        write('JSONs/molecular_weights.json', mol_weights)
