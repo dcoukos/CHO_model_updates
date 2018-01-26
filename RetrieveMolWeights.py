@@ -296,7 +296,7 @@ if __name__ == '__main__':
     sub_dict_4 = {}
 
     mol_weights = {}
-    if sys.argv[1] is None:
+    if len(sys.argv) == 1:
         brenda_parameters = openJson('JSONs/brenda_parameters.json')
     else:
         brenda_parameters = openJson(sys.argv[1])
@@ -344,7 +344,7 @@ if __name__ == '__main__':
         mol_weights.update(mw_2.get())
         mol_weights.update(mw_3.get())
         mol_weights.update(mw_4.get())
-        if sys.argv[1]:
+        if len(sys.argv > 1):
             write('Unit Tests/multiprocessing_sub_output1.json', mw_1.get())
             write('Unit Tests/multiprocessing_sub_output3.json', mw_3.get())
         mol_weights_to_write = {}
