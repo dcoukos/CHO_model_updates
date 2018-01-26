@@ -6,6 +6,7 @@ Created on Wed Jan 24 16:03:28 2018
 @author: dimitricoukos
 """
 import re
+from multiprocessing import Pool
 from urllib.error import HTTPError
 from Bio.KEGG import REST
 from Bio.SeqUtils import molecular_weight
@@ -32,9 +33,30 @@ animals = ['HSA', 'PTR', 'PPS', 'GGO', 'PON', 'NLE', 'MCC', 'MCF', 'RRO',
 
 
 def returnBestAddress(gene_list, loop):
-    '''
+    """Searches for available genes matching kegg enzyme entry.
 
-    Function in split into blocks to prevent unnecessary function calls.'''
+    This function searches 'sequentially'. It returns the best available model
+    organism genes. Organisms phylogenetically closer to Cricetulus griseus are
+    preferred, but they are chosen by approximation. A detailed study of the
+    phylogenetic tree has not been done for this project. Hopefully going
+    sequentially increases both readability and efficiency.
+
+    Parameters
+    ----------
+    gene_list : list
+        minimally processed list of genes corresponding to enzyme from kegg.
+        each string in the list contains one or more gene addresses, with must
+        be further processed to be usable with the kegg api.
+    loop : string
+        Indicates the highest potential group of matching organisms to search
+        in.
+
+    Returns
+    -------
+    dict
+        key: kegg organism code. value: gene addresses for enzyme and organism
+
+    """
     if loop == 'best':
         gene_dict = {}
         for entry in gene_list:
@@ -90,7 +112,19 @@ def returnBestAddress(gene_list, loop):
             return gene_dict['ECO']
 
 
-def loopHandler(mol_weights, bigg_id, genes, loop):
+def loopHandler(mol_weights, ec_number, genes, loop):
+    """Calls the correct loop of returnBestAddress based on best potential genes
+        matches.
+
+    Parameters
+    ----------
+    mol_weights : list
+        empty list. will contain estimated molecular weights of enzymes.
+    ec_number : string
+    genes : list
+        Addresses of genes corresponding to ec number.
+    loop : string
+    """
     searching = True
     while searching:
         best = returnBestAddress(genes, loop)
@@ -108,14 +142,14 @@ def loopHandler(mol_weights, bigg_id, genes, loop):
                 searching = False
                 return None
         searching = False
-    mol_weights[bigg_id]['genes'] = best
-    mol_weights[bigg_id]['sequences'] = []
-    mol_weights[bigg_id]['molecular_weights'] = []
-    mol_weights[bigg_id]['uniprot_ids'] = []
+    mol_weights[ec_number]['genes'] = []
+    mol_weights[ec_number]['sequences'] = []
+    mol_weights[ec_number]['molecular_weights'] = []
+    mol_weights[ec_number]['uniprot_ids'] = []
     if loop == 'best' or loop == 'csm':
         for address in best:
             try:
-                fillData(mol_weights, bigg_id, address, genes, loop)
+                fillData(mol_weights, ec_number, address)
             except HTTPError as err:
                 if err.code == 404:
                     pass
@@ -123,14 +157,26 @@ def loopHandler(mol_weights, bigg_id, genes, loop):
         for gene in best:
             for address in best[gene]:
                 try:
-                    fillData(mol_weights, bigg_id, address, genes, loop)
+                    fillData(mol_weights, ec_number, address)
                 except HTTPError as err:
                     if err.code == 404:
                         pass
 
 
-def fillData(mol_weights, bigg_id, address, genes, loop):
+def fillData(mol_weights, ec_number, address):
+    """Searches kegg for enzyme uniprot id and AA sequence.
+
+    Parameters
+    ----------
+    mol_weights : dict
+        object containing all information collected by program.
+    ec_number : string
+        enzyme classification number used to organize data.
+    address : string
+        gene address for sequence lookup.
+    """
     text = REST.kegg_get(address).read()
+    mol_weights[ec_number]['genes'].append(address)
     start_index = text.index('AASEQ')
     end_index = text.index('NTSEQ')
     raw_code = text[start_index:end_index].split('\n', 1)[1]
@@ -138,31 +184,42 @@ def fillData(mol_weights, bigg_id, address, genes, loop):
     sequence = ''
     for piece in code:
         sequence = sequence + piece.strip()
-    mol_weights[bigg_id]['sequences'].append(sequence)
+    mol_weights[ec_number]['sequences'].append(sequence)
     ambigous_count = sequence.count('X')
     mod_seqeunce = sequence.replace('X', '')
     weight = molecular_weight(mod_seqeunce, seq_type='protein')
     weight = weight + 110*ambigous_count  # Estimate
-    mol_weights[bigg_id]['molecular_weights'].append(weight)
+    mol_weights[ec_number]['molecular_weights'].append(weight)
     uni_index = text.find('UniProt')
     if uni_index != -1:
-        mol_weights[bigg_id]['uniprot_ids'].append(text[uni_index+9:
-                                                        uni_index+15])
+        mol_weights[ec_number]['uniprot_ids'].append(text[uni_index+9:
+                                                          uni_index+15])
 
 
-if __name__ == '__main__':
+def mainSubprocess(brenda_parameters, del_ec):
+    """Main function called by each multiprocessing.process.
+
+    Parameters
+    ----------
+    brenda_parameters : dict
+        key: ec_number. value: corresponding bigg ids.
+    del_ec : list
+        empty list which is appended to here containing depicrated ec numbers
+
+    Returns
+    -------
+    dict
+        key: ec number. value: all collected data in program by this process.
+    """
     try:
         mol_weights = {}
-        brenda_parameters = openJson('JSONs/brenda_parameters.json')
-        for bigg_id in brenda_parameters:
-            # TODO: restructure area to feed loop arguments.
-            # TODO: implement dict data structure.
-            # TODO: implement control methods for incomplete data.
-            mol_weights[bigg_id] = {}
-            print('Currently processing BiGG id: ' + bigg_id)
+        for ec_number in brenda_parameters:  # WARNING: joblib may require list
+            mol_weights[ec_number] = {}
+            print('Currently processing BiGG id: ' + ec_number)
+            mol_weights[ec_number]['bigg ids'] = brenda_parameters[ec_number]
             try:
-                ec_number = brenda_parameters[bigg_id][0]
-                mol_weights[bigg_id]['ec_number'] = ec_number
+                # TODO: continue modifying function so that it searches with
+                    # ec numbers directly, without accessing through bigg ids.
                 print(ec_number)
                 text = REST.kegg_get('ec:' + ec_number).read()
                 try:
@@ -178,20 +235,22 @@ if __name__ == '__main__':
             # returnBestAddress.
             except HTTPError as err:
                 if err.code == 404:
-                    print('Excepted: Error 1')
+                    print('Excepted: No entry for ec number: '+ec_number)
                     continue
                 else:
                     raise
             except ValueError:
                 start_index = text.index('Now EC ')
-                print('New EC')
                 new_ec = text[start_index+6: start_index+20].split(',')[0]
-                mol_weights[bigg_id]['ec_number'] = new_ec
+                print('New ec : ' + new_ec)
+                mol_weights[new_ec] = mol_weights[ec_number]
+                del_ec.append(ec_number)
+                ec_number = new_ec
                 try:
                     text = REST.kegg_get('ec:' + new_ec).read()
                 except HTTPError as err:
                     if err.code == 404:
-                        print('Excepted: Error 1')
+                        print('Excepted: No entry for ec number: ' + new_ec)
                         continue
                     else:
                         raise
@@ -208,7 +267,7 @@ if __name__ == '__main__':
             searching = True
             while searching:
                 try:
-                    loopHandler(mol_weights, bigg_id, genes, loop)
+                    loopHandler(mol_weights, ec_number, genes, loop)
                     searching = False
                 except HTTPError as err:
                     if err.code == 404 and loop == 'csm':
@@ -223,4 +282,62 @@ if __name__ == '__main__':
                     if loop == 'csm':
                         searching = False
     finally:
-        write('JSONs/molecular_weights.json', mol_weights)
+        return mol_weights
+
+
+if __name__ == '__main__':
+    sub_dict_1 = {}
+    sub_dict_2 = {}
+    sub_dict_3 = {}
+    sub_dict_4 = {}
+
+    mol_weights = {}
+    brenda_parameters = openJson('JSONs/brenda_parameters.json')
+    simplified_brenda = {}
+    for bigg_id in brenda_parameters:
+        simplified_brenda[bigg_id] = brenda_parameters[bigg_id][0]
+    optimized_bigg = {}
+    for k, v in simplified_brenda.items():
+        optimized_bigg[v] = optimized_bigg.get(v, [])
+        optimized_bigg[v].append(k)
+    counter = 0
+    for ec_number in optimized_bigg:
+        if counter % 4 == 0:
+            sub_dict_1[ec_number] = optimized_bigg[ec_number][0]
+        if counter % 4 == 1:
+            sub_dict_2[ec_number] = optimized_bigg[ec_number][0]
+        if counter % 4 == 2:
+            sub_dict_3[ec_number] = optimized_bigg[ec_number][0]
+        if counter % 4 == 3:
+            sub_dict_4[ec_number] = optimized_bigg[ec_number][0]
+        counter = counter + 1
+    try:
+        with Pool(processes=4) as pool:
+            del_ec1 = []
+            del_ec2 = []
+            del_ec3 = []
+            del_ec4 = []
+            mw_1 = pool.apply_async(mainSubprocess(sub_dict_1, del_ec1, ))
+            mw_2 = pool.apply_async(mainSubprocess(sub_dict_2, del_ec2))
+            mw_3 = pool.apply_async(mainSubprocess(sub_dict_3, del_ec3))
+            mw_4 = pool.apply_async(mainSubprocess(sub_dict_4, del_ec4))
+            for ec in del_ec1:
+                mw_1.pop(ec, None)
+            for ec in del_ec2:
+                mw_2.pop(ec, None)
+            for ec in del_ec3:
+                mw_3.pop(ec, None)
+            for ec in del_ec4:
+                mw_4.pop(ec, None)
+    finally:
+        # TODO: rewrite how data is appended, remember to inverse the dicts!
+        mol_weights.update(mw_1)
+        mol_weights.update(mw_2)
+        mol_weights.update(mw_3)
+        mol_weights.update(mw_4)
+        mol_weights_to_write = {}
+        for ec_number in mol_weights:
+            for bigg_id in mol_weights[ec_number]['bigg id']:
+                mol_weights_to_write[bigg_id]['ec_number'] = ec_number
+                mol_weights_to_write[bigg_id].update(mol_weights[ec_number])
+        write('JSONs/molecular_weights.json', mol_weights_to_write)
