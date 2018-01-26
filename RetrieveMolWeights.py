@@ -352,5 +352,6 @@ if __name__ == '__main__':
             for bigg_id in mol_weights[ec_number]['bigg ids']:
                 mol_weights_to_write[bigg_id] = {}
                 mol_weights_to_write[bigg_id]['ec_number'] = ec_number
+                # TODO: DO I LOSE THE EC NUMBER HERE?
                 mol_weights_to_write[bigg_id].update(mol_weights[ec_number])
         write('JSONs/molecular_weights.json', mol_weights_to_write)

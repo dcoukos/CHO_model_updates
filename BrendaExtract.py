@@ -103,7 +103,6 @@ def getBrendaParametersAndReactants(bigg_model):
         reactants = []
         name = ""
 
-
         for link in links:
             if "identifiers.org/ec-code" in link['resource']:
                 EC_number = link['resource'][31:]
@@ -114,8 +113,10 @@ def getBrendaParametersAndReactants(bigg_model):
                     BiGG_ID = BiGG_ID[2:]
 
         if EC_number and BiGG_ID:
-            try:   #Links in xml downloaded from BiGG that do not correspond to actual addresses in their database.
-                for reactant in bigg_model.reactions.get_by_id(BiGG_ID).reactants:
+            try:   # Links in xml downloaded from BiGG that do not
+                # correspond to actual addresses in their database.
+                for reactant in bigg_model.reactions.get_by_id(
+                        BiGG_ID).reactants:
                     reactants.append(reactant.name)
             except:
                 pass

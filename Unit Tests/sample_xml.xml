@@ -1,0 +1,679 @@
+<?xml version='1.0' encoding='utf-8' standalone='no'?>
+<!-- Created by ModelPolisher version 1.7 on 2017-21-09 at 24:21:03 PDT with JSBML version 1.2. -->
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" fbc:required="false" groups:required="false" level="3" sboTerm="SBO:0000624" version="1"
+xmlns:fbc="http://www.sbml.org/sbml/level3/version1/fbc/version2" xmlns:groups="http://www.sbml.org/sbml/level3/version1/groups/version1">
+<notes>
+  <body xmlns="http://www.w3.org/1999/xhtml" style="font-size: 14px; height: 100%; width: 100%; color: #444444; font-family:Helvetica, sans-serif; margin-top: 0px; margin-left: 0px;">
+    <div style="height: 60px; background-color: #09F;">
+      <div style="margin-left: auto; margin-right: auto; width: 970px;">
+        <h1
+        style="           font-family: Lato, Helvetica Neue, Helvetica, Arial, sans-serif;           font-weight: 700;           color:#EFF8FF;           text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);            text-decoration-color: -moz-use-text-color;           margin-bottom: 40px;           margin-top: 0px;">
+          <div class="dc:title">iCHOv1 - Cricetulus griseus</div>
+        </h1>
+      </div>
+    </div>
+  </body>
+</notes>
+<model extentUnits="substance" fbc:strict="true" id="iCHOv1" metaid="iCHOv1" name="Cricetulus griseus" substanceUnits="substance" timeUnits="time">
+  <notes>
+    <body xmlns="http://www.w3.org/1999/xhtml" style="margin:0 auto; width: 970px; font-size: 14px; height: 100%; color: #444444; font-family:Helvetica, sans-serif;">
+    <h2>Description</h2>
+    <div class="dc:description">
+      <p>This is a metabolism model of Cricetulus griseus in
+      <a href="http://sbml.org" target="_blank" title="Access the definition of the SBML file format.">SBML</a>&#160;format.</p>
+    </div>
+    <div class="dc:provenance">The content of this model has been carefully created in a manual research effort. This file has been exported from the software
+    <a href="http://dx.doi.org/10.1186/1752-0509-7-74" title="Access publication about COBRApy." target="_blank">COBRApy</a>&#160;and further processed with the
+    <a href="http://dx.doi.org/10.1093/bioinformatics/btv341" title="Access publication about JSBML." target="_blank">JSBML</a>-based
+    <a href="http://github.com/SBRG/ModelPolisher/" target="_blank" title="Access ModelPolisher on Github">ModelPolisher</a>&#160;application.</div>
+    <div class="dc:publisher">This file has been produced by the
+    <a href="http://systemsbiology.ucsd.edu" title="Website of the Systems Biology Research Group" target="_blank">Systems Biology Research Group</a>&#160;using
+    <a href="http://bigg.ucsd.edu" title="Access BiGG Models knowledge-base." target="_blank">BiGG Models knowledge-base</a>&#160;version of Oct 8, 2017, where it is currently hosted and identified
+    by:
+    <a href="http://identifiers.org/bigg.model/iCHOv1" title="Access to this model via BiGG Models knowledge-base." target="_blank">iCHOv1</a>.</div>
+    <h2>Terms of use</h2>
+    <div class="dc:rightsHolder">Copyright © 2017 The Regents of the University of California.</div>
+    <div class="dc:license">
+      <p>Redistribution and use of any part of this model from BiGG Models knowledge-base, with or without modification, are permitted provided that the following conditions are met:
+      <ol>
+        <li>Redistributions of this SBML file must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+        <li>Redistributions in a different form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided
+        with the distribution.</li>
+      </ol>This model is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</p>
+      <p>For specific licensing terms about this particular model and regulations of commercial use, see
+      <a href="http://identifiers.org/bigg.model/iCHOv1" title="Access to this model via BiGG Models knowledge-base." target="_blank">this model in BiGG Models knowledge-base</a>.</p>
+    </div>
+    <h2>References</h2>When using content from BiGG Models knowledge-base in your research works, please cite
+    <dl>
+      <dt>King ZA, Lu JS, Dräger A, Miller PC, Federowicz S, Lerman JA, Ebrahim A, Palsson BO, and&#160;Lewis NE. (2015).
+      <dd>BiGG Models: A platform for integrating, standardizing, and sharing genome-scale models.
+      <i>Nucl Acids Res</i>.
+      <a href="https://dx.doi.org/10.1093/nar/gkv1049" target="_blank" title="Access the publication about BiGG Models knowledge-base">doi:10.1093/nar/gkv1049</a></dd></dt>
+    </dl></body>
+  </notes>
+  <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_11docrtstrn_c" name="11-deoxycorticosterone" compartment="c" fbc:charge="0" fbc:chemicalFormula="C21H30O3" metaid="_meta_M_11docrtstrn_c">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_11docrtstrn_c">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:16973"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C03205"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00016"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_1mncam_e" name="1-methylnicotinamide" compartment="e" fbc:charge="1" fbc:chemicalFormula="C7H9N2O" metaid="_meta_M_1mncam_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_1mncam_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:16797"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C02918"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00699"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+        <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_2425dhvitd3_c" name="(24R)-24,25-dihydroxycalciol" compartment="c" fbc:charge="0" fbc:chemicalFormula="C27H44O3" metaid="_meta_M_2425dhvitd3_c">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_2425dhvitd3_c">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:28818"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_2425dhvitd3_e" name="(24R)-24,25-dihydroxycalciol" compartment="e" fbc:charge="0" fbc:chemicalFormula="C27H44O3" metaid="_meta_M_2425dhvitd3_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_2425dhvitd3_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:28818"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_24nph_e" name="4-nitrobenzene-1,2-diol" compartment="e" fbc:charge="0" fbc:chemicalFormula="C6H5NO4" metaid="_meta_M_24nph_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_24nph_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:57730"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C02235"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB02916"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_25hvitd2_c" name="25-Hydroxyvitamin D2" compartment="c" fbc:charge="0" fbc:chemicalFormula="C28H44O2" metaid="_meta_M_25hvitd2_c">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_25hvitd2_c">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB01438"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_25hvitd2_e" name="25-Hydroxyvitamin D2" compartment="e" fbc:charge="0" fbc:chemicalFormula="C28H44O2" metaid="_meta_M_25hvitd2_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_25hvitd2_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB01438"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_25hvitd3_e" name="Calcidiol; 25-Hydroxyvitamin D3" compartment="e" fbc:charge="0" fbc:chemicalFormula="C27H44O2" metaid="_meta_M_25hvitd3_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_25hvitd3_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:17933"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C01561"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB03550"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_2mb2coa_c" name="2-methylcrotonoyl-CoA(4-)" compartment="c" fbc:charge="-4" fbc:chemicalFormula="C26H38N7O17P3S" metaid="_meta_M_2mb2coa_c">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_2mb2coa_c">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:57337"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C03345"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB02054"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_2mcit_c" name="2-methylcitrate(3-)" compartment="c" fbc:charge="-3" fbc:chemicalFormula="C7H7O7" metaid="_meta_M_2mcit_c">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_2mcit_c">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:15598"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00379"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_2mcit_e" name="2-methylcitrate(3-)" compartment="e" fbc:charge="-3" fbc:chemicalFormula="C7H7O7" metaid="_meta_M_2mcit_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_2mcit_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:15598"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00379"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_34dhoxpeg_e" name="3,4-Dihydroxyphenylethyleneglycol" compartment="e" fbc:charge="0" fbc:chemicalFormula="C8H10O4" metaid="_meta_M_34dhoxpeg_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_34dhoxpeg_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:1387"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C05576"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00318"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_34hpl_m" name="3-(4-hydroxyphenyl)lactate" compartment="m" fbc:charge="-1" fbc:chemicalFormula="C9H9O4" metaid="_meta_M_34hpl_m">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_34hpl_m">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:36659"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C03672"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00755"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_34hpp_e" name="3-(4-hydroxyphenyl)pyruvate" compartment="e" fbc:charge="-1" fbc:chemicalFormula="C9H7O4" metaid="_meta_M_34hpp_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_34hpp_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:36242"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C01179"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00707"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_3aib_D_m" name="D-3-Amino-isobutanoate" compartment="m" fbc:charge="0" fbc:chemicalFormula="C4H9NO2" metaid="_meta_M_3aib_D_m">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_3aib_D_m">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:16320"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C01205"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB02299"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_3aib_c" name="(S)-3-aminoisobutyric acid" compartment="c" fbc:charge="0" fbc:chemicalFormula="C4H9NO2" metaid="_meta_M_3aib_c">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_3aib_c">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:33094"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C03284"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB02166"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_3aib_e" name="(S)-3-aminoisobutyric acid" compartment="e" fbc:charge="0" fbc:chemicalFormula="C4H9NO2" metaid="_meta_M_3aib_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_3aib_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:33094"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C03284"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB02166"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_3hbcoa_R_c" name="(R)-3-hydroxybutanoyl-CoA(4-)" compartment="c" fbc:charge="-4" fbc:chemicalFormula="C25H38N7O18P3S" metaid="_meta_M_3hbcoa_R_c">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_3hbcoa_R_c">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:57315"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C03561┬á"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB01166"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_3mlda_e" name="3-Methylimidazoleacetic acid" compartment="e" fbc:charge="-1" fbc:chemicalFormula="C6H7N2O2" metaid="_meta_M_3mlda_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_3mlda_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:1606"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C05828"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB02820"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_3mob_e" name="3-methyl-2-oxobutanoate" compartment="e" fbc:charge="-1" fbc:chemicalFormula="C5H7O3" metaid="_meta_M_3mob_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_3mob_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:11851"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00141"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00019"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_3mop_e" name="3-methyl-2-oxopentanoate" compartment="e" fbc:charge="-1" fbc:chemicalFormula="C6H9O3" metaid="_meta_M_3mop_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_3mop_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:28654"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C03465"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00491"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_coucoa_m" name="4-coumaroyl-CoA(4-)" compartment="m" fbc:charge="-4" fbc:chemicalFormula="C30H38N7O18P3S" metaid="_meta_M_coucoa_m">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_coucoa_m">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:57355"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00223"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_4hbzcoa_m" name="4-hydroxybenzoyl-CoA" compartment="m" fbc:charge="-4" fbc:chemicalFormula="C28H36N7O18P3S" metaid="_meta_M_4hbzcoa_m">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_4hbzcoa_m">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:57356"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C02949"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB06467"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_4hdebrisoquine_e" name="4 hydroxy debrisoquine" compartment="e" fbc:charge="1" fbc:chemicalFormula="C10H14N3O" metaid="_meta_M_4hdebrisoquine_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_4hdebrisoquine_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:63800"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB06468"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_4mop_e" name="4-methyl-2-oxopentanoate" compartment="e" fbc:charge="-1" fbc:chemicalFormula="C6H9O3" metaid="_meta_M_4mop_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_4mop_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:17865"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00233"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00695"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_4mptnl_c" name="4-methylpentanal" compartment="c" fbc:charge="0" fbc:chemicalFormula="C6H12O" metaid="_meta_M_4mptnl_c">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_4mptnl_c">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:17998"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C02373"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB01318"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_4mptnl_e" name="4-methylpentanal" compartment="e" fbc:charge="0" fbc:chemicalFormula="C6H12O" metaid="_meta_M_4mptnl_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_4mptnl_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:17998"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C02373"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB01318"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_4mtolbutamide_e" name="4 hydroxy tolbutamide" compartment="e" fbc:charge="0" fbc:chemicalFormula="C12H18N2O4S" metaid="_meta_M_4mtolbutamide_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_4mtolbutamide_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:63799"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB06408"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_4nphsf_e" name="4-Nitrophenyl sulfate" compartment="e" fbc:charge="-1" fbc:chemicalFormula="C6H4NO6S" metaid="_meta_M_4nphsf_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_4nphsf_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:35422"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB06492"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_4nph_e" name="4-nitrophenol" compartment="e" fbc:charge="0" fbc:chemicalFormula="C6H5NO3" metaid="_meta_M_4nph_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_4nph_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00870"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB01232"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_4pyrdx_e" name="4-pyridoxic acid" compartment="e" fbc:charge="0" fbc:chemicalFormula="C8H9NO4" metaid="_meta_M_4pyrdx_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_4pyrdx_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00847"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00017"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_5adtststerones_e" name="5alpha-Dihydrotestosterone sulfate" compartment="e" fbc:charge="-1" fbc:chemicalFormula="C19H29O5S" metaid="_meta_M_5adtststerones_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_5adtststerones_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB06278"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_5adtststerone_e" name="17beta-hydroxy-5alpha-androstan-3-one" compartment="e" fbc:charge="0" fbc:chemicalFormula="C19H30O2" metaid="_meta_M_5adtststerone_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_5adtststerone_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:16330"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C03917"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB02961"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_5homeprazole_e" name="5 hydroxy omeprazole" compartment="e" fbc:charge="0" fbc:chemicalFormula="C17H19N3O4S" metaid="_meta_M_5homeprazole_e">
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_5mta_e" name="5-Methylthioadenosine" compartment="e" fbc:charge="0" fbc:chemicalFormula="C11H15N5O3S" metaid="_meta_M_5mta_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_5mta_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:17509"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00170"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB01173"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_6htststerone_c" name="6 beta hydroxy testosterone" compartment="c" fbc:charge="0" fbc:chemicalFormula="C19H28O3" metaid="_meta_M_6htststerone_c">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_6htststerone_c">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:34477"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C14497"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB06259"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_6htststerone_e" name="6 beta hydroxy testosterone" compartment="e" fbc:charge="0" fbc:chemicalFormula="C19H28O3" metaid="_meta_M_6htststerone_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_6htststerone_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:34477"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C14497"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB06259"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_7dhchsterol_c" name="cholesta-5,7-dien-3beta-ol" compartment="c" fbc:charge="0" fbc:chemicalFormula="C27H44O" metaid="_meta_M_7dhchsterol_c">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_7dhchsterol_c">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:17759"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C01164"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00032"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_aact_m" name="ammonioacetone" compartment="m" fbc:charge="1" fbc:chemicalFormula="C3H8NO" metaid="_meta_M_aact_m">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_aact_m">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:58320"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C01888"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB02134"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_abt_e" name="L-arabinitol" compartment="e" fbc:charge="0" fbc:chemicalFormula="C5H12O5" metaid="_meta_M_abt_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_abt_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:18403"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00532"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB01851"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" hasOnlySubstanceUnits="false" id="M_acald_e" name="acetaldehyde" compartment="e" fbc:charge="0" fbc:chemicalFormula="C2H4O" metaid="_meta_M_acald_e">
+         <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+               <rdf:Description rdf:about="#_meta_M_acald_e">
+                  <bqbiol:is>
+                     <rdf:Bag>
+                        <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:15343"/>
+                        <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00084"/>
+                        <rdf:li rdf:resource="http://identifiers.org/hmdb/HMDB00990"/>
+                     </rdf:Bag>
+                  </bqbiol:is>
+               </rdf:Description>
+            </rdf:RDF>
+         </annotation>
+      </species>
+    </model>
+  </sbml>
