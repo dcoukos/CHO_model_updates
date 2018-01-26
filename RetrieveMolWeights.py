@@ -4,7 +4,11 @@
 Created on Wed Jan 24 16:03:28 2018
 
 @author: dimitricoukos
+
+Test: in command line:
+    python RetrieveUniProt.py 'Unit Tests/sample_brenda_parameters.json'
 """
+import sys
 import re
 from multiprocessing import Pool
 from urllib.error import HTTPError
@@ -292,7 +296,10 @@ if __name__ == '__main__':
     sub_dict_4 = {}
 
     mol_weights = {}
-    brenda_parameters = openJson('JSONs/brenda_parameters.json')
+    if sys.argv[1] is None:
+        brenda_parameters = openJson('JSONs/brenda_parameters.json')
+    else:
+        brenda_parameters = openJson(sys.argv[1])
     simplified_brenda = {}
     for bigg_id in brenda_parameters:
         simplified_brenda[bigg_id] = brenda_parameters[bigg_id][0]
@@ -303,13 +310,13 @@ if __name__ == '__main__':
     counter = 0
     for ec_number in optimized_bigg:
         if counter % 4 == 0:
-            sub_dict_1[ec_number] = optimized_bigg[ec_number][0]
+            sub_dict_1[ec_number] = optimized_bigg[ec_number]
         if counter % 4 == 1:
-            sub_dict_2[ec_number] = optimized_bigg[ec_number][0]
+            sub_dict_2[ec_number] = optimized_bigg[ec_number]
         if counter % 4 == 2:
-            sub_dict_3[ec_number] = optimized_bigg[ec_number][0]
+            sub_dict_3[ec_number] = optimized_bigg[ec_number]
         if counter % 4 == 3:
-            sub_dict_4[ec_number] = optimized_bigg[ec_number][0]
+            sub_dict_4[ec_number] = optimized_bigg[ec_number]
         counter = counter + 1
     try:
         with Pool(processes=4) as pool:
@@ -317,10 +324,12 @@ if __name__ == '__main__':
             del_ec2 = []
             del_ec3 = []
             del_ec4 = []
-            mw_1 = pool.apply_async(mainSubprocess(sub_dict_1, del_ec1, ))
-            mw_2 = pool.apply_async(mainSubprocess(sub_dict_2, del_ec2))
-            mw_3 = pool.apply_async(mainSubprocess(sub_dict_3, del_ec3))
-            mw_4 = pool.apply_async(mainSubprocess(sub_dict_4, del_ec4))
+            mw_1 = pool.apply_async(mainSubprocess, (sub_dict_1, del_ec1, ))
+            mw_2 = pool.apply_async(mainSubprocess, (sub_dict_2, del_ec2,))
+            mw_3 = pool.apply_async(mainSubprocess, (sub_dict_3, del_ec3,))
+            mw_4 = pool.apply_async(mainSubprocess, (sub_dict_4, del_ec4,))
+            pool.close()
+            pool.join()
             for ec in del_ec1:
                 mw_1.pop(ec, None)
             for ec in del_ec2:
@@ -331,13 +340,17 @@ if __name__ == '__main__':
                 mw_4.pop(ec, None)
     finally:
         # TODO: rewrite how data is appended, remember to inverse the dicts!
-        mol_weights.update(mw_1)
-        mol_weights.update(mw_2)
-        mol_weights.update(mw_3)
-        mol_weights.update(mw_4)
+        mol_weights.update(mw_1.get())
+        mol_weights.update(mw_2.get())
+        mol_weights.update(mw_3.get())
+        mol_weights.update(mw_4.get())
+        if sys.argv[1]:
+            write('Unit Tests/multiprocessing_sub_output1.json', mw_1.get())
+            write('Unit Tests/multiprocessing_sub_output3.json', mw_3.get())
         mol_weights_to_write = {}
         for ec_number in mol_weights:
-            for bigg_id in mol_weights[ec_number]['bigg id']:
+            for bigg_id in mol_weights[ec_number]['bigg ids']:
+                mol_weights_to_write[bigg_id] = {}
                 mol_weights_to_write[bigg_id]['ec_number'] = ec_number
                 mol_weights_to_write[bigg_id].update(mol_weights[ec_number])
         write('JSONs/molecular_weights.json', mol_weights_to_write)
