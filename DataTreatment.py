@@ -632,40 +632,6 @@ def cleanMetaboliteNames(brenda_metabolites):
     pass
 
 
-def getKeggIds(reactants):
-    '''
-
-    TODO: Make sure this returns the correct data structure for the
-    reactant_no_kegg.
-    '''
-
-    reactant_to_KEGG = {}
-    reactant_no_KEGG = []
-    for reactant in reactants:
-        request_counter = 0
-
-        while request_counter < 3:
-            try:
-                if " - reduced" in reactant:
-                    reactant = "reduced " + reactant[:-10]
-                cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/"
-                                          "service/convert/Chemical%20Name/"
-                                          "KEGG/"+reactant)
-                reactant_to_KEGG[str(json.loads(cts_output.text)[0]['result']
-                                 [0])] = reactant
-                print('Metabolite ' + reactant + 'kegg found.')
-        # TODO: What type of error is expected to be thrown here?
-        # This may be a source of missing entries.
-            except:
-                print(reactant + 'EXCEPTED')
-                if request_counter == 2:
-                    reactant_no_KEGG.append(reactant)
-                request_counter = request_counter + 1
-                continue
-
-        return [reactant_to_KEGG, reactant_no_KEGG]
-
-
 def storeBiggRepresentation():
     '''Creates and stores a representation of the BiGG Model.
 
