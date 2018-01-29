@@ -44,34 +44,47 @@ def extractBiggKeggs(reactions, cm_param, p_number):
     for reaction in reactions:
         react_id = reaction.id
         local_model[react_id] = {}
-        local_model[react_id]['metabolites'] = {}
+        local_model[react_id]['reactants'] = {}
         local_model[react_id]['products'] = {}
         if p_number == 1:
             bar.next()
-        for metabolite in reaction.metabolites:
-            rid = 'M_' + metabolite.id
-            local_model[react_id]['metabolites'][rid] = []
+        for reactant in reaction.reactants:
+            rid = 'M_' + reactant.id
+            local_model[react_id]['reactants'][rid] = []
             species = soup.find('species', id=rid)
             if species:
                 links = species.find_all('li')
                 no_kegg = True
                 for link in links:
-                    if 'identifiers.org/kegg' in link['resource']:
-                        local_model[react_id]['metabolites'][rid].append(
+                    if 'identifiers.org/kegg.compound' in link['resource']:
+                        local_model[react_id]['reactants'][rid].append(
                             link['resource'][37:])
+                    elif 'identifiers.org/kegg.drug' in link['resource']:
+                        local_model[react_id]['reactants'][rid].append(
+                            link['resource'][33:])
+                    elif 'identifiers.org/kegg.glycan' in link['resource']:
+                        local_model[react_id]['reactants'][rid].append(
+                            link['resource'][35:])
                         no_kegg = False
                 if no_kegg:
-                    local_model[react_id]['metabolites'][rid] = None
+                    local_model[react_id]['reactants'][rid] = None
         for product in reaction.products:
             pid = 'M_' + product.id
+            local_model[react_id]['products'][pid] = []
             species = soup.find('species', id=pid)
             if species:
                 links = species.find_all('li')
                 no_kegg = True
                 for link in links:
-                    if 'identifiers.org/kegg' in link['resource']:
-                        local_model[react_id]['products'][pid] = \
-                            link['resource'][37:]
+                    if 'identifiers.org/kegg.compound' in link['resource']:
+                        local_model[react_id]['products'][pid].append(
+                            link['resource'][37:])
+                    elif 'identifiers.org/kegg.drug' in link['resource']:
+                        local_model[react_id]['products'][pid].append(
+                            link['resource'][33:])
+                    elif 'identifiers.org/kegg.glycan' in link['resource']:
+                        local_model[react_id]['products'][pid].append(
+                            link['resource'][35:])
                         no_kegg = False
                 if no_kegg:
                     local_model[react_id]['products'][pid] = None
