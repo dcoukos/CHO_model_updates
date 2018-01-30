@@ -1,4 +1,264 @@
 {
+    "CSND": {
+        "D00323": "5-fluorocytosine",
+        "C00380": "cytosine"
+    },
+    "NTD10": {
+        "C00020": "5'-AMP",
+        "C00002": "ATP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "GTHOm": {
+        "C00127": "glutathione disulfide",
+        "C03170": "trypanothione",
+        "C00004": "NADH",
+        "C16758": "(E)-ajoene",
+        "C05377": "menadione",
+        "C00005": "NADPH",
+        "C02617": "1,4-Naphthoquinone"
+    },
+    "CAT2p": {
+        "C00027": "H2O2"
+    },
+    "NTD1m": {
+        "C00360": "5'-dAMP"
+    },
+    "GBA_cho": {
+        "C01604": "phlorizin"
+    },
+    "T2M26DCOAHLm": {
+        "C00877": "crotonyl-CoA"
+    },
+    "ASPTA": {
+        "C00049": "L-aspartate",
+        "C00047": "L-Lys",
+        "C00025": "L-glutamate",
+        "C00026": "2-oxoglutarate",
+        "C20327": "2-oxo-4-phenyl-butanoic acid",
+        "C00036": "oxaloacetate"
+    },
+    "r0113": {
+        "C00029": "UDP-D-glucose",
+        "C00052": "UDP-D-galactose",
+        "C00043": "UDP-N-acetyl-alpha-D-glucosamine"
+    },
+    "RE1860E": {
+        "C03779": "bis-p-nitrophenyl phosphate",
+        "C03360": "p-nitrophenyl phosphate"
+    },
+    "MTHFCm": {},
+    "RE1538C": {
+        "C02567": "N1-acetylspermine",
+        "C00750": "spermine",
+        "C00612": "N1-acetylspermidine"
+    },
+    "GNDer": {},
+    "r0331": {},
+    "RDH1": {},
+    "IMACTD_m": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C01545": "octanal",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal"
+    },
+    "PNP": {
+        "C05512": "2'-deoxyinosine",
+        "C00262": "hypoxanthine",
+        "C00242": "guanine",
+        "C00170": "5'-methylthioadenosine",
+        "C00330": "2'-deoxyguanosine",
+        "C06953": "2',3'-dideoxyinosine",
+        "C20674": "7-methylguanosine",
+        "C00294": "Inosine",
+        "C16615": "5'-methylthioinosine",
+        "C00387": "guanosine",
+        "C00212": "adenosine",
+        "C00620": "alpha-D-ribose 1-phosphate"
+    },
+    "PI3P3Pn_cho": {},
+    "MAN1PT": {},
+    "RE1587L": {
+        "C00004": "NADH",
+        "C02341": "omega-(p-nitrophenyl)octanoic acid",
+        "C00005": "NADPH"
+    },
+    "PI3PP_cho": {},
+    "ACONT": {
+        "C00417": "cis-aconitate"
+    },
+    "PYDXK": {
+        "C00250": "pyridoxal",
+        "C00314": "pyridoxine",
+        "C00002": "ATP",
+        "C01279": "4-Amino-5-hydroxymethyl-2-methylpyrimidine",
+        "C00534": "pyridoxamine"
+    },
+    "SLCBK1": {
+        "C00002": "ATP"
+    },
+    "RE1342C": {
+        "C14448": "Glyoxal",
+        "C02154": "DL-glyceraldehyde",
+        "C14696": "1-nonanol",
+        "C00191": "D-glucuronate",
+        "C01545": "1-octanal",
+        "C09094": "geranylgeraniol",
+        "C00181": "D-xylose",
+        "C01412": "1-butanal",
+        "C01471": "acrolein",
+        "C01633": "1-Decanol",
+        "C00124": "D-galactose",
+        "C00556": "benzyl alcohol",
+        "C01126": "trans,trans-farnesol",
+        "C00546": "methylglyoxal",
+        "D05158": "Pyridine-3-methanol",
+        "C00193": "benzaldehyde",
+        "C11129": "isatin",
+        "C07327": "Pyridine-3-aldehyde",
+        "C00031": "D-glucose"
+    },
+    "RE1539C": {
+        "C02567": "N1-acetylspermine",
+        "C00750": "spermine",
+        "C00315": "spermidine",
+        "C00612": "N1-acetylspermidine",
+        "C19669": "thermospermine",
+        "C14685": "N,N'-dibenzyl-1,4-diaminobutane"
+    },
+    "PRDXl": {
+        "C00034": "Mn2+",
+        "D06272": "2,2'-azino-bis-(3-ethylbenzthiazole-6-sulfonic acid)",
+        "C14402": "o-phenylenediamine",
+        "C00027": "H2O2",
+        "C16001": "Reactive Black 5",
+        "C09263": "esculetin",
+        "C01502": "guaiacol"
+    },
+    "THRD": {
+        "C00003": "NAD+",
+        "C00188": "L-threonine"
+    },
+    "5HXKYNDCL": {
+        "C00355": "L-Dopa",
+        "C03758": "dopamine",
+        "C00643": "L-5-hydroxytryptophan"
+    },
+    "ARGNm": {
+        "C00079": "L-phenylalanine",
+        "C00062": "L-arginine"
+    },
+    "AOBUTDsm": {
+        "C00740": "D-serine",
+        "C00820": "D-threonine",
+        "C03197": "L-3-hydroxyisobutyrate",
+        "C00065": "L-serine",
+        "C05519": "L-allo-threonine"
+    },
+    "NTD7l": {
+        "C00020": "5'-AMP",
+        "C00002": "ATP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "MMCDp": {
+        "C00083": "malonyl-CoA"
+    },
+    "r0629": {},
+    "HIBDm": {
+        "C00003": "NAD+",
+        "C06001": "(S)-3-hydroxyisobutyrate",
+        "C01013": "3-hydroxypropionic acid",
+        "C00065": "L-serine"
+    },
+    "DURIK1": {
+        "C07210": "3'-azido-3'-deoxythymidine",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00214": "thymidine",
+        "C00299": "uridine",
+        "C00881": "deoxycytidine",
+        "D00333": "ganciclovir",
+        "C00526": "deoxyuridine",
+        "C06810": "acyclovir",
+        "C00044": "GTP",
+        "C11736": "5-fluoro-2'-deoxyuridine"
+    },
+    "r0558": {
+        "C02918": "N1-methylnicotinamide",
+        "C00376": "retinaldehyde",
+        "C01412": "Butanal",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "RDH1a": {
+        "C00376": "all-trans-retinal",
+        "C00473": "all-trans-retinol"
+    },
+    "MGCHrm": {},
+    "GLNS": {
+        "C00025": "L-Glu",
+        "C00002": "ATP",
+        "C01342": "NH4+"
+    },
+    "OCOAT1m": {
+        "C00332": "acetoacetyl-CoA"
+    },
+    "THYPX": {},
+    "DCTPDPm": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "GLYPROPRO1c": {
+        "C00148": "Lys-Pro-p-nitroanilide",
+        "C00073": "Met-Pro-p-nitroanilide",
+        "C00716": "Ser-Pro-p-nitroanilide",
+        "C02155": "Gly-Leu"
+    },
+    "SERHL": {
+        "C00065": "L-serine",
+        "C00740": "D-serine",
+        "C00820": "D-threonine",
+        "C00188": "L-threonine"
+    },
+    "ORNDC": {
+        "C00047": "L-lysine",
+        "C03283": "L-2,4-diaminobutanoate",
+        "C00077": "L-ornithine"
+    },
+    "PPAer": {
+        "C00002": "ATP"
+    },
     "GLNLASEer": {
         "C06606": "Paraoxon",
         "C01880": "epsilon-caprolactone",
@@ -19,6 +279,1354 @@
         "C00005": "NADPH",
         "C03840": "5-hydroxy-1,4-naphthoquinone"
     },
+    "PDX5POi": {
+        "C00647": "pyridoxamine 5'-phosphate",
+        "C00627": "pyridoxine 5'-phosphate"
+    },
+    "SPODM": {
+        "C00007": "O2-"
+    },
+    "NTD7": {
+        "C00020": "5'-AMP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C00002": "ATP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "NTD3": {
+        "C00360": "5'-dAMP"
+    },
+    "r0548": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "PROAKGOX1r": {
+        "D05554": "PEG-Gly-Tyr-4-fluoroproline-GlyOEt",
+        "C00306": "(Ser-Pro)5",
+        "C01845": "(Pro-Pro-Gly)10"
+    },
+    "ADSL1r": {
+        "C03794": "adenylosuccinate"
+    },
+    "3HLYTCL": {
+        "C00355": "L-Dopa",
+        "C03758": "dopamine",
+        "C00643": "L-5-hydroxytryptophan"
+    },
+    "EPCTX": {
+        "C00063": "CTP",
+        "C00346": "Ethanolamine phosphate"
+    },
+    "NTPP3": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "ESTSULT": {
+        "C00951": "17beta-estradiol"
+    },
+    "HSD17B8r": {
+        "C00951": "estradiol-17beta",
+        "C01227": "dehydroepiandrosterone",
+        "C00468": "estrone",
+        "C00005": "NADPH",
+        "C03917": "dihydrotestosterone",
+        "C00006": "NADP+"
+    },
+    "MCITS": {
+        "C00100": "propanoyl-CoA",
+        "C00024": "acetyl-CoA"
+    },
+    "PCm": {
+        "C00288": "HCO3-",
+        "C00002": "ATP",
+        "C00169": "Carbamoyl phosphate",
+        "C00036": "oxaloacetate"
+    },
+    "IDHPOXOX4": {},
+    "5HTRPDOX": {
+        "C01718": "kynurenine",
+        "C00078": "L-tryptophan",
+        "C00525": "D-tryptophan"
+    },
+    "2AMACHYD": {
+        "C00065": "L-serine",
+        "C00740": "D-serine",
+        "C00820": "D-threonine",
+        "C00188": "L-threonine"
+    },
+    "HURH": {
+        "C11821": "5-hydroxyisourate"
+    },
+    "RE1944C": {
+        "C06423": "Octanoic acid",
+        "C16241": "R-lipoic acid",
+        "C00002": "ATP"
+    },
+    "LEUGLYHYc": {
+        "C02155": "Gly-Leu",
+        "C00097": "L-Cys-7-amido-4-methylcoumarin",
+        "C01419": "Cys-Gly",
+        "C00041": "L-alanine-4-methylcoumaryl-7-amide",
+        "C00148": "L-proline-4-methylcoumaryl-7-amide",
+        "C02037": "Gly-Gly"
+    },
+    "CHSTEROLSULT": {},
+    "r0571": {
+        "C00683": "(S)-methylmalonyl-CoA"
+    },
+    "HSD3B11": {
+        "C20252": "5-androstene-3,17-dione",
+        "C01227": "dehydroepiandrosterone",
+        "C00280": "androstene-3,17-dione"
+    },
+    "B3GALT43g_cho": {},
+    "PDE4": {
+        "C04741": "3',5'-cGMP",
+        "C00942": "cGMP"
+    },
+    "CYTK2": {
+        "C00055": "CMP",
+        "C00239": "dCMP",
+        "C00105": "UMP"
+    },
+    "NDP6": {
+        "C00008": "ADP"
+    },
+    "GALUi": {
+        "C00029": "UDP-glucose",
+        "C00459": "TTP",
+        "C00075": "UTP",
+        "C00103": "alpha-D-glucose 1-phosphate"
+    },
+    "ACCOALm": {
+        "C00246": "Butyrate",
+        "C00010": "CoA",
+        "C00163": "propionate",
+        "C00002": "ATP",
+        "C00511": "Acrylate"
+    },
+    "ALOX15": {
+        "C01595": "linoleic acid",
+        "C02341": "(17(S),5Z,8Z,11Z,14Z)-17-hydroxyeicosa-5,8,11,14-tetraenoic acid",
+        "C00219": "arachidonic acid",
+        "C07130": "(16(S),5Z,8Z,11Z,14Z)-16-hydroxyeicosa-5,8,11,14-tetraenoic acid",
+        "C00007": "O2"
+    },
+    "NTD8l": {
+        "C00360": "5'-dAMP"
+    },
+    "MTHFR2": {
+        "C00004": "NADH",
+        "C00005": "NADPH"
+    },
+    "r0782": {
+        "D06272": "GDP-6-deoxy-4-keto-mannose"
+    },
+    "r0789": {
+        "C13482": "N,N-dimethylethanolamine phosphate",
+        "C00019": "S-adenosyl-L-methionine",
+        "C00346": "Ethanolamine phosphate"
+    },
+    "DOPASULT": {
+        "C05658": "3-hydroxyindole",
+        "C10208": "daidzein",
+        "C00059": "genistein 4'-sulfate",
+        "C11713": "2-naphthol",
+        "D04926": "4-methoxyphenol",
+        "C00146": "phenol",
+        "C03758": "dopamine",
+        "C02124": "4-Chlorophenol",
+        "C00053": "3'-phosphoadenylyl sulfate",
+        "C00780": "5-hydroxytryptamine",
+        "C00870": "4-nitrophenol"
+    },
+    "HPROx": {
+        "C00004": "NADH",
+        "C00005": "NADPH",
+        "C03912": "1-pyrroline-5-carboxylate",
+        "C00006": "NADP+"
+    },
+    "ICDHxm": {
+        "C00003": "NAD+",
+        "C00451": "DL-isocitrate",
+        "C00311": "D-isocitrate",
+        "C00006": "NADP+"
+    },
+    "FBA2": {
+        "C00111": "glycerone phosphate",
+        "C00118": "D-glyceraldehyde 3-phosphate",
+        "C01094": "D-Fructose 1-phosphate"
+    },
+    "r0361": {
+        "C00586": "2-deoxy-D-glucose",
+        "C00031": "D-glucose",
+        "C00159": "D-mannose",
+        "C00002": "ATP"
+    },
+    "PGISr": {},
+    "5HOXINDACTOXm": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "NDPK9n": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "NMNSn": {
+        "C00153": "nicotinamide",
+        "C00002": "ATP"
+    },
+    "ECOAH12m": {
+        "C00877": "crotonyl-CoA"
+    },
+    "P4503A43r": {
+        "C00004": "NADH",
+        "C02341": "omega-(p-nitrophenyl)dodecanoic acid",
+        "C00005": "NADPH"
+    },
+    "PPCDC": {},
+    "GCCam": {
+        "C00248": "Lipoamide"
+    },
+    "NMNATm": {
+        "C01185": "nicotinate beta-D-ribonucleotide"
+    },
+    "SACCD3m": {},
+    "NDPK4n": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "DPPS": {
+        "C00341": "geranyl diphosphate",
+        "C00129": "isopentenyl diphosphate",
+        "C00448": "(2E,6E)-farnesyl diphosphate"
+    },
+    "HGNTOR": {
+        "C00544": "homogentisate"
+    },
+    "ALLTN": {
+        "C01551": "allantoin"
+    },
+    "DUTPDPn": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "AASAD3": {},
+    "NTD9e": {
+        "C00020": "5'-AMP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C00002": "ATP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "RNDR2": {
+        "C00112": "CDP"
+    },
+    "RE2640C": {
+        "C01733": "N-cyclohexanoyl-L-methionine",
+        "D07063": "N-acetyl-L-glutamine",
+        "C06809": "N-acetyl-L-Cys",
+        "C00624": "N-acetyl-L-glutamate",
+        "C08159": "2-acetylamino-3-((1S,2S)-2-hydroxycyclohexylsulfanyl)-propionic acid",
+        "C02712": "N-acetyl-L-Met",
+        "C02710": "N-acetyl-L-leucine",
+        "C03519": "N-acetyl-L-phenylalanine",
+        "C01589": "2-acetylamino-3-[(S)-1-((R)-hydroxyphenyl-methyl)-2-oxo-2-phenyl-ethylsulfanyl]-propionic acid",
+        "C02997": "N-acetyl-L-histidine"
+    },
+    "r0514": {
+        "C00415": "7,8-dihydrofolate",
+        "C00504": "folate",
+        "C00005": "NADPH"
+    },
+    "HISDC": {
+        "C00355": "L-Dopa",
+        "C03758": "dopamine",
+        "C00643": "L-5-hydroxytryptophan"
+    },
+    "r0423": {
+        "C00003": "NAD+",
+        "C00451": "DL-isocitrate",
+        "C00311": "isocitrate",
+        "C00006": "NADP+"
+    },
+    "RE1587C": {
+        "C00004": "NADH",
+        "C02341": "omega-(p-nitrophenyl)octanoic acid",
+        "C00005": "NADPH"
+    },
+    "IPDDI": {
+        "C00129": "isopentenyl diphosphate"
+    },
+    "FA180ACPH": {
+        "C00517": "palmitoyl-[acyl-carrier protein]"
+    },
+    "HSD17B2r": {
+        "C00003": "NAD+",
+        "C00004": "NADH"
+    },
+    "ICDHyr": {
+        "C00003": "NAD+",
+        "C00451": "DL-isocitrate",
+        "C00311": "isocitrate",
+        "C00006": "NADP+"
+    },
+    "ICDHym": {
+        "C00003": "NAD+",
+        "C00451": "DL-isocitrate",
+        "C00311": "isocitrate",
+        "C00006": "NADP+"
+    },
+    "LTC4Sr": {
+        "C00909": "leukotriene A4",
+        "C00051": "glutathione"
+    },
+    "ACSm": {
+        "C00010": "CoA",
+        "C00246": "Butyrate",
+        "C00163": "propionate",
+        "C00002": "ATP"
+    },
+    "DGK1": {
+        "C00362": "dGMP",
+        "C00144": "GMP"
+    },
+    "MAOLNOR": {
+        "C00483": "tyramine",
+        "C03758": "dopamine",
+        "C00007": "O2",
+        "C04599": "1-Methyl-4-phenyl-1,2,3,6-tetrahydropyridine",
+        "C15562": "benzylamine",
+        "C00398": "tryptamine",
+        "C05332": "2-Phenylethylamine",
+        "C00780": "serotonin"
+    },
+    "SBPP1er": {},
+    "SERPT": {
+        "C00154": "palmitoyl-CoA",
+        "C00065": "L-serine"
+    },
+    "ST3GAL23g_cho": {
+        "C02094": "4-methylumbelliferyl 4-O-beta-D-galactosyl-beta-D-glucoside",
+        "C01970": "lactose",
+        "C00128": "CMP-N-acetylneuraminate"
+    },
+    "DTTPDPm": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "NDP8ex": {
+        "C00002": "ATP",
+        "D02011": "3'(2')-O-(methylanthranoyl)adenosine 5'-diphosphate",
+        "C00212": "1,N6-etheno-ADP",
+        "C00458": "dCTP",
+        "C18690": "3'(2')-O-(methylanthranoyl)adenosine 5'-triphosphate",
+        "C00459": "dTTP",
+        "C00008": "ADP",
+        "C00075": "UTP",
+        "C00035": "GDP",
+        "C00015": "UDP",
+        "C00286": "dGTP",
+        "C00131": "dATP"
+    },
+    "SELADT": {
+        "C00224": "adenylyl sulfate",
+        "C00002": "ATP"
+    },
+    "FADDP": {
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00029": "UDP-glucose",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "GTPCI": {
+        "C00044": "GTP"
+    },
+    "NDPK7m": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "RE1537C": {
+        "C02567": "N1-acetylspermine",
+        "C00750": "spermine",
+        "C00315": "spermidine",
+        "C00612": "N1-acetylspermidine",
+        "C19669": "thermospermine",
+        "C14685": "N,N'-dibenzyl-1,4-diaminobutane"
+    },
+    "PDE1g": {
+        "C00942": "cGMP",
+        "C00575": "cAMP"
+    },
+    "PGI": {
+        "C03251": "D-glucose 6-phosphate",
+        "C00085": "D-fructose 6-phosphate"
+    },
+    "PAPSR": {
+        "C00053": "3'-phosphoadenylyl-sulfate"
+    },
+    "FA141ACPHi": {
+        "C00517": "palmitoyl-[acyl-carrier protein]"
+    },
+    "3SALACBOXL_cho": {},
+    "NDPK10n": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "PPA2": {
+        "C00002": "ATP"
+    },
+    "FUT92g_cho": {
+        "C00611": "N-acetyllactosamine",
+        "C00325": "GDP-beta-L-fucose",
+        "C01970": "D-lactose"
+    },
+    "KYNAKGAT": {
+        "C00123": "L-leucine",
+        "C00073": "L-methionine",
+        "C00166": "phenylpyruvate",
+        "C00109": "2-oxobutyrate",
+        "C00078": "L-tryptophan",
+        "C06255": "2-oxovalerate",
+        "C00328": "L-kynurenine",
+        "C00026": "2-oxoglutarate",
+        "C00152": "L-asparagine",
+        "C01179": "hydroxyphenylpyruvate",
+        "C00957": "Mercaptopyruvate",
+        "C00135": "L-histidine",
+        "C00079": "L-phenylalanine",
+        "C00097": "L-cysteine",
+        "C00065": "L-serine",
+        "C00036": "oxaloacetate",
+        "C02356": "2-aminobutanoate",
+        "C00082": "L-tyrosine",
+        "C00064": "L-glutamine",
+        "C00041": "L-alanine"
+    },
+    "r0753": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "r0754": {
+        "C00003": "NAD+",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C01412": "Butyraldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "SPODMe": {
+        "C00007": "O2-"
+    },
+    "NDPK6n": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "5HXKYNOXDA": {
+        "C00483": "tyramine",
+        "C03758": "dopamine",
+        "C00007": "O2",
+        "C04599": "1-Methyl-4-phenyl-1,2,3,6-tetrahydropyridine",
+        "C15562": "benzylamine",
+        "C00398": "tryptamine",
+        "C05332": "2-Phenylethylamine",
+        "C00780": "serotonin"
+    },
+    "ALATA_L": {
+        "C00026": "2-oxoglutarate",
+        "C00025": "L-glutamate",
+        "C00041": "L-alanine"
+    },
+    "CPCTDTX": {
+        "C00588": "phosphocholine"
+    },
+    "TMDS": {
+        "C00143": "5,10-methylenetetrahydrofolate",
+        "C00526": "2'-deoxyuridine",
+        "C00365": "dUMP"
+    },
+    "PYK3": {
+        "C00074": "phosphoenolpyruvate",
+        "C00008": "ADP"
+    },
+    "DOPABMO": {
+        "C03758": "dopamine"
+    },
+    "BETALDHx": {},
+    "CYOOm2_cho": {
+        "C00051": "reduced cytochrome c551",
+        "C00148": "N,N,N',N'-tetramethyl-p-phenylendiamine"
+    },
+    "DADAe": {
+        "C00170": "5'-methylthioadenosine",
+        "C00212": "adenosine"
+    },
+    "PPCOAOm": {
+        "C00147": "[4-(dimethylamino)phenyl]propionyl-CoA",
+        "C02094": "recombinant beta-Y16L electron transferring flavoprotein",
+        "C00154": "hexadecanoyl-CoA",
+        "C05274": "decanoyl-CoA",
+        "C05270": "Hexanoyl-CoA",
+        "C01832": "Dodecanoyl-CoA",
+        "C02593": "tetradecanoyl-CoA",
+        "C00136": "Butanoyl-CoA",
+        "C01944": "Octanoyl-CoA"
+    },
+    "GLYCLTDy": {
+        "C00005": "NADPH",
+        "C00168": "Hydroxypyruvate",
+        "C00004": "NADH"
+    },
+    "DCYTDn": {},
+    "HSD17B3r": {},
+    "GK1": {
+        "C00362": "dGMP",
+        "C00144": "GMP"
+    },
+    "NADK": {
+        "C00003": "NAD+",
+        "C00002": "ATP"
+    },
+    "P45011B12m": {
+        "D05688": "adrenal ferredoxin",
+        "C03205": "11-deoxycorticosterone",
+        "C05488": "11-deoxycortisol"
+    },
+    "DCK2n": {
+        "C02961": "1-beta-D-arabinofuranosylcytosine",
+        "D01370": "cladribine",
+        "C00214": "L-thymidine",
+        "C00002": "ATP",
+        "C07650": "2',2'-difluorodeoxycytidine",
+        "C00330": "2'-deoxyguanosine",
+        "D07966": "fludarabine",
+        "D03546": "clofarabine",
+        "D06255": "troxacitabine",
+        "C00075": "UTP",
+        "C00881": "deoxycytidine",
+        "C00559": "2'-deoxyadenosine",
+        "C02094": "(-)-beta-2',3'-dideoxy-3'-thiacytidine"
+    },
+    "LDH_Lm": {
+        "C00003": "NAD+",
+        "C00004": "NADH",
+        "C00186": "(S)-lactate",
+        "C04423": "nicotinamide hypoxanthine dinucleotide"
+    },
+    "APRTO2": {
+        "C00483": "tyramine",
+        "C03758": "dopamine",
+        "C00007": "O2",
+        "C04599": "1-Methyl-4-phenyl-1,2,3,6-tetrahydropyridine",
+        "C15562": "benzylamine",
+        "C00398": "tryptamine",
+        "C05332": "2-Phenylethylamine",
+        "C00780": "serotonin"
+    },
+    "PUNP7": {
+        "C05512": "2'-deoxyinosine",
+        "C00262": "hypoxanthine",
+        "C00242": "guanine",
+        "C00170": "5'-methylthioadenosine",
+        "C00330": "2'-deoxyguanosine",
+        "C06953": "2',3'-dideoxyinosine",
+        "C20674": "7-methylguanosine",
+        "C00294": "Inosine",
+        "C16615": "5'-methylthioinosine",
+        "C00387": "guanosine",
+        "C00212": "adenosine",
+        "C00620": "alpha-D-ribose 1-phosphate"
+    },
+    "GULND": {
+        "C00004": "NADH",
+        "C05853": "Phenylethanol",
+        "C07329": "3-Methylbutanal",
+        "C02201": "veratraldehyde",
+        "C00006": "NADP+",
+        "C01412": "Butanal",
+        "C06142": "butanol",
+        "C00903": "cinnamaldehyde",
+        "C02394": "cinnamyl alcohol",
+        "C07328": "3-methyl-1-butanol",
+        "C00005": "NADPH",
+        "C00116": "glycerol",
+        "C00469": "ethanol",
+        "C00084": "acetaldehyde",
+        "C00003": "NAD+",
+        "C07113": "acetophenone"
+    },
+    "PRGNLONESULT": {},
+    "NDPK5m": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "ACP1_FMN": {
+        "C00002": "ATP",
+        "C00074": "phosphoenolpyruvate",
+        "C03360": "p-nitrophenyl phosphate",
+        "C00008": "ADP",
+        "C01367": "3'-AMP",
+        "C00020": "5'-AMP",
+        "C02734": "Phenyl phosphate",
+        "C03251": "D-glucose 6-phosphate",
+        "C00946": "2'-AMP"
+    },
+    "FACOAL160": {
+        "C02679": "lauric acid",
+        "C06424": "tetradecanoate",
+        "C00002": "ATP"
+    },
+    "ACNML": {
+        "C00270": "N-acetylneuraminate",
+        "C00645": "N-acetyl-D-mannosamine",
+        "C19910": "N-acetyl-D-neuraminic acid",
+        "C08159": "(2S,4S,5R,6R)-5-(acetylamino)-6-[(dipropylamino)carbonyl]-2,4-dihydroxytetrahydro-pyran-2-carboxylic acid"
+    },
+    "PTPATi": {
+        "C00882": "3'-Dephospho-CoA"
+    },
+    "GCCbim": {
+        "C00143": "5,10-methylenetetrahydrofolate",
+        "C00051": "reduced H-protein",
+        "C12538": "NH4Cl"
+    },
+    "SERR": {
+        "C00740": "D-serine",
+        "C00065": "L-serine"
+    },
+    "HXAND": {
+        "C00004": "NADH",
+        "C00385": "xanthine",
+        "C00262": "hypoxanthine"
+    },
+    "LDH_L": {
+        "C00003": "NAD+",
+        "C00004": "NADH",
+        "C00186": "(S)-lactate",
+        "C04423": "nicotinamide hypoxanthine dinucleotide"
+    },
+    "XYLOR": {
+        "C00031": "D-glucose",
+        "C00181": "D-xylose"
+    },
+    "ACHEe": {
+        "C01996": "Acetylcholine",
+        "C01416": "(-)-cocaine"
+    },
+    "MTHFC": {},
+    "GK_adp": {
+        "C03251": "D-glucose 6-phosphate",
+        "C00008": "ADP"
+    },
+    "r0085": {
+        "C02362": "2-oxosuccinamate"
+    },
+    "r0649": {
+        "C00127": "GSSG",
+        "C00051": "GSH",
+        "C00669": "gamma-Glu-Cys"
+    },
+    "NDPK4m": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "UDPGLDCg": {
+        "C00167": "UDP-D-glucuronate"
+    },
+    "XAO2": {
+        "C00385": "xanthine",
+        "C00005": "NADPH",
+        "C00262": "hypoxanthine"
+    },
+    "r0393": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C01545": "octanal",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal"
+    },
+    "DASCBH_cho": {},
+    "r0068": {
+        "C00246": "Butyrate",
+        "C00010": "CoA",
+        "C00163": "propionate",
+        "C00002": "ATP"
+    },
+    "TRPOX": {
+        "C00123": "L-Leu",
+        "C00073": "L-methionine",
+        "C00078": "L-tryptophan",
+        "C00047": "L-lysine",
+        "C00079": "L-phenylalanine",
+        "C00041": "L-alanine"
+    },
+    "PPNCL2": {
+        "C00063": "CTP"
+    },
+    "ATP1ter": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "SUCOASm": {
+        "C00010": "CoA",
+        "C00490": "Itaconate",
+        "C00044": "GTP",
+        "C00002": "ATP",
+        "C00149": "L-malate",
+        "C00497": "D-malate",
+        "C00042": "succinate"
+    },
+    "RADH": {
+        "C00003": "NAD+",
+        "C00376": "retinal",
+        "C12307": "decanal",
+        "C01545": "octanal"
+    },
+    "PMANM": {
+        "C00103": "alpha-D-glucose 1-phosphate",
+        "C00636": "alpha-D-mannose 1-phosphate"
+    },
+    "RE2235C": {
+        "C00004": "NADH",
+        "C02341": "omega-(p-nitrophenyl)dodecanoic acid",
+        "C00005": "NADPH"
+    },
+    "ADK3m": {
+        "C00360": "dAMP"
+    },
+    "BILIRED2": {
+        "C00004": "NADH"
+    },
+    "HSD17B1": {
+        "C00951": "estradiol-17beta",
+        "C01227": "dehydroepiandrosterone",
+        "C00468": "estrone",
+        "C00005": "NADPH",
+        "C03917": "dihydrotestosterone",
+        "C00006": "NADP+"
+    },
+    "r0093": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "CYSO": {
+        "C00097": "L-cysteine"
+    },
+    "r0384": {},
+    "r0383": {
+        "D01526": "N-terminal lipoyl domain",
+        "D01225": "thiamine diphosphate",
+        "C00109": "2-ketobutanoate",
+        "C02137": "benzoylformate",
+        "C06255": "2-ketopentanoate"
+    },
+    "PRPNCOAHYDm": {
+        "C00877": "crotonyl-CoA"
+    },
+    "IMPD": {
+        "C00003": "NAD+",
+        "C00130": "IMP",
+        "C00104": "Inosine 5'-diphosphate"
+    },
+    "NDPK3n": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "CSNATm": {
+        "C05270": "Hexanoyl-CoA",
+        "C00318": "carnitine",
+        "C00114": "choline",
+        "C00024": "acetyl-CoA"
+    },
+    "ASPCT": {
+        "C00049": "L-aspartate",
+        "C00169": "Carbamoyl phosphate"
+    },
+    "PMEVK": {},
+    "C2M26DCOAHLx": {
+        "C00877": "crotonyl-CoA"
+    },
+    "C2M26DCOAHLm": {
+        "C00877": "crotonyl-CoA"
+    },
+    "GDHm": {
+        "C00026": "2-oxoglutarate",
+        "C00025": "L-glutamate",
+        "C00005": "NADPH",
+        "C00006": "NADP+",
+        "C00014": "NH3"
+    },
+    "ARABR": {
+        "C14448": "Glyoxal",
+        "C02154": "DL-glyceraldehyde",
+        "C14696": "1-nonanol",
+        "C00191": "D-glucuronate",
+        "C01545": "1-octanal",
+        "C09094": "geranylgeraniol",
+        "C00181": "D-xylose",
+        "C01412": "1-butanal",
+        "C01471": "acrolein",
+        "C01633": "1-Decanol",
+        "C00124": "D-galactose",
+        "C00556": "benzyl alcohol",
+        "C01126": "trans,trans-farnesol",
+        "C00546": "methylglyoxal",
+        "D05158": "Pyridine-3-methanol",
+        "C00193": "benzaldehyde",
+        "C11129": "isatin",
+        "C07327": "Pyridine-3-aldehyde",
+        "C00031": "D-glucose"
+    },
+    "FEROc": {
+        "C14818": "Fe(II)",
+        "C19499": "p-phenylenediamine",
+        "C00530": "hydroquinone",
+        "C00070": "Cu+"
+    },
+    "ATPasel": {
+        "C00008": "ADP",
+        "C00002": "ATP"
+    },
+    "NDPK9": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "TRDR": {
+        "C00004": "NADH",
+        "C00282": "Hordeum vulgare thioredoxin disulfide h2",
+        "C00027": "hydrogen peroxide",
+        "C03840": "5-hydroxy-1,4-naphthoquinone",
+        "C18902": "methylseleninate",
+        "C00248": "Lipoamide",
+        "C00005": "NADPH"
+    },
+    "r0385": {
+        "D01225": "thiamine diphosphate",
+        "C00141": "alpha-ketoisovaleric acid"
+    },
+    "STS1r": {},
+    "GMPR": {},
+    "GLYOX": {
+        "C03451": "S-D-lactoylglutathione"
+    },
+    "r0280": {
+        "C00074": "phosphoenolpyruvate",
+        "C00008": "ADP"
+    },
+    "MALT": {
+        "C01936": "maltohexaose",
+        "C01518": "nigerose",
+        "C00897": "starch",
+        "C01835": "maltotriose",
+        "C00089": "Sucrose",
+        "C01083": "trehalose",
+        "C02052": "maltotetraose",
+        "C00252": "isomaltose",
+        "C00317": "amylopectin",
+        "C19632": "kojibiose",
+        "C01971": "maltose"
+    },
+    "PIK4_cho": {
+        "C00002": "ATP"
+    },
+    "PPCOACm": {
+        "C00100": "propionyl-CoA",
+        "C00024": "acetyl-CoA"
+    },
+    "ALCD22_L": {
+        "C20335": "1,3-butanediol"
+    },
+    "SUCRe": {
+        "C00252": "isomaltose",
+        "C00089": "Sucrose",
+        "C01971": "maltose"
+    },
+    "ASNN": {
+        "C02512": "3-Cyano-L-alanine"
+    },
+    "DHORTS": {
+        "C00438": "L-carbamoyl-L-aspartate",
+        "C00337": "(S)-dihydroorotate"
+    },
+    "PPA": {
+        "C00002": "ATP"
+    },
+    "PRAGSr": {},
+    "URAOX": {
+        "C00366": "Urate"
+    },
+    "MCDm": {
+        "C00083": "malonyl-CoA"
+    },
+    "34DHXMANDACOX_NADP": {
+        "C00003": "NAD+",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C01412": "Butyraldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "TDPm": {
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00458": "dCTP",
+        "C00459": "TTP",
+        "C00008": "ADP",
+        "C00044": "GTP",
+        "C00075": "UTP",
+        "C00460": "dUTP",
+        "C00286": "dGTP",
+        "C00131": "dATP"
+    },
+    "MACACI": {
+        "C01036": "4-Maleylacetoacetate"
+    },
+    "KHK": {
+        "C05052": "D-xylulose",
+        "C00247": "L-sorbose"
+    },
+    "TREH": {
+        "C01083": "alpha,alpha-trehalose"
+    },
+    "r0450": {
+        "C00123": "L-leucine",
+        "C00956": "L-2-aminoadipate",
+        "C00025": "L-glutamate"
+    },
+    "PDHm": {
+        "C00024": "acetyl-CoA"
+    },
+    "PTHPSn": {
+        "C04895": "6-(L-erythro-1,2-dihydroxypropyl 3-triphosphate)-7,8-dihydropterin"
+    },
+    "NDPK1n": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "FACOAL80": {
+        "C02679": "lauric acid",
+        "C06424": "tetradecanoate",
+        "C00002": "ATP"
+    },
+    "34HPPOR": {
+        "C01179": "4-hydroxyphenylpyruvate"
+    },
+    "RE2513L": {
+        "C00027": "H2O2",
+        "C00090": "catechol",
+        "C01755": "SCN-",
+        "C03758": "dopamine",
+        "C00087": "phenyl propan-2-yl sulfide"
+    },
+    "ORNTArm": {
+        "C00077": "L-ornithine"
+    },
+    "HSD3B12r": {
+        "C20252": "5-androstene-3,17-dione",
+        "C01227": "dehydroepiandrosterone",
+        "C00280": "androstene-3,17-dione"
+    },
+    "DADNKn": {
+        "C00214": "thymidine",
+        "C00559": "deoxyadenosine",
+        "C00881": "deoxycytidine"
+    },
+    "RE0944E": {
+        "C01936": "maltohexaose",
+        "C01518": "nigerose",
+        "C00897": "starch",
+        "C01835": "maltotriose",
+        "C00089": "Sucrose",
+        "C01083": "trehalose",
+        "C02052": "maltotetraose",
+        "C00252": "isomaltose",
+        "C00317": "amylopectin",
+        "C19632": "kojibiose",
+        "C01971": "maltose"
+    },
+    "PGDI": {
+        "C00427": "(5Z,13E)-(15S)-9alpha,11alpha-epidioxy-15-hydroxyprosta-5,13-dienoate",
+        "C00051": "glutathione"
+    },
+    "ADMDC": {
+        "C00019": "S-adenosyl-L-methionine"
+    },
+    "LTDCL": {
+        "C00355": "L-Dopa",
+        "C03758": "dopamine",
+        "C00643": "L-5-hydroxytryptophan"
+    },
+    "3SALATAim": {
+        "C00049": "L-aspartate",
+        "C00047": "L-Lys",
+        "C00025": "L-glutamate",
+        "C00026": "2-oxoglutarate",
+        "C20327": "2-oxo-4-phenyl-butanoic acid",
+        "C00036": "oxaloacetate"
+    },
+    "3HAO": {
+        "C00632": "3-Hydroxyanthranilate"
+    },
+    "RE2386C": {
+        "C14209": "4-hydroxyestradiol",
+        "C09727": "epicatechin",
+        "C00788": "epinephrine",
+        "C00547": "norepinephrine",
+        "C05301": "2-hydroxyestradiol",
+        "C06562": "catechin",
+        "C03758": "dopamine"
+    },
+    "ADNK1m": {
+        "C02961": "1-beta-D-arabinofuranosylcytosine",
+        "D01370": "cladribine",
+        "C00214": "L-thymidine",
+        "C00002": "ATP",
+        "C07650": "2',2'-difluorodeoxycytidine",
+        "C00330": "2'-deoxyguanosine",
+        "D07966": "fludarabine",
+        "D03546": "clofarabine",
+        "D06255": "troxacitabine",
+        "C00075": "UTP",
+        "C00881": "deoxycytidine",
+        "C00559": "2'-deoxyadenosine",
+        "C02094": "(-)-beta-2',3'-dideoxy-3'-thiacytidine"
+    },
+    "KYN": {
+        "C03227": "3-hydroxy-L-kynurenine",
+        "C00123": "3,5-dibromo-L-kynurenine",
+        "C00328": "L-kynurenine"
+    },
+    "OPAH": {},
+    "PETHCT": {
+        "C00063": "CTP",
+        "C00346": "Ethanolamine phosphate"
+    },
+    "DHPM2": {
+        "C00148": "DL-p-hydroxyphenylhydantoin",
+        "C05146": "hydantoin",
+        "C00429": "dihydrouracil",
+        "C14916": "L-5-ethylhydantoin"
+    },
+    "ILETAm": {
+        "C00233": "2-oxoisocaproate",
+        "C00123": "L-leucine",
+        "C03465": "3-methyl-2-oxovaleric acid",
+        "C06255": "2-oxovalerate",
+        "C00026": "2-oxoglutarate",
+        "C00183": "L-valine",
+        "C00025": "L-glutamate",
+        "C00079": "L-phenylalanine",
+        "C00141": "3-methyl-2-oxobutanoic acid",
+        "C01589": "2-(3-hydroxy-1-adamantyl)-2-oxoethanoic acid",
+        "C00407": "L-isoleucine",
+        "C00041": "L-alanine"
+    },
+    "r0027": {},
+    "PYDXO_1": {
+        "C00647": "pyridoxamine 5'-phosphate",
+        "C00627": "pyridoxine 5'-phosphate"
+    },
+    "r0330": {},
+    "PMI12346PH": {},
+    "PALFATPtc": {
+        "C02679": "lauric acid",
+        "C06424": "tetradecanoate",
+        "C00002": "ATP"
+    },
+    "NTD6l": {
+        "C00360": "5'-dAMP"
+    },
+    "SEAHCYSHYD": {
+        "C05330": "DL-homocysteine",
+        "C00021": "S-adenosyl-L-homocysteine",
+        "C00212": "adenosine"
+    },
+    "ACONTm": {
+        "C00417": "cis-aconitate"
+    },
+    "RE1587R": {
+        "C00004": "NADH",
+        "C02341": "omega-(p-nitrophenyl)dodecanoic acid",
+        "C00005": "NADPH"
+    },
+    "ADNK1": {
+        "C02961": "1-beta-D-arabinofuranosylcytosine",
+        "C00214": "L-thymidine",
+        "C00559": "2'-deoxyadenosine",
+        "C07650": "2',2'-difluorodeoxycytidine",
+        "C00330": "2'-deoxyguanosine",
+        "D07966": "fludarabine",
+        "D03546": "clofarabine",
+        "D06255": "troxacitabine",
+        "C00075": "UTP",
+        "C00881": "deoxycytidine",
+        "C00002": "ATP",
+        "C02094": "(-)-beta-2',3'-dideoxy-3'-thiacytidine",
+        "D01370": "cladribine"
+    },
+    "RE3013R": {
+        "C00004": "NADH",
+        "C02341": "omega-(p-nitrophenyl)octanoic acid",
+        "C00005": "NADPH"
+    },
+    "r0614": {},
+    "UPP3S": {
+        "C01024": "Hydroxymethylbilane"
+    },
+    "PPAn": {
+        "C00002": "ATP"
+    },
+    "DASPO1p": {},
+    "ACACT1m": {
+        "C00332": "acetoacetyl-CoA",
+        "C00087": "acetoacetyl-S-pantetheine"
+    },
+    "F1PGT": {
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "GLYK": {
+        "C00116": "glycerol"
+    },
+    "UPPDC1": {
+        "C01051": "uroporphyrinogen-III",
+        "C05766": "uroporphyrinogen-I"
+    },
+    "DORNOp": {
+        "C01570": "D-Leu",
+        "C02265": "D-Phe",
+        "C01905": "D-Asn",
+        "C00133": "D-Ala",
+        "C00402": "D-Asp",
+        "C00916": "cephalosporin C",
+        "C00525": "D-Trp",
+        "C00217": "D-Glu",
+        "C06420": "D-tyrosine",
+        "C00763": "D-proline",
+        "C00007": "O2",
+        "C06417": "D-Val",
+        "C00037": "Gly",
+        "C00792": "D-Arg",
+        "C00740": "D-Ser",
+        "C00855": "D-Met",
+        "C00739": "D-Lys",
+        "C00819": "D-Gln"
+    },
+    "RE1238X": {
+        "C00750": "spermine",
+        "C00315": "spermidine",
+        "C00024": "acetyl-CoA"
+    },
+    "ITCOALm": {
+        "C00044": "GTP",
+        "C00002": "ATP",
+        "C00490": "Itaconate",
+        "C00010": "CoA",
+        "C00149": "L-malate",
+        "C00042": "succinate",
+        "C00497": "D-malate"
+    },
+    "THFATm": {
+        "C00051": "reduced H-protein",
+        "C12538": "NH4Cl",
+        "C00143": "5,10-methylenetetrahydrofolate"
+    },
+    "UMPK": {
+        "C00360": "dAMP"
+    },
+    "MMCDm": {
+        "C00083": "malonyl-CoA"
+    },
+    "r0627": {
+        "C02094": "beta-naphthyl alpha-D-galactoside",
+        "C05402": "melibiose",
+        "C01613": "stachyose",
+        "C11596": "2,5-dinitrophenyl alpha-D-galactoside",
+        "C00492": "raffinose"
+    },
+    "r0480": {
+        "C13482": "N,N-dimethylethanolamine phosphate",
+        "C00019": "S-adenosyl-L-methionine",
+        "C00346": "Ethanolamine phosphate"
+    },
+    "r0139": {
+        "C00008": "ADP"
+    },
+    "SFGTHi": {
+        "C03451": "S-Lactoylglutathione",
+        "C01031": "S-formylglutathione"
+    },
+    "SARCOXp": {
+        "C00007": "oxygen",
+        "C00213": "sarcosine"
+    },
+    "DPMVDx": {
+        "C01143": "5-diphosphomevalonate"
+    },
+    "4HGLSDm": {
+        "C03912": "1-pyrroline-5-carboxylate"
+    },
+    "r0009": {
+        "C00002": "ATP"
+    },
+    "PYDAMK": {
+        "C00250": "pyridoxal",
+        "C00314": "pyridoxine",
+        "C00002": "ATP",
+        "C01279": "4-Amino-5-hydroxymethyl-2-methylpyrimidine",
+        "C00534": "pyridoxamine"
+    },
+    "EBP1r": {},
+    "RE2292C": {},
+    "FACOAL1821": {
+        "C02679": "lauric acid",
+        "C06424": "tetradecanoate",
+        "C00002": "ATP"
+    },
+    "TMDPPK": {
+        "D08580": "thiamine",
+        "C00002": "ATP"
+    },
+    "ACGALK": {
+        "C02711": "N-acetyl-D-glucosamine",
+        "C20328": "N-acetyl-alpha-D-glucosamine",
+        "C00002": "ATP"
+    },
+    "NDPK6": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "METS": {
+        "C00019": "S-adenosyl-L-methionine"
+    },
+    "r0630": {},
     "CYSTS": {
         "C05330": "homocysteine",
         "C00155": "L-homocysteine",
@@ -33,5 +1641,4410 @@
     "MCD": {
         "C00083": "malonyl-CoA"
     },
-    "RE1845C": {}
+    "NTD8": {
+        "C00360": "5'-dAMP"
+    },
+    "NTD4": {
+        "C03998": "N7-methyl-GMP"
+    },
+    "HMGCOASm": {
+        "C00024": "acetyl-CoA"
+    },
+    "ETHP": {
+        "C03360": "p-nitrophenyl phosphate",
+        "C00588": "phosphocholine"
+    },
+    "CBLATm": {
+        "C00063": "CTP",
+        "C00044": "GTP",
+        "C00075": "UTP",
+        "C00131": "2'-deoxy-ATP",
+        "C00002": "ATP",
+        "C00541": "cob(II)alamin",
+        "C00081": "ITP"
+    },
+    "B3GALT44g_cho": {},
+    "PMEVKx": {},
+    "CHLPCTD": {
+        "C00588": "phosphocholine"
+    },
+    "NTPP7": {
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00029": "UDP-glucose",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "NTPP2": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "MAN6PI": {
+        "C00275": "D-mannose 6-phosphate"
+    },
+    "LCADm": {
+        "C00479": "propionaldehyde"
+    },
+    "PGESr": {
+        "C00427": "(5Z,13E)-(15S)-9alpha,11alpha-epidioxy-15-hydroxyprosta-5,13-dienoate"
+    },
+    "TMDK1m": {
+        "C07210": "3'-azido-3'-deoxythymidine",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00214": "thymidine",
+        "C00299": "uridine",
+        "C00881": "deoxycytidine",
+        "D00333": "ganciclovir",
+        "C00526": "deoxyuridine",
+        "C06810": "acyclovir",
+        "C00044": "GTP",
+        "C11736": "5-fluoro-2'-deoxyuridine"
+    },
+    "DUTUP": {
+        "C00475": "cytidine",
+        "C00299": "uridine"
+    },
+    "DRPA": {
+        "C11736": "D-2-deoxyribose",
+        "C00673": "2-deoxy-D-ribose 5-phosphate"
+    },
+    "NDP3g": {
+        "C00008": "ADP"
+    },
+    "CBPS": {
+        "C00064": "L-glutamine",
+        "C00008": "ADP",
+        "C00002": "ATP",
+        "C01342": "NH4+"
+    },
+    "TMDK1": {
+        "C07210": "3'-azido-3'-deoxythymidine",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00214": "thymidine",
+        "C00299": "uridine",
+        "C00881": "deoxycytidine",
+        "D00333": "ganciclovir",
+        "C00526": "deoxyuridine",
+        "C06810": "acyclovir",
+        "C00044": "GTP",
+        "C11736": "5-fluoro-2'-deoxyuridine"
+    },
+    "ADSELK": {
+        "C00224": "adenosine-5'-phosphosulfate",
+        "C00002": "ATP"
+    },
+    "ADK1": {
+        "C00020": "AMP",
+        "C00002": "ATP"
+    },
+    "FA161ACPHi": {
+        "C00517": "palmitoyl-[acyl-carrier protein]"
+    },
+    "RE2642C": {
+        "C01733": "N-cyclohexanoyl-L-methionine",
+        "D07063": "N-acetyl-L-glutamine",
+        "C06809": "N-acetyl-L-Cys",
+        "C00624": "N-acetyl-L-glutamate",
+        "C08159": "2-acetylamino-3-((1S,2S)-2-hydroxycyclohexylsulfanyl)-propionic acid",
+        "C02712": "N-acetyl-L-Met",
+        "C02710": "N-acetyl-L-leucine",
+        "C03519": "N-acetyl-L-phenylalanine",
+        "C01589": "2-acetylamino-3-[(S)-1-((R)-hydroxyphenyl-methyl)-2-oxo-2-phenyl-ethylsulfanyl]-propionic acid",
+        "C02997": "N-acetyl-L-histidine"
+    },
+    "SPTc": {},
+    "PGCD": {
+        "C03232": "3-phosphohydroxypyruvate",
+        "C00003": "NAD+",
+        "C00004": "NADH",
+        "C00026": "alpha-ketoglutarate",
+        "C00197": "3-phospho-D-glycerate"
+    },
+    "PI45P5P_cho": {},
+    "PDE1": {
+        "C00942": "cGMP",
+        "C00575": "cAMP"
+    },
+    "PMI12346PS": {},
+    "NDP8": {
+        "C00459": "dTTP",
+        "C00460": "dUTP",
+        "C00458": "dCTP"
+    },
+    "NDP7": {
+        "C00008": "ADP"
+    },
+    "ENO": {
+        "C00631": "2-phospho-D-glycerate",
+        "C00074": "phosphoenolpyruvate"
+    },
+    "HSD17B7r": {
+        "C00951": "estradiol-17beta",
+        "C01227": "dehydroepiandrosterone",
+        "C00468": "estrone",
+        "C00005": "NADPH",
+        "C03917": "dihydrotestosterone",
+        "C00006": "NADP+"
+    },
+    "THMP": {
+        "C00002": "ATP",
+        "C02734": "Phenyl phosphate",
+        "C00008": "ADP",
+        "C03360": "p-nitrophenyl phosphate",
+        "C00020": "5'-AMP",
+        "C00074": "phosphoenolpyruvate",
+        "C00946": "2'-AMP",
+        "C01367": "3'-AMP",
+        "C03251": "D-glucose 6-phosphate"
+    },
+    "ACGSm": {},
+    "UPPRT": {
+        "C00119": "5-phospho-alpha-D-ribose 1-diphosphate",
+        "C00106": "Uracil"
+    },
+    "PI34P3Pn_cho": {},
+    "FTHFLmi": {
+        "C00002": "ATP"
+    },
+    "r0142": {},
+    "r0568": {
+        "C00041": "gamma-glutamyl-L-alanine",
+        "C00051": "glutathione"
+    },
+    "SPHK21c": {
+        "C00002": "ATP"
+    },
+    "3MOXTYROX": {
+        "C00483": "tyramine",
+        "C03758": "dopamine",
+        "C00007": "O2",
+        "C04599": "1-Methyl-4-phenyl-1,2,3,6-tetrahydropyridine",
+        "C15562": "benzylamine",
+        "C00398": "tryptamine",
+        "C05332": "2-Phenylethylamine",
+        "C00780": "serotonin"
+    },
+    "ST3GAL61g_cho": {
+        "C00128": "CMP-N-acetylneuraminate"
+    },
+    "r0368": {
+        "C00083": "malonyl-CoA",
+        "C19543": "apo-acyl-carrier protein",
+        "C05274": "decanoyl-CoA",
+        "C00136": "butyryl-CoA",
+        "C00024": "acetyl-CoA",
+        "C00332": "acetoacetyl-CoA",
+        "C00877": "crotonyl-CoA",
+        "C02593": "myristoyl-CoA",
+        "C00010": "CoA"
+    },
+    "MLTG1e": {
+        "C01936": "maltohexaose",
+        "C01518": "nigerose",
+        "C00897": "starch",
+        "C01835": "maltotriose",
+        "C00089": "Sucrose",
+        "C01083": "trehalose",
+        "C02052": "maltotetraose",
+        "C00252": "isomaltose",
+        "C00317": "amylopectin",
+        "C19632": "kojibiose",
+        "C01971": "maltose"
+    },
+    "r0366": {},
+    "5HOXINDACTOX": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "AGTim": {
+        "C00041": "L-alanine"
+    },
+    "HSD3A2r": {
+        "C01589": "(2Z)-2-(5-hydroxy-4,6-dimethyl-2-oxo-1,2-dihydro-3H-indol-3-ylidene)-N,N-di(prop-2-en-1-yl)hydrazinecarbothioamide",
+        "C03681": "5alpha-dihydroprogesterone",
+        "C00004": "NADH",
+        "C06694": "Fusidic acid",
+        "C00695": "cholic acid",
+        "C05479": "5beta-dihydroprogesterone",
+        "C01710": "1-Indanol",
+        "C03243": "9,10-phenanthrenequinone",
+        "C00523": "androsterone",
+        "C03917": "5alpha-dihydrotestosterone"
+    },
+    "ARGDCm": {
+        "C00062": "L-arginine"
+    },
+    "DTMPKm": {
+        "C00364": "dTMP",
+        "C08159": "N1-[(E)-4-dihydroxyphosphonyl-but-2-enyl]-5-chlorouracil",
+        "C00002": "ATP",
+        "C00362": "dGMP",
+        "C00365": "dUMP"
+    },
+    "LTA4H": {
+        "C00909": "leukotriene A4"
+    },
+    "GLYAMDTR": {},
+    "PGDIr": {
+        "C00427": "(5Z,13E)-(15S)-9alpha,11alpha-epidioxy-15-hydroxyprosta-5,13-dienoate",
+        "C00051": "glutathione"
+    },
+    "NTPP11": {
+        "C00081": "ITP",
+        "C00700": "XTP"
+    },
+    "BBHOX": {
+        "C00026": "2-oxoglutarate"
+    },
+    "GLYCLTDym": {
+        "C00005": "NADPH",
+        "C00168": "Hydroxypyruvate",
+        "C00004": "NADH"
+    },
+    "r0179": {
+        "C00232": "Succinic semialdehyde",
+        "C00006": "NADP+",
+        "C00433": "2,5-dioxopentanoate"
+    },
+    "r0775": {
+        "C00044": "GTP"
+    },
+    "HACD9m": {
+        "C00003": "NAD+",
+        "C00332": "acetoacetyl-CoA",
+        "C00004": "NADH",
+        "C05267": "3-ketooctanoyl-CoA",
+        "C01144": "(S)-3-hydroxybutyryl-CoA"
+    },
+    "RNDR1": {
+        "C00112": "CDP"
+    },
+    "NDPK8m": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "HSD3A1r": {
+        "C06694": "Fusidic acid",
+        "C00004": "NADH",
+        "C01589": "(2Z)-2-(5-hydroxy-4,6-dimethyl-2-oxo-1,2-dihydro-3H-indol-3-ylidene)-N,N-di(prop-2-en-1-yl)hydrazinecarbothioamide",
+        "C03681": "5alpha-dihydroprogesterone",
+        "C05479": "5beta-dihydroprogesterone",
+        "C00695": "cholic acid",
+        "C01710": "1-Indanol",
+        "C03243": "9,10-phenanthrenequinone",
+        "C00523": "androsterone",
+        "C03917": "5alpha-dihydrotestosterone"
+    },
+    "r0686": {
+        "C03912": "1-pyrroline-5-carboxylate"
+    },
+    "r0424": {
+        "C00003": "NAD+",
+        "C00451": "DL-isocitrate",
+        "C00311": "isocitrate",
+        "C00006": "NADP+"
+    },
+    "r0422": {
+        "C00003": "NAD+",
+        "C00451": "DL-isocitrate",
+        "C00311": "isocitrate",
+        "C00006": "NADP+"
+    },
+    "SELNPS_cho": {},
+    "NaKt": {
+        "C00047": "K+",
+        "C01330": "Na+/in"
+    },
+    "CYTK2n": {
+        "C00055": "CMP",
+        "C00239": "dCMP",
+        "C00105": "UMP"
+    },
+    "XYLR": {
+        "C00004": "NADH",
+        "C02154": "DL-glyceraldehyde",
+        "C00031": "D-glucose",
+        "C01412": "Butanal",
+        "C00479": "propionaldehyde",
+        "C00005": "NADPH",
+        "C00124": "D-galactose",
+        "C00003": "NAD+",
+        "C00259": "L-arabinose",
+        "C00181": "D-xylose",
+        "C03243": "9,10-phenanthrenequinone"
+    },
+    "SUCD1m": {
+        "C11378": "ubiquinone",
+        "C15494": "2,3-Dimethoxy-5-methyl-6-decyl-1,4-benzoquinone",
+        "C14785": "naphthoquinol",
+        "C00042": "succinate"
+    },
+    "CATm": {
+        "C00027": "H2O2"
+    },
+    "PFK": {
+        "C00085": "D-fructose 6-phosphate",
+        "C00002": "ATP"
+    },
+    "OCBTm": {
+        "C00327": "L-citrulline",
+        "C00077": "L-ornithine"
+    },
+    "NP1": {
+        "C05512": "2'-deoxyinosine",
+        "C00262": "hypoxanthine",
+        "C00242": "guanine",
+        "C00170": "5'-methylthioadenosine",
+        "C00330": "2'-deoxyguanosine",
+        "C06953": "2',3'-dideoxyinosine",
+        "C20674": "7-methylguanosine",
+        "C01589": "alpha-D-deoxyribose 1-phosphate",
+        "C00294": "Inosine",
+        "C16615": "5'-methylthioinosine",
+        "C00387": "guanosine",
+        "C00212": "adenosine",
+        "C00620": "alpha-D-ribose 1-phosphate"
+    },
+    "PIK4n_cho": {
+        "C00002": "ATP"
+    },
+    "GACMTRc": {
+        "C00019": "S-adenosyl-L-methionine",
+        "C00581": "Guanidinoacetate"
+    },
+    "MTHFDm": {
+        "C00006": "NADP+"
+    },
+    "ASPNATm": {},
+    "r0166": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "UGLT": {
+        "C00052": "UDP-galactose",
+        "C00446": "alpha-D-galactose 1-phosphate",
+        "C00029": "UDP-alpha-D-glucose",
+        "C00103": "alpha-D-glucose 1-phosphate",
+        "C01589": "imidazole"
+    },
+    "DHFR2i": {
+        "C00415": "7,8-dihydrofolate",
+        "C00504": "folate",
+        "C00005": "NADPH"
+    },
+    "SADTn": {
+        "C00224": "adenylyl sulfate",
+        "C00002": "ATP"
+    },
+    "r0757": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "TXASr": {
+        "C00427": "prostaglandin H2"
+    },
+    "ALASm": {
+        "C00037": "glycine",
+        "C00136": "Butanoyl-CoA",
+        "C01944": "Octanoyl-CoA",
+        "C00091": "succinyl-CoA",
+        "C00527": "glutaryl-CoA"
+    },
+    "RE1537X": {
+        "C02567": "N1-acetylspermine",
+        "C00750": "spermine",
+        "C00315": "spermidine",
+        "C00612": "N1-acetylspermidine",
+        "C19669": "thermospermine",
+        "C14685": "N,N'-dibenzyl-1,4-diaminobutane"
+    },
+    "CAT": {
+        "C00027": "H2O2"
+    },
+    "HEX7": {},
+    "FTHFLi": {
+        "C00002": "ATP"
+    },
+    "ALKP": {
+        "C00002": "ATP",
+        "C02734": "Phenyl phosphate",
+        "C00008": "ADP",
+        "C03360": "p-nitrophenyl phosphate",
+        "C00020": "5'-AMP",
+        "C00074": "phosphoenolpyruvate",
+        "C00946": "2'-AMP",
+        "C01367": "3'-AMP",
+        "C03251": "D-glucose 6-phosphate"
+    },
+    "CYSTGL": {
+        "C00155": "L-homocysteine",
+        "C02291": "L-cystathionine",
+        "C00097": "L-cysteine",
+        "C00979": "O-acetyl-L-serine"
+    },
+    "GPDDA1": {
+        "C03779": "bis(p-nitrophenyl) phosphate",
+        "D07349": "glycerophosphocholine",
+        "C03274": "glycerophosphoglycerol",
+        "C01233": "glycerophosphoethanolamine",
+        "C03360": "p-nitrophenyl phosphate"
+    },
+    "COUCOAFm": {
+        "C01494": "ferulate",
+        "C00423": "trans-cinnamate",
+        "C00811": "4-coumarate"
+    },
+    "5HOXINDACTO2OX": {
+        "C02918": "N1-methylnicotinamide",
+        "C00376": "retinaldehyde",
+        "C01412": "Butanal",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "ILETA": {
+        "C00233": "2-oxoisocaproate",
+        "C00123": "L-leucine",
+        "C03465": "3-methyl-2-oxovaleric acid",
+        "C06255": "2-oxovalerate",
+        "C00026": "2-oxoglutarate",
+        "C00183": "L-valine",
+        "C00025": "L-glutamate",
+        "C00079": "L-phenylalanine",
+        "C00141": "3-methyl-2-oxobutanoic acid",
+        "C01589": "2-(3-hydroxy-1-adamantyl)-2-oxoethanoic acid",
+        "C00407": "L-isoleucine",
+        "C00041": "L-alanine"
+    },
+    "r0752": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "DALAOXx": {
+        "C01570": "D-Leu",
+        "C02265": "D-Phe",
+        "C01905": "D-Asn",
+        "C00133": "D-Ala",
+        "C00402": "D-Asp",
+        "C00916": "cephalosporin C",
+        "C00525": "D-Trp",
+        "C00217": "D-Glu",
+        "C06420": "D-tyrosine",
+        "C00763": "D-proline",
+        "C00007": "O2",
+        "C06417": "D-Val",
+        "C00037": "Gly",
+        "C00792": "D-Arg",
+        "C00740": "D-Ser",
+        "C00855": "D-Met",
+        "C00739": "D-Lys",
+        "C00819": "D-Gln"
+    },
+    "SPODMx": {
+        "C00007": "O2-"
+    },
+    "ADSS": {
+        "C00049": "L-Asp",
+        "C06196": "2'-dIMP",
+        "C00192": "hydroxylamine",
+        "C00044": "GTP",
+        "C00130": "IMP"
+    },
+    "SERD_L": {
+        "C00065": "L-Ser",
+        "C00188": "L-Thr"
+    },
+    "DIAT": {
+        "C00750": "spermine",
+        "C00315": "spermidine",
+        "C00024": "acetyl-CoA"
+    },
+    "r0246": {
+        "C00005": "NADPH"
+    },
+    "BETALDHy": {},
+    "ASPTAm": {
+        "C00049": "L-aspartate",
+        "C00025": "L-glutamate",
+        "C00047": "L-Lys",
+        "C00026": "2-oxoglutarate",
+        "C20327": "2-oxo-4-phenyl-butanoic acid",
+        "C00036": "oxaloacetate"
+    },
+    "PYDXNO": {
+        "C00647": "pyridoxamine 5'-phosphate",
+        "C00627": "pyridoxine 5'-phosphate"
+    },
+    "RE1630C": {
+        "C14209": "4-hydroxyestradiol",
+        "C09727": "epicatechin",
+        "C00788": "epinephrine",
+        "C00547": "norepinephrine",
+        "C05301": "2-hydroxyestradiol",
+        "C06562": "catechin",
+        "C03758": "dopamine"
+    },
+    "UAG2EMA": {
+        "C00029": "UDP-D-glucose",
+        "C00052": "UDP-D-galactose",
+        "C00043": "UDP-N-acetyl-alpha-D-glucosamine"
+    },
+    "HMGLx": {
+        "C00356": "(S)-3-hydroxy-3-methylglutaryl-CoA"
+    },
+    "DGNSK": {
+        "C02961": "1-beta-D-arabinofuranosylcytosine",
+        "D01370": "cladribine",
+        "C00214": "L-thymidine",
+        "C00002": "ATP",
+        "C07650": "2',2'-difluorodeoxycytidine",
+        "C00330": "2'-deoxyguanosine",
+        "D07966": "fludarabine",
+        "D03546": "clofarabine",
+        "D06255": "troxacitabine",
+        "C00075": "UTP",
+        "C00881": "deoxycytidine",
+        "C00559": "2'-deoxyadenosine",
+        "C02094": "(-)-beta-2',3'-dideoxy-3'-thiacytidine"
+    },
+    "GCCcm": {
+        "C00003": "NAD+",
+        "C00248": "Lipoamide",
+        "C00004": "NADH",
+        "C00579": "Dihydrolipoamide",
+        "C11378": "ubiquinone"
+    },
+    "DHFRim": {
+        "C00415": "7,8-dihydrofolate",
+        "C00504": "folate",
+        "C00005": "NADPH"
+    },
+    "AKR1C41": {
+        "C01589": "(2Z)-2-(5-hydroxy-4,6-dimethyl-2-oxo-1,2-dihydro-3H-indol-3-ylidene)-N,N-di(prop-2-en-1-yl)hydrazinecarbothioamide",
+        "C03681": "5alpha-dihydroprogesterone",
+        "C00004": "NADH",
+        "C06694": "Fusidic acid",
+        "C00695": "cholic acid",
+        "C05479": "5beta-dihydroprogesterone",
+        "C01710": "1-Indanol",
+        "C03243": "9,10-phenanthrenequinone",
+        "C00523": "androsterone",
+        "C03917": "5alpha-dihydrotestosterone"
+    },
+    "HMGCOAR": {},
+    "TYRCBOX": {
+        "C00355": "L-Dopa",
+        "C03758": "dopamine",
+        "C00643": "L-5-hydroxytryptophan"
+    },
+    "TALA": {
+        "C00184": "dihydroxyacetone",
+        "C00279": "D-erythrose 4-phosphate",
+        "C00085": "D-fructose 6-phosphate",
+        "C00661": "glyceraldehyde 3-phosphate"
+    },
+    "PUNP4": {
+        "C00214": "thymidine"
+    },
+    "PUNP1": {
+        "C05512": "2'-deoxyinosine",
+        "C00262": "hypoxanthine",
+        "C00242": "guanine",
+        "C00170": "5'-methylthioadenosine",
+        "C00330": "2'-deoxyguanosine",
+        "C06953": "2',3'-dideoxyinosine",
+        "C20674": "7-methylguanosine",
+        "C00294": "Inosine",
+        "C19787": "5'-methylthioinosine",
+        "C00387": "guanosine",
+        "C00212": "adenosine",
+        "C00620": "alpha-D-ribose 1-phosphate"
+    },
+    "ADADir": {
+        "C02961": "1-beta-D-arabinofuranosylcytosine",
+        "D01370": "cladribine",
+        "C00214": "L-thymidine",
+        "C00002": "ATP",
+        "C07650": "2',2'-difluorodeoxycytidine",
+        "C00330": "2'-deoxyguanosine",
+        "D07966": "fludarabine",
+        "D03546": "clofarabine",
+        "D06255": "troxacitabine",
+        "C00075": "UTP",
+        "C00881": "deoxycytidine",
+        "C00559": "2'-deoxyadenosine",
+        "C02094": "(-)-beta-2',3'-dideoxy-3'-thiacytidine"
+    },
+    "RE2972M": {
+        "C00002": "ATP"
+    },
+    "r0410": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "H2O2syn": {},
+    "NDPK5n": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "LCYSTATm": {
+        "C00049": "L-aspartate",
+        "C00025": "L-glutamate",
+        "C00047": "L-Lys",
+        "C00026": "2-oxoglutarate",
+        "C20327": "2-oxo-4-phenyl-butanoic acid",
+        "C00036": "oxaloacetate"
+    },
+    "3HKYNAKGAT": {
+        "C00123": "L-leucine",
+        "C00073": "L-methionine",
+        "C00166": "phenylpyruvate",
+        "C00109": "2-oxobutyrate",
+        "C00078": "L-tryptophan",
+        "C06255": "2-oxovalerate",
+        "C00328": "L-kynurenine",
+        "C00026": "2-oxoglutarate",
+        "C00152": "L-asparagine",
+        "C01179": "hydroxyphenylpyruvate",
+        "C00957": "Mercaptopyruvate",
+        "C00135": "L-histidine",
+        "C00079": "L-phenylalanine",
+        "C00097": "L-cysteine",
+        "C00065": "L-serine",
+        "C00036": "oxaloacetate",
+        "C02356": "2-aminobutanoate",
+        "C00082": "L-tyrosine",
+        "C00064": "L-glutamine",
+        "C00041": "L-alanine"
+    },
+    "MI4PP": {
+        "C01589": "3-deoxy-D-myo-inositol 1-phosphate"
+    },
+    "PTPATe": {
+        "C00882": "3'-Dephospho-CoA"
+    },
+    "NADS2": {
+        "C00064": "L-glutamine",
+        "C00002": "ATP",
+        "C00857": "deamido-NAD+",
+        "C00014": "NH3"
+    },
+    "XAO2x": {
+        "C00385": "xanthine",
+        "C00005": "NADPH",
+        "C00262": "hypoxanthine"
+    },
+    "r0644": {
+        "C02918": "N1-methylnicotinamide",
+        "C00376": "retinaldehyde",
+        "C01412": "Butanal",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "FTHFCLm": {
+        "C03479": "5-formyltetrahydrofolate",
+        "C00002": "ATP"
+    },
+    "MLTG1": {
+        "C01936": "maltohexaose",
+        "C01518": "nigerose",
+        "C00897": "starch",
+        "C01835": "maltotriose",
+        "C00089": "Sucrose",
+        "C01083": "trehalose",
+        "C02052": "maltotetraose",
+        "C00252": "isomaltose",
+        "C00317": "amylopectin",
+        "C19632": "kojibiose",
+        "C01971": "maltose"
+    },
+    "PPBNGS": {},
+    "DCMPDA": {
+        "C00239": "dCMP"
+    },
+    "ACOAH": {
+        "C00024": "acetyl-CoA"
+    },
+    "MTHFD": {
+        "C00006": "NADP+"
+    },
+    "r0084": {
+        "C00003": "NAD+",
+        "C00451": "DL-isocitrate",
+        "C00311": "isocitrate",
+        "C00006": "NADP+"
+    },
+    "r0648": {
+        "C00127": "GSSG",
+        "C00051": "GSH",
+        "C00669": "gamma-Glu-Cys"
+    },
+    "DARGOp": {
+        "C01570": "D-Leu",
+        "C00402": "D-Aspartate",
+        "C01905": "D-Asn",
+        "C00133": "D-Ala",
+        "C00916": "cephalosporin C",
+        "C00525": "D-Trp",
+        "C06420": "D-tyrosine",
+        "C00763": "D-proline",
+        "C00007": "O2",
+        "C02265": "D-phenylalanine",
+        "C06417": "D-Val",
+        "C00037": "Gly",
+        "C00792": "D-Arg",
+        "C00740": "D-Ser",
+        "C00855": "D-Met",
+        "C00739": "D-Lys",
+        "C00819": "D-Gln",
+        "C00217": "D-Glu"
+    },
+    "GBAl_cho": {
+        "C01604": "phlorizin"
+    },
+    "GLYCK": {},
+    "r0463": {
+        "C00024": "acetyl-CoA"
+    },
+    "MCPST": {
+        "C00928": "2-mercaptoethanol",
+        "C00957": "3-Mercaptopyruvate"
+    },
+    "COKECBESr": {
+        "C01416": "cocaine"
+    },
+    "ACACT4p": {
+        "C00332": "acetoacetyl-CoA",
+        "C00087": "acetoacetyl-S-pantetheine"
+    },
+    "UNK3": {
+        "C00049": "L-aspartate",
+        "C00082": "L-tyrosine",
+        "C00026": "2-oxoglutarate",
+        "C00079": "L-phenylalanine",
+        "C00078": "L-tryptophan"
+    },
+    "ALDD20xm": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C01545": "octanal",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal"
+    },
+    "GLYOXm": {
+        "C03451": "S-D-lactoylglutathione"
+    },
+    "ME1m": {
+        "C00003": "NAD+",
+        "C00149": "(S)-malate"
+    },
+    "ADCim": {},
+    "PMI12346PHn": {},
+    "RE3409C": {},
+    "PNTKm": {
+        "C00002": "ATP",
+        "C00864": "(R)-pantothenate",
+        "C08159": "(2S)-3-ethyl-2-hydroxy-3-(hydroxymethyl)-N-[3-oxo-3-(pentylamino)propyl]hex-5-enamide",
+        "C05944": "pantothenol"
+    },
+    "RE2235R": {
+        "C00004": "NADH",
+        "C02341": "omega-(p-nitrophenyl)dodecanoic acid",
+        "C00005": "NADPH"
+    },
+    "PI5P4K_cho": {
+        "C00002": "ATP"
+    },
+    "DURADx": {},
+    "RNMK": {},
+    "r0097": {
+        "C00246": "Butyrate",
+        "C00010": "CoA",
+        "C00163": "propionate",
+        "C00002": "ATP"
+    },
+    "PRPNCOAHYDx": {
+        "C00877": "crotonyl-CoA"
+    },
+    "DUTCP": {
+        "C00475": "cytidine",
+        "C00299": "uridine"
+    },
+    "IDPA": {
+        "C01337": "XDP",
+        "C00081": "ITP"
+    },
+    "AGPOP": {
+        "C00074": "phosphoenolpyruvate",
+        "C00008": "ADP"
+    },
+    "STS4": {},
+    "NDPK3m": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "R01465m": {
+        "C00003": "NAD+",
+        "C00188": "L-threonine"
+    },
+    "IDHPOXOX2b": {},
+    "FUM": {
+        "C00149": "L-malate",
+        "C00160": "S-malate",
+        "C00711": "malate"
+    },
+    "ACACT5p": {
+        "C00332": "acetoacetyl-CoA",
+        "C00087": "acetoacetyl-S-pantetheine"
+    },
+    "3NTD7l": {},
+    "SRTN23OX": {
+        "C01718": "kynurenine",
+        "C00078": "L-tryptophan",
+        "C00525": "D-tryptophan"
+    },
+    "HACD1m": {
+        "C00003": "NAD+",
+        "C00332": "acetoacetyl-CoA",
+        "C00004": "NADH",
+        "C05267": "3-ketooctanoyl-CoA",
+        "C01144": "(S)-3-hydroxybutyryl-CoA"
+    },
+    "CYTD": {},
+    "NDPK7": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "r0860": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "MGSA": {
+        "C00111": "dihydroxyacetone phosphate"
+    },
+    "NTD3l": {
+        "C00360": "5'-dAMP"
+    },
+    "NDPK2m": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "FBP": {
+        "C02094": "beta-D-glucose 1,6-bisphosphate",
+        "C05378": "fructose 1,6-diphosphate"
+    },
+    "GMPS": {
+        "C00002": "ATP",
+        "C00064": "L-glutamine",
+        "C00655": "XMP"
+    },
+    "URIK2": {
+        "C00475": "cytidine",
+        "C00299": "uridine"
+    },
+    "r0047": {
+        "C00020": "5'-AMP",
+        "C00002": "ATP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "FBA": {
+        "C00111": "glycerone phosphate",
+        "C00118": "D-glyceraldehyde 3-phosphate",
+        "C01094": "D-Fructose 1-phosphate"
+    },
+    "SPRn": {
+        "C03243": "9,10-phenanthrenequinone",
+        "C00835": "sepiapterin"
+    },
+    "GLYCLm": {
+        "C00143": "5,10-methylenetetrahydrofolate",
+        "C00051": "reduced H-protein",
+        "C12538": "NH4Cl"
+    },
+    "ACP1e": {
+        "C00002": "ATP",
+        "C02734": "Phenyl phosphate",
+        "C00008": "ADP",
+        "C03360": "p-nitrophenyl phosphate",
+        "C00020": "5'-AMP",
+        "C00074": "phosphoenolpyruvate",
+        "C00946": "2'-AMP",
+        "C01367": "3'-AMP",
+        "C03251": "D-glucose 6-phosphate"
+    },
+    "PYLALDOXm": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "RE0344M": {
+        "C00412": "stearoyl-CoA",
+        "C01832": "lauroyl-CoA",
+        "C00154": "palmitoyl-CoA",
+        "C00014": "N-carbobenzoxy-L-tyrosine p-nitrophenyl ester"
+    },
+    "ADK1m": {
+        "C00020": "AMP",
+        "C00002": "ATP"
+    },
+    "STS2": {},
+    "MLTG1ly": {
+        "C01936": "maltohexaose",
+        "C01518": "nigerose",
+        "C00897": "starch",
+        "C01835": "maltotriose",
+        "C00089": "Sucrose",
+        "C01083": "trehalose",
+        "C02052": "maltotetraose",
+        "C00252": "isomaltose",
+        "C00317": "amylopectin",
+        "C19632": "kojibiose",
+        "C01971": "maltose"
+    },
+    "MALTe": {
+        "C01936": "maltohexaose",
+        "C01518": "nigerose",
+        "C00897": "starch",
+        "C01835": "maltotriose",
+        "C00089": "Sucrose",
+        "C01083": "trehalose",
+        "C02052": "maltotetraose",
+        "C00252": "isomaltose",
+        "C00317": "amylopectin",
+        "C19632": "kojibiose",
+        "C01971": "maltose"
+    },
+    "HPROxm": {
+        "C00004": "NADH",
+        "C00005": "NADPH",
+        "C03912": "1-pyrroline-5-carboxylate",
+        "C00006": "NADP+"
+    },
+    "CK_cho": {
+        "C00008": "ADP",
+        "C00300": "Creatine",
+        "C00002": "ATP",
+        "C02305": "phosphocreatine"
+    },
+    "SRTNMTX": {
+        "C00398": "tryptamine",
+        "C00019": "S-adenosyl-L-methionine",
+        "C00481": "pyrazole",
+        "C00292": "aniline",
+        "C06943": "desmethylimipramine",
+        "C01589": "imidazole"
+    },
+    "r0679": {
+        "C00002": "ATP",
+        "C00864": "(R)-pantothenate",
+        "C08159": "(2S)-3-ethyl-2-hydroxy-3-(hydroxymethyl)-N-[3-oxo-3-(pentylamino)propyl]hex-5-enamide",
+        "C05944": "pantothenol"
+    },
+    "r0451": {},
+    "ARGN": {
+        "C00062": "L-arginine",
+        "C00079": "L-phenylalanine"
+    },
+    "r0051": {
+        "C00262": "hypoxanthine",
+        "C00144": "GMP",
+        "C00385": "xanthine",
+        "C00130": "IMP",
+        "C00242": "guanine",
+        "C00119": "5-phospho-alpha-D-ribose 1-diphosphate"
+    },
+    "RE0926E": {
+        "C01971": "cellobiose"
+    },
+    "RE2513C": {
+        "C00090": "catechol",
+        "C01755": "SCN-",
+        "C03758": "dopamine",
+        "C00087": "phenyl propan-2-yl sulfide",
+        "C00027": "H2O2"
+    },
+    "INOSTO": {},
+    "ACACT7p": {
+        "C00332": "acetoacetyl-CoA",
+        "C00087": "acetoacetyl-S-pantetheine"
+    },
+    "IPDDIx": {
+        "C00129": "isopentenyl diphosphate"
+    },
+    "MMMm": {
+        "C01213": "(R)-methylmalonyl-CoA",
+        "C02557": "(R)-2-methylmalonyl-CoA",
+        "C00091": "succinyl-CoA"
+    },
+    "PI345P3Pn_cho": {},
+    "HPYRRy": {
+        "C00005": "NADPH",
+        "C00168": "Hydroxypyruvate",
+        "C00004": "NADH"
+    },
+    "MCCCrm": {
+        "C03069": "3-methylcrotonoyl-CoA"
+    },
+    "UDPGP": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "FCLTm": {
+        "C00011": "Co2+"
+    },
+    "NDP7er": {
+        "C00008": "ADP"
+    },
+    "FOLR2": {
+        "C00415": "7,8-dihydrofolate",
+        "C00504": "folate",
+        "C00005": "NADPH"
+    },
+    "NDP7g": {
+        "C00008": "ADP"
+    },
+    "SPR": {
+        "C03243": "9,10-phenanthrenequinone",
+        "C00835": "sepiapterin"
+    },
+    "P5CR": {
+        "C00004": "NADH",
+        "C00005": "NADPH",
+        "C03912": "1-pyrroline-5-carboxylate",
+        "C00006": "NADP+"
+    },
+    "GTHOr": {
+        "C00127": "glutathione disulfide",
+        "C03170": "trypanothione",
+        "C00004": "NADH",
+        "C16758": "(E)-ajoene",
+        "C05377": "menadione",
+        "C00005": "NADPH",
+        "C02617": "1,4-Naphthoquinone"
+    },
+    "TRIODTHYSULT": {
+        "C05658": "3-hydroxyindole",
+        "C10208": "daidzein",
+        "C00059": "genistein 4'-sulfate",
+        "C11713": "2-naphthol",
+        "D04926": "4-methoxyphenol",
+        "C00146": "phenol",
+        "C03758": "dopamine",
+        "C02124": "4-Chlorophenol",
+        "C00053": "3'-phosphoadenylyl sulfate",
+        "C00780": "5-hydroxytryptamine",
+        "C00870": "4-nitrophenol"
+    },
+    "SBPP1": {},
+    "XYLTD_D": {
+        "C00003": "NAD+",
+        "C05052": "D-xylulose",
+        "C00006": "NADP+",
+        "C00794": "sorbitol"
+    },
+    "STS3r": {},
+    "r0596": {
+        "C04047": "3-hydroxy-2-methylpropanoyl-CoA"
+    },
+    "DHPM1": {
+        "C00148": "DL-p-hydroxyphenylhydantoin",
+        "C05146": "hydantoin",
+        "C00429": "dihydrouracil",
+        "C14916": "L-5-ethylhydantoin"
+    },
+    "RE1538X": {
+        "C02567": "N1-acetylspermine",
+        "C00750": "spermine",
+        "C00612": "N1-acetylspermidine"
+    },
+    "NADPNe": {
+        "C00003": "NAD+"
+    },
+    "ACCOACrm": {
+        "C00024": "acetyl-CoA"
+    },
+    "SQLSr": {
+        "C00448": "(2E,6E)-farnesyl diphosphate"
+    },
+    "GLUPRT": {},
+    "ABO5g_cho": {},
+    "FTHFCL": {
+        "C03479": "5-formyltetrahydrofolate",
+        "C00002": "ATP"
+    },
+    "RE2034C": {
+        "C00233": "2-oxoisocaproate",
+        "C00123": "L-leucine",
+        "C03465": "3-methyl-2-oxovaleric acid",
+        "C06255": "2-oxovalerate",
+        "C00026": "2-oxoglutarate",
+        "C00183": "L-valine",
+        "C00025": "L-glutamate",
+        "C00079": "L-phenylalanine",
+        "C00141": "3-methyl-2-oxobutanoic acid",
+        "C01589": "2-(3-hydroxy-1-adamantyl)-2-oxoethanoic acid",
+        "C00407": "L-isoleucine",
+        "C00041": "L-alanine"
+    },
+    "KAS8": {
+        "C00005": "NADPH",
+        "C00083": "malonyl-CoA",
+        "C00004": "NADH",
+        "C00024": "acetyl-CoA"
+    },
+    "PI345P3P_cho": {},
+    "NORANMT": {
+        "C00019": "S-adenosyl-L-methionine",
+        "C02735": "phenylethanolamine"
+    },
+    "SELCYSTGL": {
+        "C00155": "L-homocysteine",
+        "C02291": "L-cystathionine",
+        "C00097": "L-cysteine",
+        "C00979": "O-acetyl-L-serine"
+    },
+    "PPOR": {
+        "C01179": "4-hydroxyphenylpyruvate"
+    },
+    "PI34P3P": {},
+    "NTP10": {
+        "C00002": "ATP",
+        "D02011": "3'(2')-O-(methylanthranoyl)adenosine 5'-diphosphate",
+        "C00212": "1,N6-etheno-ADP",
+        "C00458": "dCTP",
+        "C18690": "3'(2')-O-(methylanthranoyl)adenosine 5'-triphosphate",
+        "C00459": "dTTP",
+        "C00008": "ADP",
+        "C00075": "UTP",
+        "C00035": "GDP",
+        "C00015": "UDP",
+        "C00286": "dGTP",
+        "C00131": "dATP"
+    },
+    "GFUCS": {
+        "D06272": "GDP-6-deoxy-4-keto-mannose"
+    },
+    "MEVK1": {
+        "C00002": "ATP"
+    },
+    "UGALGTg": {},
+    "PI45P5Pn_cho": {},
+    "DGNSKm": {
+        "C02961": "1-beta-D-arabinofuranosylcytosine",
+        "C00214": "L-thymidine",
+        "C00559": "2'-deoxyadenosine",
+        "C07650": "2',2'-difluorodeoxycytidine",
+        "C00330": "2'-deoxyguanosine",
+        "D07966": "fludarabine",
+        "D03546": "clofarabine",
+        "D06255": "troxacitabine",
+        "C00075": "UTP",
+        "C00881": "deoxycytidine",
+        "C00002": "ATP",
+        "C02094": "(-)-beta-2',3'-dideoxy-3'-thiacytidine",
+        "D01370": "cladribine"
+    },
+    "34DHPHAMT": {
+        "C09727": "epicatechin",
+        "C14209": "4-hydroxyestradiol",
+        "C00788": "epinephrine",
+        "C00547": "norepinephrine",
+        "C05301": "2-hydroxyestradiol",
+        "C06562": "catechin",
+        "C03758": "dopamine"
+    },
+    "RE1539X": {
+        "C02567": "N1-acetylspermine",
+        "C00750": "spermine",
+        "C00315": "spermidine",
+        "C00612": "N1-acetylspermidine",
+        "C19669": "thermospermine",
+        "C14685": "N,N'-dibenzyl-1,4-diaminobutane"
+    },
+    "ACACT1x": {
+        "C00332": "acetoacetyl-CoA",
+        "C00087": "acetoacetyl-S-pantetheine"
+    },
+    "KYNAKGATm": {
+        "C00123": "L-leucine",
+        "C00073": "L-methionine",
+        "C00166": "phenylpyruvate",
+        "C00109": "2-oxobutyrate",
+        "C00078": "L-tryptophan",
+        "C06255": "2-oxovalerate",
+        "C00328": "L-kynurenine",
+        "C00026": "2-oxoglutarate",
+        "C00152": "L-asparagine",
+        "C01179": "hydroxyphenylpyruvate",
+        "C00957": "Mercaptopyruvate",
+        "C00135": "L-histidine",
+        "C00079": "L-phenylalanine",
+        "C00097": "L-cysteine",
+        "C00065": "L-serine",
+        "C00036": "oxaloacetate",
+        "C02356": "2-aminobutanoate",
+        "C00082": "L-tyrosine",
+        "C00064": "L-glutamine",
+        "C00041": "L-alanine"
+    },
+    "STS4r": {},
+    "XANDp": {
+        "C00004": "NADH",
+        "C00385": "xanthine",
+        "C00262": "hypoxanthine"
+    },
+    "NTD7e": {
+        "C00020": "5'-AMP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C00002": "ATP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "LCYSTCBOXL": {},
+    "NNMT": {
+        "C00153": "nicotinamide"
+    },
+    "r0620": {},
+    "ADNK1n": {
+        "C02961": "1-beta-D-arabinofuranosylcytosine",
+        "D01370": "cladribine",
+        "C00214": "L-thymidine",
+        "C00002": "ATP",
+        "C07650": "2',2'-difluorodeoxycytidine",
+        "C00330": "2'-deoxyguanosine",
+        "D07966": "fludarabine",
+        "D03546": "clofarabine",
+        "D06255": "troxacitabine",
+        "C00075": "UTP",
+        "C00881": "deoxycytidine",
+        "C00559": "2'-deoxyadenosine",
+        "C02094": "(-)-beta-2',3'-dideoxy-3'-thiacytidine"
+    },
+    "GLYKm": {
+        "C00116": "glycerol"
+    },
+    "SALMCOM2": {
+        "C14209": "4-hydroxyestradiol",
+        "C09727": "epicatechin",
+        "C00788": "epinephrine",
+        "C00547": "norepinephrine",
+        "C05301": "2-hydroxyestradiol",
+        "C06562": "catechin",
+        "C03758": "dopamine"
+    },
+    "GALOR": {
+        "C14448": "Glyoxal",
+        "C09094": "geranylgeraniol",
+        "C01126": "trans,trans-farnesol",
+        "C02154": "DL-glyceraldehyde",
+        "C14696": "1-nonanol",
+        "C00191": "D-glucuronate",
+        "C01545": "1-octanal",
+        "C00031": "D-glucose",
+        "C00124": "D-galactose",
+        "C00193": "benzaldehyde",
+        "C01412": "1-butanal",
+        "C01471": "acrolein",
+        "C01633": "1-Decanol",
+        "C00546": "methylglyoxal",
+        "C00556": "benzyl alcohol",
+        "D05158": "Pyridine-3-methanol",
+        "C00181": "D-xylose",
+        "C11129": "isatin",
+        "C07327": "Pyridine-3-aldehyde"
+    },
+    "FUMm": {
+        "C00149": "L-malate",
+        "C00160": "S-malate",
+        "C00711": "malate"
+    },
+    "41R1H2MAE12BOOX": {
+        "C00483": "tyramine",
+        "C03758": "dopamine",
+        "C00007": "O2",
+        "C04599": "1-Methyl-4-phenyl-1,2,3,6-tetrahydropyridine",
+        "C15562": "benzylamine",
+        "C00398": "tryptamine",
+        "C05332": "2-Phenylethylamine",
+        "C00780": "serotonin"
+    },
+    "r0311": {
+        "C02679": "lauric acid",
+        "C06424": "tetradecanoate",
+        "C00002": "ATP"
+    },
+    "PCLAD": {
+        "C04409": "2-amino-3-(3-oxoprop-2-enyl)-but-2-enedioate",
+        "C02094": "alpha-amino-beta-carboxymuconate-epsilon-semialdehyde"
+    },
+    "RBFK": {
+        "C00255": "riboflavin",
+        "C00002": "ATP"
+    },
+    "NDPK2": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "NTD4l": {
+        "C03998": "N7-methyl-GMP"
+    },
+    "GLACO": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "2HBO": {
+        "C00003": "NAD+",
+        "C00004": "NADH",
+        "C00186": "(S)-lactate",
+        "C04423": "nicotinamide hypoxanthine dinucleotide"
+    },
+    "GCC2cm": {
+        "C00003": "NAD+",
+        "C00004": "NADH",
+        "C00248": "Lipoamide",
+        "C00579": "Dihydrolipoamide",
+        "C11378": "ubiquinone"
+    },
+    "DCYTD": {},
+    "NTD4e": {
+        "C03998": "N7-methyl-GMP"
+    },
+    "CSNATer": {
+        "C05270": "Hexanoyl-CoA",
+        "C00318": "carnitine",
+        "C00114": "choline",
+        "C00024": "acetyl-CoA"
+    },
+    "r0120": {
+        "C00044": "GTP"
+    },
+    "NTD9": {
+        "C00020": "5'-AMP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C00002": "ATP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "NTD5": {
+        "C00360": "5'-dAMP"
+    },
+    "NTD1": {
+        "C00360": "5'-dAMP"
+    },
+    "METAT": {
+        "C11227": "L-ethionine",
+        "C00073": "L-methionine",
+        "C00002": "ATP",
+        "C00019": "S-adenosylmethionine"
+    },
+    "r0494": {
+        "C00212": "1,N6-etheno-ADP",
+        "C00002": "ATP",
+        "C00458": "dCTP",
+        "C18690": "3'(2')-O-(methylanthranoyl)adenosine 5'-triphosphate",
+        "D02011": "2'(3')-O-(2,4,6-trinitrophenyl)adenosine 5'-diphosphate",
+        "C00459": "dTTP",
+        "C00008": "ADP",
+        "C00075": "UTP",
+        "C00035": "GDP",
+        "C00015": "UDP",
+        "C00286": "dGTP",
+        "C00131": "dATP"
+    },
+    "G6PDH2r": {
+        "C00003": "NAD+",
+        "C03251": "D-glucose 6-phosphate",
+        "C00006": "NADP+",
+        "C06369": "2-deoxy-D-glucose 6-phosphate"
+    },
+    "HCO3Em": {
+        "C00011": "CO2",
+        "C00288": "HCO3-",
+        "C00388": "histamine",
+        "C01353": "H2CO3"
+    },
+    "3SALATAi": {
+        "C00049": "L-aspartate",
+        "C00047": "L-Lys",
+        "C00025": "L-glutamate",
+        "C00026": "2-oxoglutarate",
+        "C20327": "2-oxo-4-phenyl-butanoic acid",
+        "C00036": "oxaloacetate"
+    },
+    "IMACTD": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "NTPP5": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "LCADi": {
+        "C00479": "propionaldehyde"
+    },
+    "MINOHPKn": {},
+    "NDPK2n": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "IDHPOXOX3": {},
+    "CYTK1n": {
+        "C00055": "CMP",
+        "C00239": "dCMP",
+        "C00105": "UMP"
+    },
+    "NNATm": {
+        "C01185": "nicotinate beta-D-ribonucleotide"
+    },
+    "DPMVD": {
+        "C01143": "5-diphosphomevalonate"
+    },
+    "NTD5m": {
+        "C00360": "5'-dAMP"
+    },
+    "FKYNH": {
+        "C02700": "N-formyl-L-kynurenine"
+    },
+    "DHFR": {
+        "C00415": "7,8-dihydrofolate",
+        "C00504": "folate",
+        "C00005": "NADPH"
+    },
+    "GLACOm": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "r0796": {
+        "C14448": "Glyoxal",
+        "C09094": "geranylgeraniol",
+        "C01126": "trans,trans-farnesol",
+        "C02154": "DL-glyceraldehyde",
+        "C14696": "1-nonanol",
+        "C00191": "D-glucuronate",
+        "C01545": "1-octanal",
+        "C00031": "D-glucose",
+        "C00124": "D-galactose",
+        "C00193": "benzaldehyde",
+        "C01412": "1-butanal",
+        "C01471": "acrolein",
+        "C01633": "1-Decanol",
+        "C00546": "methylglyoxal",
+        "C00556": "benzyl alcohol",
+        "D05158": "Pyridine-3-methanol",
+        "C00181": "D-xylose",
+        "C11129": "isatin",
+        "C07327": "Pyridine-3-aldehyde"
+    },
+    "DUTPDP": {
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00029": "UDP-glucose",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "MTHFD2i": {},
+    "GLYOp": {
+        "C01570": "D-Leu",
+        "C00402": "D-Aspartate",
+        "C01905": "D-Asn",
+        "C00133": "D-Ala",
+        "C00916": "cephalosporin C",
+        "C00525": "D-Trp",
+        "C06420": "D-tyrosine",
+        "C00763": "D-proline",
+        "C00007": "O2",
+        "C02265": "D-phenylalanine",
+        "C06417": "D-Val",
+        "C00037": "Gly",
+        "C00792": "D-Arg",
+        "C00740": "D-Ser",
+        "C00855": "D-Met",
+        "C00739": "D-Lys",
+        "C00819": "D-Gln",
+        "C00217": "D-Glu"
+    },
+    "3DSPHR": {},
+    "NDP3": {
+        "C00008": "ADP"
+    },
+    "HPROym": {
+        "C00004": "NADH",
+        "C00005": "NADPH",
+        "C03912": "1-pyrroline-5-carboxylate",
+        "C00006": "NADP+"
+    },
+    "RE2427M": {},
+    "34DHXMANDACOX": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "PPPGOm": {
+        "C01079": "protoporphyrinogen-IX"
+    },
+    "AMPTASECG": {
+        "C02155": "Gly-Leu",
+        "C00148": "Lys-Pro-p-nitroanilide",
+        "C00073": "Met-Pro-p-nitroanilide",
+        "C00716": "Ser-Pro-p-nitroanilide"
+    },
+    "SSALxm": {},
+    "GCC2am": {
+        "C00248": "Lipoamide"
+    },
+    "GTHDH": {
+        "C00051": "glutathione",
+        "C05422": "dehydroascorbate"
+    },
+    "GHMT2rm": {
+        "C00065": "L-serine",
+        "C00740": "D-serine",
+        "C00101": "tetrahydrofolate"
+    },
+    "ACCOAL": {
+        "C00035": "GDP",
+        "C00002": "ATP",
+        "C00008": "ADP",
+        "C00630": "isobutyryl-CoA",
+        "C02632": "Isobutyrate",
+        "C00010": "CoA",
+        "C00024": "acetyl-CoA"
+    },
+    "r0784": {
+        "C00003": "NAD+",
+        "C05052": "D-xylulose",
+        "C00006": "NADP+",
+        "C00794": "sorbitol"
+    },
+    "RE1711C_2": {
+        "C06317": "Vanillyl alcohol",
+        "C10761": "4-methoxybenzaldehyde",
+        "C06142": "n-butanol",
+        "C00756": "Octanol",
+        "C01710": "1-Indanol",
+        "C00854": "Cyclohexanol",
+        "C00207": "acetone",
+        "C00473": "all-trans-retinol",
+        "C16834": "1-Pentanol",
+        "C01845": "2-propanol",
+        "C08317": "12-hydroxylauric acid methyl ester",
+        "C01380": "ethylene glycol",
+        "C07328": "3-methyl-1-butanol",
+        "C01545": "octanal",
+        "C01949": "2-Pentanone",
+        "C00469": "ethanol",
+        "C01412": "Butyraldehyde",
+        "C15492": "3,4-dihydro-retinol",
+        "C03352": "3-methoxybenzylalcohol",
+        "C07113": "acetophenone",
+        "C00004": "NADH",
+        "C05979": "Propanol",
+        "C00006": "NADP+",
+        "C08279": "methylcrotonyl alcohol",
+        "C00601": "phenylacetaldehyde",
+        "C02394": "cinnamyl alcohol",
+        "C00005": "NADPH",
+        "C00903": "trans-cinnamaldehyde",
+        "C00556": "benzyl alcohol",
+        "C00003": "NAD+",
+        "C00414": "cyclohexanone",
+        "C00376": "all-trans-retinal",
+        "C00132": "methanol",
+        "C00193": "benzaldehyde",
+        "C17268": "1-phenyl-1,2-propanedione",
+        "C00084": "acetaldehyde",
+        "C06647": "4-chloroacetophenone"
+    },
+    "METOX": {
+        "C00123": "L-Leu",
+        "C00073": "L-methionine",
+        "C00078": "L-tryptophan",
+        "C00047": "L-lysine",
+        "C00079": "L-phenylalanine",
+        "C00041": "L-alanine"
+    },
+    "NTP3e": {
+        "C00044": "GTP"
+    },
+    "CYTDn": {},
+    "FBA4": {
+        "C01131": "L-rhamnulose 1-phosphate"
+    },
+    "r0363": {
+        "C00586": "2-deoxy-D-glucose",
+        "C00031": "D-glucose",
+        "C00159": "D-mannose",
+        "C00002": "ATP"
+    },
+    "r0364": {
+        "C00586": "2-deoxy-D-glucose",
+        "C00031": "D-glucose",
+        "C00159": "D-mannose",
+        "C00002": "ATP"
+    },
+    "DATPDPm": {
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00029": "UDP-glucose",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "AGTix": {
+        "C00041": "L-alanine"
+    },
+    "EBP2r": {},
+    "GARFT": {
+        "C02094": "beta-glycinamide ribonucleotide",
+        "C00234": "(6R)-N10-formyltetrahydrofolate"
+    },
+    "HXPRT": {
+        "C00262": "hypoxanthine",
+        "C00144": "GMP",
+        "C00385": "xanthine",
+        "C00130": "IMP",
+        "C00242": "guanine",
+        "C00119": "5-phospho-alpha-D-ribose 1-diphosphate"
+    },
+    "BAAT2x": {},
+    "MI3PS": {
+        "C03251": "D-glucose 6-phosphate"
+    },
+    "3HBCOAHLm": {
+        "C04047": "3-hydroxyisobutyryl-CoA"
+    },
+    "GNK": {},
+    "PYAM5PO": {
+        "C00647": "pyridoxamine 5'-phosphate",
+        "C00627": "pyridoxine 5'-phosphate"
+    },
+    "DADK": {
+        "C00020": "AMP",
+        "C00002": "ATP"
+    },
+    "NTPP10": {
+        "C00081": "ITP",
+        "C00700": "XTP"
+    },
+    "DHDDH": {
+        "C00087": "(S)-tetralol",
+        "C03990": "lithocholic acid",
+        "C14515": "Camphorquinone",
+        "C00829": "trans-naphthalene dihydrodiol",
+        "C05465": "taurochenodeoxycholic acid",
+        "C00695": "cholic acid",
+        "C01407": "trans-benzene dihydrodiol",
+        "C02592": "taurolithocholic acid",
+        "C00523": "androsterone"
+    },
+    "DPROOp": {
+        "C01570": "D-Leu",
+        "C00402": "D-Aspartate",
+        "C01905": "D-Asn",
+        "C00133": "D-Ala",
+        "C00916": "cephalosporin C",
+        "C00525": "D-Trp",
+        "C06420": "D-tyrosine",
+        "C00763": "D-proline",
+        "C00007": "O2",
+        "C02265": "D-phenylalanine",
+        "C06417": "D-Val",
+        "C00037": "Gly",
+        "C00792": "D-Arg",
+        "C00740": "D-Ser",
+        "C00855": "D-Met",
+        "C00739": "D-Lys",
+        "C00819": "D-Gln",
+        "C00217": "D-Glu"
+    },
+    "HKYNH": {
+        "C00328": "L-kynurenine",
+        "C03227": "3-hydroxy-L-kynurenine",
+        "C00123": "3,5-dibromo-L-kynurenine"
+    },
+    "r0777": {
+        "C00044": "GTP"
+    },
+    "RNDR4": {
+        "C00112": "CDP"
+    },
+    "GMAND": {
+        "C00096": "GDP-mannose"
+    },
+    "PGMT": {
+        "C00103": "alpha-D-glucose 1-phosphate",
+        "C00636": "alpha-D-mannose 1-phosphate"
+    },
+    "CHOLK": {
+        "C00114": "choline",
+        "C00002": "ATP"
+    },
+    "r0355": {
+        "C00031": "D-glucose",
+        "C00221": "beta-D-glucose",
+        "C00002": "ATP"
+    },
+    "ARGSL": {
+        "C03406": "argininosuccinate",
+        "C01589": "N,N'-bis(tert-butoxycarbonyl)-5-[(3-aminopropyl)amino]pentan-1-ol"
+    },
+    "HCO3E": {
+        "C00011": "CO2",
+        "C00288": "HCO3-",
+        "C00388": "histamine",
+        "C01353": "H2CO3"
+    },
+    "SPTix": {},
+    "DOPAMT": {
+        "C09727": "epicatechin",
+        "C14209": "4-hydroxyestradiol",
+        "C00788": "epinephrine",
+        "C00547": "norepinephrine",
+        "C05301": "2-hydroxyestradiol",
+        "C06562": "catechin",
+        "C03758": "dopamine"
+    },
+    "CYTK2m": {
+        "C00239": "dCMP",
+        "C00105": "UMP",
+        "C00055": "CMP"
+    },
+    "AASAD3m": {},
+    "ILEOX": {
+        "C00078": "L-tryptophan",
+        "C00123": "L-Leu",
+        "C00073": "L-methionine",
+        "C00047": "L-Lys",
+        "C00079": "L-phenylalanine",
+        "C00041": "L-alanine"
+    },
+    "PYLALDOX": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C01545": "octanal",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal"
+    },
+    "ACS2": {
+        "C00010": "CoA",
+        "C00246": "Butyrate",
+        "C00163": "propionate",
+        "C00002": "ATP",
+        "C00511": "Acrylate"
+    },
+    "GUAPRT": {
+        "C00262": "hypoxanthine",
+        "C00144": "GMP",
+        "C00385": "xanthine",
+        "C00130": "IMP",
+        "C00242": "guanine",
+        "C00119": "5-phospho-alpha-D-ribose 1-diphosphate"
+    },
+    "GLYLEUHYDROc": {},
+    "GGTAe2": {
+        "C02341": "L-glutamic acid-(4-nitroanilide)"
+    },
+    "PYNP2r": {
+        "C00299": "uridine"
+    },
+    "ACODA": {
+        "C00077": "N-alpha-acetyl-L-ornithine",
+        "C00437": "N2-Acetyl-L-ornithine"
+    },
+    "ECOAH9m": {
+        "C00877": "crotonyl-CoA"
+    },
+    "ACGAM6PS": {
+        "C00352": "D-Glucosamine 6-phosphate"
+    },
+    "ABTD": {
+        "C00003": "NAD+",
+        "C00532": "L-arabinitol",
+        "C00006": "NADP+",
+        "C00794": "D-sorbitol"
+    },
+    "r0340": {},
+    "MEVK1x": {
+        "C00002": "ATP"
+    },
+    "DADNK": {
+        "C00559": "2'-deoxyadenosine",
+        "C00214": "thymidine",
+        "C00881": "deoxycytidine"
+    },
+    "MMEm": {
+        "C00147": "DL-methylmalonyl-CoA"
+    },
+    "C3STDH1r": {
+        "C20252": "5-androstene-3,17-dione",
+        "C01227": "dehydroepiandrosterone",
+        "C00280": "androstene-3,17-dione"
+    },
+    "FA160ACPHi": {
+        "C00517": "palmitoyl-[acyl-carrier protein]"
+    },
+    "PGM": {
+        "C00197": "3-phospho-D-glycerate",
+        "C00631": "2-phospho-D-glycerate"
+    },
+    "URIDK2m": {
+        "C00364": "dTMP",
+        "C08159": "N1-[(E)-4-dihydroxyphosphonyl-but-2-enyl]-5-chlorouracil",
+        "C00002": "ATP",
+        "C00362": "dGMP",
+        "C00365": "dUMP"
+    },
+    "4HBZFm": {
+        "C00512": "benzoyl-CoA",
+        "C02949": "4-hydroxybenzoyl-CoA"
+    },
+    "G6PPer": {},
+    "5HOXINOXDA": {
+        "C00483": "tyramine",
+        "C03758": "dopamine",
+        "C00007": "O2",
+        "C04599": "1-Methyl-4-phenyl-1,2,3,6-tetrahydropyridine",
+        "C15562": "benzylamine",
+        "C00398": "tryptamine",
+        "C05332": "2-Phenylethylamine",
+        "C00780": "serotonin"
+    },
+    "ME2m": {
+        "C00003": "NAD+",
+        "C00149": "L-malate",
+        "C00006": "NADP+"
+    },
+    "PYK": {
+        "C00074": "phosphoenolpyruvate",
+        "C00008": "ADP"
+    },
+    "SPMDAT1": {
+        "C00750": "spermine",
+        "C00315": "spermidine",
+        "C00024": "acetyl-CoA"
+    },
+    "ADAe": {
+        "C00170": "5'-methylthioadenosine",
+        "C00212": "adenosine"
+    },
+    "PRDX": {
+        "C00034": "Mn2+",
+        "D06272": "2,2'-azino-bis-(3-ethylbenzthiazole-6-sulfonic acid)",
+        "C14402": "o-phenylenediamine",
+        "C00027": "H2O2",
+        "C09263": "esculetin",
+        "C16001": "Reactive Black 5",
+        "C01502": "guaiacol"
+    },
+    "BDG2HCGHD": {
+        "C00389": "quercetin-7-beta-D-glucopyranoside",
+        "C05143": "Dhurrin",
+        "C06217": "cellohexaose",
+        "C06186": "Arbutin",
+        "C04452": "4-nitrophenyl-beta-D-galactopyranoside",
+        "C00509": "naringenin",
+        "C10208": "daidzein-7-beta-D-glucopyranoside",
+        "C08240": "gentiobiose",
+        "C01514": "luteolin-4'-beta-D-glucopyranoside",
+        "C02094": "genistein-7-beta-D-glucopyranoside",
+        "C08250": "sophorose",
+        "C02013": "Cellotetraose",
+        "C04608": "apigetrin",
+        "C03200": "laminaritriose",
+        "C09264": "esculin",
+        "C06422": "D-cellobiose",
+        "C01971": "cellobiose",
+        "C05631": "eriodictyol-7-beta-D-glucopyranoside",
+        "C08887": "avenacoside",
+        "C01451": "Salicin",
+        "C06219": "cellotriose",
+        "C10216": "daidzin",
+        "C02048": "laminaribiose",
+        "C08325": "amygdalin"
+    },
+    "SPODMm": {
+        "C00007": "O2-"
+    },
+    "NDPK6m": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "SRTNACT": {
+        "C00780": "serotonin",
+        "C00136": "Butanoyl-CoA",
+        "C00483": "tyramine",
+        "C05659": "methoxytryptamine",
+        "C00398": "tryptamine",
+        "C00547": "norepinephrine",
+        "C00024": "acetyl-CoA",
+        "C03758": "dopamine",
+        "C00388": "histamine"
+    },
+    "ADSK": {
+        "C00224": "adenosine-5'-phosphosulfate",
+        "C00002": "ATP"
+    },
+    "AMPTASECGe": {
+        "C00148": "Lys-Pro-p-nitroanilide",
+        "C00062": "Arg-Pro-p-nitroanilide",
+        "C00073": "Met-Pro-p-nitroanilide",
+        "C00716": "Ser-Pro-p-nitroanilide",
+        "C02155": "Gly-Leu"
+    },
+    "ASP1DC": {
+        "C00025": "L-glutamate"
+    },
+    "GUAD": {
+        "C00242": "guanine"
+    },
+    "BAAT5x": {},
+    "r0249": {
+        "C06468": "D-psicose",
+        "C01487": "D-Allose",
+        "C01095": "D-Ribose 5-diphosphate",
+        "C00199": "D-ribulose 5-phosphate",
+        "C00309": "D-ribulose 5-diphosphate"
+    },
+    "5HLTDL": {
+        "C00355": "L-Dopa",
+        "C03758": "dopamine",
+        "C00643": "L-5-hydroxytryptophan"
+    },
+    "RPI": {
+        "C06468": "D-psicose",
+        "C01487": "D-Allose",
+        "C01095": "D-Ribose 5-diphosphate",
+        "C00199": "D-ribulose 5-phosphate",
+        "C00309": "D-ribulose 5-diphosphate"
+    },
+    "PPAm": {
+        "C00002": "ATP"
+    },
+    "PYDXNK": {
+        "C00250": "pyridoxal",
+        "C00314": "pyridoxine",
+        "C00002": "ATP",
+        "C01279": "4-Amino-5-hydroxymethyl-2-methylpyrimidine",
+        "C00534": "pyridoxamine"
+    },
+    "NAMNPP": {
+        "C00119": "5-phospho-alpha-D-ribose 1-diphosphate",
+        "C00253": "nicotinate"
+    },
+    "ALCD2x": {
+        "C00004": "NADH",
+        "C00756": "octan-1-ol",
+        "C06142": "butan-1-ol",
+        "C00546": "Pyruvaldehyde",
+        "C00005": "NADPH",
+        "C00006": "NADP+",
+        "C01412": "Butanal",
+        "C00469": "ethanol",
+        "C00084": "acetaldehyde",
+        "C01845": "2-propanol",
+        "C16834": "pentan-1-ol"
+    },
+    "PYK4": {
+        "C00074": "phosphoenolpyruvate",
+        "C00008": "ADP"
+    },
+    "HMGLr": {
+        "C00356": "(S)-3-hydroxy-3-methylglutaryl-CoA"
+    },
+    "ALDD2y": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "AKR1C42": {
+        "C06694": "Fusidic acid",
+        "C00004": "NADH",
+        "C01589": "(2Z)-2-(5-hydroxy-4,6-dimethyl-2-oxo-1,2-dihydro-3H-indol-3-ylidene)-N,N-di(prop-2-en-1-yl)hydrazinecarbothioamide",
+        "C03681": "5alpha-dihydroprogesterone",
+        "C05479": "5beta-dihydroprogesterone",
+        "C00695": "cholic acid",
+        "C01710": "1-Indanol",
+        "C03243": "9,10-phenanthrenequinone",
+        "C00523": "androsterone",
+        "C03917": "5alpha-dihydrotestosterone"
+    },
+    "HMGCOAS": {
+        "C00024": "acetyl-CoA"
+    },
+    "GLUCYS": {
+        "C00025": "L-Glu",
+        "C00097": "L-cysteine",
+        "C00334": "4-aminobutyrate",
+        "C00034": "Mn2+",
+        "C00002": "ATP"
+    },
+    "LFORKYNHYD": {
+        "C00328": "L-kynurenine",
+        "C03227": "3-hydroxy-L-kynurenine",
+        "C00123": "3,5-dibromo-L-kynurenine"
+    },
+    "HSD11B1r": {
+        "C00762": "cortisone",
+        "C01328": "21-hydroxy-pregn-4-en-3,11,20-trione",
+        "C00735": "cortisol"
+    },
+    "FACOAE180": {
+        "C00412": "stearoyl-CoA",
+        "C01832": "lauroyl-CoA",
+        "C00154": "palmitoyl-CoA",
+        "C00014": "N-carbobenzoxy-L-tyrosine p-nitrophenyl ester"
+    },
+    "PUNP2": {
+        "C05512": "2'-deoxyinosine",
+        "C00262": "hypoxanthine",
+        "C00242": "guanine",
+        "C00170": "5'-methylthioadenosine",
+        "C00330": "2'-deoxyguanosine",
+        "C06953": "2',3'-dideoxyinosine",
+        "C20674": "7-methylguanosine",
+        "C00294": "Inosine",
+        "C16615": "5'-methylthioinosine",
+        "C00387": "guanosine",
+        "C00212": "adenosine",
+        "C00620": "alpha-D-ribose 1-phosphate"
+    },
+    "ASPO1": {
+        "C00123": "L-Leu",
+        "C00073": "L-methionine",
+        "C00078": "L-tryptophan",
+        "C00047": "L-lysine",
+        "C00079": "L-phenylalanine",
+        "C00041": "L-alanine"
+    },
+    "RE2972G": {
+        "C00002": "ATP"
+    },
+    "UPPN": {
+        "C02642": "N-Carbamoyl-beta-alanine"
+    },
+    "PGLYCP": {
+        "C00988": "2-Phosphoglycolate",
+        "C03360": "p-nitrophenyl phosphate"
+    },
+    "MDHm": {
+        "C00003": "NAD+",
+        "C00149": "L-malate",
+        "C00004": "NADH",
+        "C00711": "malate",
+        "C00036": "oxaloacetate"
+    },
+    "BPNT2": {
+        "C00054": "adenosine 3',5'-bisphosphate"
+    },
+    "3HXKYNOXDA": {
+        "C00483": "tyramine",
+        "C03758": "dopamine",
+        "C00007": "O2",
+        "C04599": "1-Methyl-4-phenyl-1,2,3,6-tetrahydropyridine",
+        "C15562": "benzylamine",
+        "C00398": "tryptamine",
+        "C05332": "2-Phenylethylamine",
+        "C00780": "serotonin"
+    },
+    "NNDPR": {
+        "C03722": "quinolinic acid",
+        "C00119": "5-phospho-alpha-D-ribose 1-diphosphate"
+    },
+    "GLYCTO1p": {
+        "C08159": "DL-2-hydroxy-4-methylthiobutanoic acid",
+        "C00160": "glycolate",
+        "C05607": "L-Phenyllactate",
+        "C00186": "L-lactate",
+        "C00007": "O2"
+    },
+    "TKT2": {
+        "C00168": "Hydroxypyruvate",
+        "C01112": "D-arabinose 5-phosphate",
+        "C00231": "Xylulose 5-phosphate",
+        "C00279": "D-erythrose 4-phosphate",
+        "C00118": "D-glyceraldehyde 3-phosphate",
+        "C00673": "2-deoxy-D-ribose 5-phosphate",
+        "C00085": "D-fructose 6-phosphate",
+        "C03109": "D-threose 4-phosphate"
+    },
+    "UMPKn": {
+        "C00360": "dAMP"
+    },
+    "GLYCK2": {},
+    "FUT93g_cho": {
+        "C00611": "N-acetyllactosamine",
+        "C00325": "GDP-beta-L-fucose",
+        "C01970": "D-lactose"
+    },
+    "DTMPK": {
+        "C00364": "dTMP",
+        "C08159": "N1-[(E)-4-dihydroxyphosphonyl-but-2-enyl]-5-chlorouracil",
+        "C00002": "ATP",
+        "C00362": "dGMP",
+        "C00365": "dUMP"
+    },
+    "MTHFD2m": {},
+    "ACS": {
+        "C00246": "Butyrate",
+        "C00010": "CoA",
+        "C00163": "propionate",
+        "C00002": "ATP"
+    },
+    "NTD2l": {
+        "C00020": "5'-AMP",
+        "C00002": "ATP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "3MOX4HOXPGALDOX": {
+        "C00003": "NAD+",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C01412": "Butyraldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "ACOAHim": {
+        "C00024": "acetyl-CoA"
+    },
+    "GDR": {
+        "C00127": "glutathione disulfide",
+        "C03170": "trypanothione",
+        "C00004": "NADH",
+        "C16758": "(E)-ajoene",
+        "C05377": "menadione",
+        "C00005": "NADPH",
+        "C02617": "1,4-Naphthoquinone"
+    },
+    "XAOx": {
+        "C00385": "xanthine",
+        "C00005": "NADPH",
+        "C00262": "hypoxanthine"
+    },
+    "r0083": {
+        "C00003": "NAD+",
+        "C00451": "DL-isocitrate",
+        "C00311": "isocitrate",
+        "C00006": "NADP+"
+    },
+    "GTHRDH_syn": {
+        "C02341": "L-glutamic acid-(4-nitroanilide)"
+    },
+    "r0643": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C01545": "octanal",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal"
+    },
+    "PFK26": {
+        "C05345": "beta-D-fructose 6-phosphate",
+        "C00002": "ATP",
+        "C00085": "D-fructose 6-phosphate"
+    },
+    "NADDP": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "DPCOAK": {
+        "C00002": "ATP",
+        "C00882": "3'-Dephospho-CoA"
+    },
+    "r0390": {
+        "C01083": "trehalose",
+        "C01742": "palatinose",
+        "C00252": "isomaltose",
+        "C02160": "isomaltotriose",
+        "C00089": "Sucrose"
+    },
+    "PEPCKm": {
+        "C00035": "GDP",
+        "C00011": "CO2",
+        "C00361": "2'-deoxyguanosine 5'-diphosphate",
+        "C00074": "phosphoenolpyruvate",
+        "C00104": "IDP",
+        "C00044": "GTP",
+        "C00036": "oxaloacetate",
+        "C00286": "2'-deoxyguanosine 5'-triphosphate",
+        "C00081": "ITP"
+    },
+    "ABOR": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "XYLUR": {
+        "C00003": "NAD+",
+        "C00466": "acetoin",
+        "C00004": "NADH",
+        "C00184": "dihydroxyacetone",
+        "C00005": "NADPH",
+        "C05052": "D-xylulose",
+        "C00006": "NADP+",
+        "C02045": "L-erythrulose",
+        "C02154": "DL-glyceraldehyde",
+        "C00741": "diacetyl",
+        "C16884": "D-threitol"
+    },
+    "GUACYC": {
+        "C00044": "GTP"
+    },
+    "NDP10ex": {
+        "C01337": "XDP",
+        "C00081": "ITP"
+    },
+    "CYTDK2": {
+        "C00475": "cytidine",
+        "C00299": "uridine"
+    },
+    "CHLP": {
+        "C03360": "p-nitrophenyl phosphate",
+        "C00588": "phosphocholine"
+    },
+    "MDH": {
+        "C00003": "NAD+",
+        "C00149": "L-malate",
+        "C00004": "NADH",
+        "C00711": "malate",
+        "C00036": "oxaloacetate"
+    },
+    "TYRTA": {
+        "C00079": "L-phenylalanine",
+        "C00082": "L-tyrosine",
+        "C01100": "L-Histidinol phosphate",
+        "C00123": "L-leucine"
+    },
+    "NTD2e": {
+        "C00020": "5'-AMP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C00002": "ATP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "TMDPP": {
+        "C00214": "thymidine"
+    },
+    "TMDPK": {
+        "D08580": "thiamine",
+        "C00002": "ATP"
+    },
+    "r1384": {},
+    "ADPRDP": {
+        "C00008": "ADP",
+        "C00513": "CDP-glycerol",
+        "D03528": "CDP-choline",
+        "C00016": "FAD",
+        "C02353": "2',3'-cAMP",
+        "C00570": "CDP-ethanolamine",
+        "C13050": "cADP-ribose"
+    },
+    "NOS1": {
+        "C01661": "adriamycin",
+        "C00005": "NADPH",
+        "C06681": "mitomycin C",
+        "C05377": "menadione",
+        "C00533": "nitric oxide"
+    },
+    "r1257": {
+        "C02679": "lauric acid",
+        "C06424": "tetradecanoate",
+        "C00002": "ATP"
+    },
+    "r0386": {
+        "D01225": "thiamine diphosphate",
+        "C00141": "alpha-ketoisovaleric acid"
+    },
+    "GLYALDDr": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "STS1": {},
+    "r0074": {
+        "C03912": "1-pyrroline-5-carboxylate"
+    },
+    "CSNATp": {
+        "C05270": "Hexanoyl-CoA",
+        "C00318": "carnitine",
+        "C00114": "choline",
+        "C00024": "acetyl-CoA"
+    },
+    "XAND": {
+        "C00004": "NADH",
+        "C00385": "xanthine",
+        "C00262": "hypoxanthine"
+    },
+    "LCYSTAT": {
+        "C00049": "L-aspartate",
+        "C00025": "L-glutamate",
+        "C00047": "L-Lys",
+        "C00026": "2-oxoglutarate",
+        "C20327": "2-oxo-4-phenyl-butanoic acid",
+        "C00036": "oxaloacetate"
+    },
+    "AKR1C1": {
+        "C04042": "20alpha-hydroxyprogesterone"
+    },
+    "HYPOE": {
+        "C00018": "pyridoxal 5'-phosphate"
+    },
+    "OCDCAFATPc": {
+        "C02679": "lauric acid",
+        "C06424": "tetradecanoate",
+        "C00002": "ATP"
+    },
+    "HSD11B2r": {
+        "C00762": "cortisone",
+        "C01328": "21-hydroxy-pregn-4-en-3,11,20-trione",
+        "C00735": "cortisol"
+    },
+    "NDPK3": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "NDPK4": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "MALTly": {
+        "C01936": "maltohexaose",
+        "C01518": "nigerose",
+        "C00897": "starch",
+        "C01835": "maltotriose",
+        "C00089": "Sucrose",
+        "C01083": "trehalose",
+        "C02052": "maltotetraose",
+        "C00252": "isomaltose",
+        "C00317": "amylopectin",
+        "C19632": "kojibiose",
+        "C01971": "maltose"
+    },
+    "DCK1m": {
+        "C02961": "1-beta-D-arabinofuranosylcytosine",
+        "D01370": "cladribine",
+        "C00214": "L-thymidine",
+        "C00002": "ATP",
+        "C07650": "2',2'-difluorodeoxycytidine",
+        "C00330": "2'-deoxyguanosine",
+        "D07966": "fludarabine",
+        "D03546": "clofarabine",
+        "D06255": "troxacitabine",
+        "C00075": "UTP",
+        "C00881": "deoxycytidine",
+        "C00559": "2'-deoxyadenosine",
+        "C02094": "(-)-beta-2',3'-dideoxy-3'-thiacytidine"
+    },
+    "ACNMCT": {
+        "C00063": "CTP",
+        "C19910": "sialic acid",
+        "C00270": "N-acetylneuraminate",
+        "C03410": "N-glycolylneuraminic acid"
+    },
+    "HSD3B13r": {
+        "C20252": "5-androstene-3,17-dione",
+        "C01227": "dehydroepiandrosterone",
+        "C00280": "androstene-3,17-dione"
+    },
+    "URIK1": {
+        "C00475": "cytidine",
+        "C00299": "uridine"
+    },
+    "GALKr": {
+        "C00031": "D-glucose",
+        "C00002": "ATP",
+        "C00984": "alpha-D-galactose",
+        "C00124": "D-galactose"
+    },
+    "34DHALDD": {
+        "C00003": "NAD+",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C01412": "Butyraldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "PNTK": {
+        "C00002": "ATP",
+        "C00864": "(R)-pantothenate",
+        "C08159": "(2S)-3-ethyl-2-hydroxy-3-(hydroxymethyl)-N-[3-oxo-3-(pentylamino)propyl]hex-5-enamide",
+        "C05944": "pantothenol"
+    },
+    "DURAD": {
+        "C00106": "Uracil"
+    },
+    "PDE4g": {
+        "C04741": "3',5'-cGMP",
+        "C00942": "cGMP"
+    },
+    "ETHAK": {
+        "C00189": "ethanolamine"
+    },
+    "MI134PK": {
+        "C01245": "1D-myo-inositol-1,3,4-trisphosphate"
+    },
+    "PPM": {},
+    "FUT14g_cho": {},
+    "MCDp": {
+        "C00083": "malonyl-CoA"
+    },
+    "ALDD2xm": {
+        "C00003": "NAD+",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C01412": "Butyraldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "ARD": {
+        "C00007": "O2"
+    },
+    "STS2r": {},
+    "PPM2": {},
+    "NDPK10": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "PHETHPTOX": {
+        "C00078": "L-tryptophan",
+        "C00007": "O2",
+        "C00272": "tetrahydrobiopterin"
+    },
+    "CSNATr": {
+        "C05270": "Hexanoyl-CoA",
+        "C00318": "carnitine",
+        "C00114": "choline",
+        "C00024": "acetyl-CoA"
+    },
+    "TYRDOPO3": {
+        "D04926": "4-hydroxyanisole",
+        "C00090": "catechol",
+        "C01744": "4-hydroxyphenyl  propionic acid",
+        "C03758": "dopamine",
+        "C02124": "4-Chlorophenol",
+        "D07304": "methyl 3-hydroxy-L-tyrosinate",
+        "C06420": "D-tyrosine",
+        "C00082": "L-tyrosine",
+        "C00355": "L-Dopa",
+        "C00146": "phenol",
+        "C00230": "protocatechuic acid",
+        "C00483": "tyramine",
+        "C17467": "4-Hydroxybenzyl alcohol",
+        "C00642": "4-hydroxyphenyl acetic acid",
+        "C09263": "esculetin",
+        "C03404": "L-tyrosine methyl ester",
+        "C16700": "Protocatechuic aldehyde",
+        "C01108": "pyrogallol",
+        "D06672": "Gly-Gly-L-Tyr",
+        "C06730": "4-Methylcatechol"
+    },
+    "ACACT10m": {
+        "C00332": "acetoacetyl-CoA",
+        "C00087": "acetoacetyl-S-pantetheine"
+    },
+    "RE2133C": {
+        "C00954": "(indol-3-yl)acetate"
+    },
+    "GLUDC": {
+        "C00025": "L-glutamate"
+    },
+    "MI1PP": {
+        "C01589": "3-deoxy-D-myo-inositol 1-phosphate"
+    },
+    "ACACT7m": {
+        "C00332": "acetoacetyl-CoA",
+        "C00087": "acetoacetyl-S-pantetheine"
+    },
+    "ACGAMK": {
+        "C02711": "N-acetyl-D-glucosamine"
+    },
+    "ALDD20x": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C01545": "octanal",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal"
+    },
+    "MMSAD1m": {
+        "C00003": "NAD+",
+        "C00010": "CoA",
+        "C00349": "2-Methyl-3-oxopropanoate"
+    },
+    "ACNAM9PL": {
+        "C04257": "N-acetyl-D-mannosamine 6-phosphate",
+        "C00275": "D-mannose 6-phosphate"
+    },
+    "HPYRRx": {
+        "C00005": "NADPH",
+        "C00168": "Hydroxypyruvate",
+        "C00004": "NADH"
+    },
+    "OAADC": {
+        "C00036": "oxaloacetate"
+    },
+    "NDP7ex": {
+        "C00008": "ADP"
+    },
+    "GDRm": {
+        "C00127": "glutathione disulfide",
+        "C03170": "trypanothione",
+        "C00004": "NADH",
+        "C16758": "(E)-ajoene",
+        "C05377": "menadione",
+        "C00005": "NADPH",
+        "C02617": "1,4-Naphthoquinone"
+    },
+    "SPRMS": {
+        "C00315": "spermidine"
+    },
+    "GCPNn": {
+        "C04741": "3',5'-cGMP",
+        "C00942": "cGMP"
+    },
+    "NACASPAH": {
+        "C01042": "N-acetylaspartic acid"
+    },
+    "SELCYSTS": {
+        "C05330": "homocysteine",
+        "C00155": "L-homocysteine",
+        "C02291": "L-cystathionine",
+        "C00097": "L-cysteine",
+        "C00065": "L-serine"
+    },
+    "ADSL2r": {
+        "C03794": "adenylosuccinate"
+    },
+    "LACZly": {
+        "C07064": "lactulose",
+        "C00123": "2,4-dinitrophenyl 2-acetamido-2-deoxy-alpha-D-galactopyranosyl-(1-3)-[alpha-L-fucopyranosyl-(1-2)]-beta-D-galactopyranoside",
+        "C04452": "4-nitrophenyl-beta-D-galactopyranoside",
+        "C01970": "lactose"
+    },
+    "r0598": {},
+    "PHETA1m": {
+        "C00079": "L-phenylalanine",
+        "C00082": "L-tyrosine",
+        "C01100": "L-Histidinol phosphate",
+        "C00123": "L-leucine"
+    },
+    "DIDP": {
+        "C01337": "XDP",
+        "C00081": "ITP"
+    },
+    "PRPPS": {
+        "C00034": "Mn-ATP2-"
+    },
+    "ATPH1e": {
+        "C00002": "ATP",
+        "D02011": "3'(2')-O-(methylanthranoyl)adenosine 5'-diphosphate",
+        "C00212": "1,N6-etheno-ADP",
+        "C00458": "dCTP",
+        "C18690": "3'(2')-O-(methylanthranoyl)adenosine 5'-triphosphate",
+        "C00459": "dTTP",
+        "C00008": "ADP",
+        "C00075": "UTP",
+        "C00035": "GDP",
+        "C00015": "UDP",
+        "C00286": "dGTP",
+        "C00131": "dATP"
+    },
+    "GMPS2": {
+        "C00002": "ATP",
+        "C00064": "L-glutamine",
+        "C00655": "XMP"
+    },
+    "NABTNO": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "DURIK1m": {
+        "C07210": "3'-azido-3'-deoxythymidine",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00214": "thymidine",
+        "C00299": "uridine",
+        "C00881": "deoxycytidine",
+        "D00333": "ganciclovir",
+        "C00526": "deoxyuridine",
+        "C06810": "acyclovir",
+        "C00044": "GTP",
+        "C11736": "5-fluoro-2'-deoxyuridine"
+    },
+    "GRTTx": {
+        "C00129": "isopentenyl diphosphate",
+        "C00341": "geranyl diphosphate"
+    },
+    "PRFGS": {},
+    "RE3013C": {
+        "C00004": "NADH",
+        "C02341": "omega-(p-nitrophenyl)octanoic acid",
+        "C00005": "NADPH"
+    },
+    "UDPG4E": {
+        "C00029": "UDP-glucose",
+        "C00043": "UDP-N-acetyl-alpha-D-glucosamine",
+        "C00052": "UDP-D-galactose"
+    },
+    "GTHS": {
+        "C00669": "gamma-L-glutamyl-L-cysteine",
+        "C00037": "gamma-L-Glu-aminobutanoate",
+        "C00097": "gamma-Glu-L-Cys",
+        "C00123": "gamma-L-Glu-L-Cys",
+        "C00002": "ATP"
+    },
+    "PSP_L": {
+        "C01005": "O-phospho-L-serine"
+    },
+    "3HKYNAKGATm": {
+        "C00123": "L-leucine",
+        "C00073": "L-methionine",
+        "C00166": "phenylpyruvate",
+        "C00109": "2-oxobutyrate",
+        "C00078": "L-tryptophan",
+        "C06255": "2-oxovalerate",
+        "C00328": "L-kynurenine",
+        "C00026": "2-oxoglutarate",
+        "C00152": "L-asparagine",
+        "C01179": "hydroxyphenylpyruvate",
+        "C00957": "Mercaptopyruvate",
+        "C00135": "L-histidine",
+        "C00079": "L-phenylalanine",
+        "C00097": "L-cysteine",
+        "C00065": "L-serine",
+        "C00036": "oxaloacetate",
+        "C02356": "2-aminobutanoate",
+        "C00082": "L-tyrosine",
+        "C00064": "L-glutamine",
+        "C00041": "L-alanine"
+    },
+    "CMPSASn": {
+        "C00063": "CTP",
+        "C03410": "N-glycolylneuraminic acid",
+        "C00270": "N-acetylneuraminate",
+        "C19910": "sialic acid"
+    },
+    "FTHFDH": {
+        "C00234": "10-formyltetrahydrofolate"
+    },
+    "TREHe": {
+        "C01083": "alpha,alpha-trehalose"
+    },
+    "NDP3ex": {
+        "C00008": "ADP"
+    },
+    "ACACT1r": {
+        "C00332": "acetoacetyl-CoA",
+        "C00087": "acetoacetyl-S-pantetheine"
+    },
+    "FACOAL1832": {
+        "C02679": "lauric acid",
+        "C06424": "tetradecanoate",
+        "C00002": "ATP"
+    },
+    "PCLYSOX": {},
+    "ASNS1": {
+        "C00049": "L-aspartic acid",
+        "C00002": "ATP",
+        "C00064": "glutamine",
+        "C00192": "hydroxylamine",
+        "C01342": "NH4+"
+    },
+    "PTPATim": {
+        "C00882": "3'-Dephospho-CoA"
+    },
+    "G6PDH2er": {
+        "C00003": "NAD+",
+        "C03251": "D-glucose 6-phosphate",
+        "C00006": "NADP+",
+        "C06369": "2-deoxy-D-glucose 6-phosphate"
+    },
+    "HACD4p": {
+        "C00003": "NAD+",
+        "C00332": "acetoacetyl-CoA",
+        "C00004": "NADH",
+        "C05267": "3-ketooctanoyl-CoA",
+        "C01144": "(S)-3-hydroxybutyryl-CoA"
+    },
+    "CTPS2": {
+        "C00002": "ATP",
+        "C00064": "glutamine",
+        "C00147": "2',3'-dialdehyde adenosine 5'-triphosphate",
+        "C00044": "GTP",
+        "C00075": "UTP",
+        "C00192": "NH2OH",
+        "C00014": "NH3",
+        "C01342": "NH4+"
+    },
+    "NADPN": {
+        "C00003": "NAD+"
+    },
+    "NMNS": {
+        "C00153": "nicotinamide",
+        "C00002": "ATP"
+    },
+    "TDP": {
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00458": "dCTP",
+        "C00459": "TTP",
+        "C00008": "ADP",
+        "C00044": "GTP",
+        "C00075": "UTP",
+        "C00460": "dUTP",
+        "C00286": "dGTP",
+        "C00131": "dATP"
+    },
+    "r0559": {
+        "C02918": "N1-methylnicotinamide",
+        "C00376": "retinaldehyde",
+        "C01412": "Butanal",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "HISDr": {
+        "C00135": "L-histidine"
+    },
+    "MELATN23DOX": {
+        "C01718": "kynurenine",
+        "C00078": "L-tryptophan",
+        "C00525": "D-tryptophan"
+    },
+    "KYN3OX": {
+        "C01718": "kynurenine"
+    },
+    "AGLPH_cho": {},
+    "HMGL": {
+        "C00356": "(S)-3-hydroxy-3-methylglutaryl-CoA"
+    },
+    "GLYATm": {
+        "C00037": "glycine",
+        "C00136": "Butanoyl-CoA",
+        "C01944": "Octanoyl-CoA",
+        "C00091": "succinyl-CoA",
+        "C00527": "glutaryl-CoA"
+    },
+    "DCTPDPn": {
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00029": "UDP-glucose",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "BETALDHxm": {},
+    "DNAMTn": {
+        "C03657": "DNA",
+        "C00019": "S-adenosyl-L-methionine"
+    },
+    "TRIOK": {
+        "C00184": "dihydroxyacetone",
+        "C00002": "ATP",
+        "C00577": "D-glyceraldehyde"
+    },
+    "ADA": {
+        "C00170": "5'-methylthioadenosine",
+        "C00212": "adenosine"
+    },
+    "RE1845C": {},
+    "UAGDP": {
+        "C04256": "N-acetyl-D-glucosamine 1-phosphate",
+        "C00075": "UTP"
+    },
+    "NTD6": {
+        "C00360": "5'-dAMP"
+    },
+    "NTD2": {
+        "C00020": "5'-AMP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C00002": "ATP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "r0546": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "r0016": {
+        "C14818": "Fe(II)",
+        "C19499": "p-phenylenediamine",
+        "C00530": "hydroquinone",
+        "C00070": "Cu+"
+    },
+    "r0497": {
+        "C00002": "ATP",
+        "D02011": "3'(2')-O-(methylanthranoyl)adenosine 5'-diphosphate",
+        "C00212": "1,N6-etheno-ADP",
+        "C00458": "dCTP",
+        "C18690": "3'(2')-O-(methylanthranoyl)adenosine 5'-triphosphate",
+        "C00459": "dTTP",
+        "C00008": "ADP",
+        "C00075": "UTP",
+        "C00035": "GDP",
+        "C00015": "UDP",
+        "C00286": "dGTP",
+        "C00131": "dATP"
+    },
+    "DRBK": {
+        "C00002": "ATP"
+    },
+    "HCO3Ee": {
+        "C00011": "CO2",
+        "C00288": "HCO3-",
+        "C00388": "histamine",
+        "C01353": "H2CO3"
+    },
+    "FACOAL180": {
+        "C02679": "lauric acid",
+        "C06424": "tetradecanoate",
+        "C00002": "ATP"
+    },
+    "PHETA1": {
+        "C00079": "L-phenylalanine",
+        "C00082": "L-tyrosine",
+        "C01100": "L-Histidinol phosphate",
+        "C00123": "L-leucine"
+    },
+    "NTPP9": {
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00029": "UDP-glucose",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "ATPtm": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "IDHPOXOXb": {},
+    "ATPH2e": {
+        "C00212": "1,N6-etheno-ADP",
+        "C00002": "ATP",
+        "C00458": "dCTP",
+        "C18690": "3'(2')-O-(methylanthranoyl)adenosine 5'-triphosphate",
+        "D02011": "2'(3')-O-(2,4,6-trinitrophenyl)adenosine 5'-diphosphate",
+        "C00459": "dTTP",
+        "C00008": "ADP",
+        "C00075": "UTP",
+        "C00035": "GDP",
+        "C00015": "UDP",
+        "C00286": "dGTP",
+        "C00131": "dATP"
+    },
+    "TYROX": {
+        "C00078": "L-tryptophan",
+        "C00123": "L-Leu",
+        "C00073": "L-methionine",
+        "C00047": "L-Lys",
+        "C00079": "L-phenylalanine",
+        "C00041": "L-alanine"
+    },
+    "PGESc": {
+        "C00427": "(5Z,13E)-(15S)-9alpha,11alpha-epidioxy-15-hydroxyprosta-5,13-dienoate"
+    },
+    "GLUNm": {
+        "C00064": "L-glutamine",
+        "C00008": "ADP",
+        "C00002": "ATP",
+        "C01342": "NH4+"
+    },
+    "CYTK1m": {
+        "C00055": "CMP",
+        "C00239": "dCMP",
+        "C00105": "UMP"
+    },
+    "NNATn": {
+        "C01185": "nicotinate beta-D-ribonucleotide"
+    },
+    "ADPRDPm": {
+        "C00016": "FAD",
+        "C00008": "ADP",
+        "C00513": "CDP-glycerol",
+        "D03528": "CDP-choline",
+        "C02353": "2',3'-cAMP",
+        "C13050": "cADP-ribose",
+        "C00570": "CDP-ethanolamine"
+    },
+    "DPCOAKm": {
+        "C00002": "ATP",
+        "C00882": "3'-Dephospho-CoA"
+    },
+    "HMGCOARx": {},
+    "ADK3": {
+        "C00360": "dAMP"
+    },
+    "SR5ARr": {
+        "C00762": "cortisone",
+        "C00735": "cortisol",
+        "C02395": "2-cyclohexen-1-one",
+        "C00280": "4-androstene-3,17-dione",
+        "C00410": "progesterone",
+        "C00535": "testosterone"
+    },
+    "SADT": {
+        "C00224": "adenylyl sulfate",
+        "C00002": "ATP"
+    },
+    "HSD3B13": {
+        "C20252": "5-androstene-3,17-dione",
+        "C01227": "dehydroepiandrosterone",
+        "C00280": "androstene-3,17-dione"
+    },
+    "TYRDOPO": {
+        "D04926": "4-hydroxyanisole",
+        "C01744": "4-hydroxyphenylpropionic acid",
+        "C00082": "L-tyrosine",
+        "C03758": "dopamine",
+        "C02124": "4-Chlorophenol",
+        "C06420": "D-tyrosine",
+        "D06672": "Gly-Gly-L-Tyr",
+        "C00090": "catechol",
+        "C00355": "L-Dopa",
+        "D07304": "methyl 3-hydroxy-L-tyrosinate",
+        "C09263": "esculetin",
+        "C00146": "phenol",
+        "C03404": "L-tyrosine methyl ester",
+        "C00230": "protocatechuic acid",
+        "C00483": "tyramine",
+        "C00642": "4-hydroxyphenyl acetic acid",
+        "C17467": "4-Hydroxybenzyl alcohol",
+        "C16700": "Protocatechuic aldehyde",
+        "C01108": "pyrogallol",
+        "C06730": "4-Methylcatechol"
+    },
+    "TPI": {
+        "C00118": "D-glyceraldehyde 3-phosphate",
+        "C00111": "glycerone phosphate"
+    },
+    "CYTK1": {
+        "C00239": "dCMP",
+        "C00105": "UMP",
+        "C00055": "CMP"
+    },
+    "BAAT1x": {},
+    "NDP1": {
+        "C00002": "ATP",
+        "D02011": "3'(2')-O-(methylanthranoyl)adenosine 5'-diphosphate",
+        "C00212": "1,N6-etheno-ADP",
+        "C00458": "dCTP",
+        "C18690": "3'(2')-O-(methylanthranoyl)adenosine 5'-triphosphate",
+        "C00459": "dTTP",
+        "C00008": "ADP",
+        "C00075": "UTP",
+        "C00035": "GDP",
+        "C00015": "UDP",
+        "C00286": "dGTP",
+        "C00131": "dATP"
+    },
+    "DPCOAPPe": {
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00029": "UDP-glucose",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "ALCD19y": {
+        "C00005": "NADPH"
+    },
+    "ADNCYC": {
+        "C00002": "ATP"
+    },
+    "GTPCIn": {
+        "C00044": "GTP"
+    },
+    "NMNDA": {
+        "C00455": "beta-nicotinamide D-ribonucleotide"
+    },
+    "BDHm": {
+        "C00003": "NAD+",
+        "C00004": "NADH",
+        "C01089": "(R)-3-hydroxybutanoate"
+    },
+    "r0737": {
+        "C07064": "lactulose",
+        "C00123": "2,4-dinitrophenyl 2-acetamido-2-deoxy-alpha-D-galactopyranosyl-(1-3)-[alpha-L-fucopyranosyl-(1-2)]-beta-D-galactopyranoside",
+        "C04452": "4-nitrophenyl-beta-D-galactopyranoside",
+        "C01970": "lactose"
+    },
+    "ACCOAC": {
+        "C00024": "acetyl-CoA"
+    },
+    "r0149": {
+        "C00002": "ATP",
+        "D02011": "3'(2')-O-(methylanthranoyl)adenosine 5'-diphosphate",
+        "C00212": "1,N6-etheno-ADP",
+        "C00458": "dCTP",
+        "C18690": "3'(2')-O-(methylanthranoyl)adenosine 5'-triphosphate",
+        "C00459": "dTTP",
+        "C00008": "ADP",
+        "C00075": "UTP",
+        "C00035": "GDP",
+        "C00015": "UDP",
+        "C00286": "dGTP",
+        "C00131": "dATP"
+    },
+    "r0788": {
+        "C13482": "N,N-dimethylethanolamine phosphate",
+        "C00019": "S-adenosyl-L-methionine",
+        "C00346": "Ethanolamine phosphate"
+    },
+    "GLUDym": {
+        "C00005": "NADPH",
+        "C00025": "L-glutamate",
+        "C00026": "2-oxoglutarate",
+        "C00006": "NADP+",
+        "C00014": "NH3"
+    },
+    "DHEASULT": {},
+    "HPROb": {
+        "C00004": "NADH",
+        "C00005": "NADPH",
+        "C03912": "1-pyrroline-5-carboxylate",
+        "C00006": "NADP+"
+    },
+    "r0360": {
+        "C00586": "2-deoxy-D-glucose",
+        "C00031": "D-glucose",
+        "C00159": "D-mannose",
+        "C00002": "ATP"
+    },
+    "r0365": {},
+    "ABUTDm": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "NDPK9m": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "DATPDPn": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "MI3PP": {
+        "C01589": "3-deoxy-D-myo-inositol 1-phosphate"
+    },
+    "GTHPi": {
+        "C00051": "GSH",
+        "C00027": "H2O2"
+    },
+    "GNMT": {
+        "C00019": "S-adenosyl-L-methionine",
+        "C00037": "glycine"
+    },
+    "NDPK8n": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "CBPSam": {
+        "C00064": "L-glutamine",
+        "C00008": "ADP",
+        "C00002": "ATP",
+        "C01342": "NH4+"
+    },
+    "NMNATn": {
+        "C01185": "nicotinate beta-D-ribonucleotide"
+    },
+    "4HOXPACDOX_NADP": {
+        "C00003": "NAD+",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C01412": "Butyraldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "GND": {},
+    "AHCi": {
+        "C05330": "DL-homocysteine",
+        "C00021": "S-adenosyl-L-homocysteine",
+        "C00212": "adenosine"
+    },
+    "DADA": {
+        "C00170": "5'-methylthioadenosine",
+        "C00212": "adenosine"
+    },
+    "PTRCAT1": {
+        "C00750": "spermine",
+        "C00315": "spermidine",
+        "C00024": "acetyl-CoA"
+    },
+    "DNTP": {
+        "C00147": "P1-5'-O-adenosine-P3-5'-O-adenosine triphosphate"
+    },
+    "DUTPDPm": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "r0173": {
+        "C00003": "NAD+",
+        "C00004": "NADH",
+        "C00186": "(S)-lactate",
+        "C04423": "nicotinamide hypoxanthine dinucleotide"
+    },
+    "NTD9l": {
+        "C00020": "5'-AMP",
+        "C00002": "ATP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "RNDR3": {
+        "C00112": "CDP"
+    },
+    "PDXPP": {
+        "C00018": "pyridoxal 5'-phosphate"
+    },
+    "r0512": {
+        "C00415": "7,8-dihydrofolate",
+        "C00504": "folate",
+        "C00005": "NADPH"
+    },
+    "r0680": {
+        "C00002": "ATP",
+        "C00864": "(R)-pantothenate",
+        "C08159": "(2S)-3-ethyl-2-hydroxy-3-(hydroxymethyl)-N-[3-oxo-3-(pentylamino)propyl]hex-5-enamide",
+        "C05944": "pantothenol"
+    },
+    "AM6SAD": {},
+    "r0354": {
+        "C00586": "2-deoxy-D-glucose",
+        "C00031": "D-glucose",
+        "C00159": "D-mannose",
+        "C00002": "ATP"
+    },
+    "RE2766C": {},
+    "PPA2m": {
+        "C00002": "ATP"
+    },
+    "MCLORi": {
+        "C00003": "NAD+",
+        "C00004": "NADH",
+        "C00186": "(S)-lactate",
+        "C04423": "nicotinamide hypoxanthine dinucleotide"
+    },
+    "ICDHyp": {
+        "C00003": "NAD+",
+        "C00451": "DL-isocitrate",
+        "C00311": "isocitrate",
+        "C00006": "NADP+"
+    },
+    "NABTNOm": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "XYLK": {
+        "C05052": "D-xylulose",
+        "C00002": "ATP"
+    },
+    "UAG4Ei": {
+        "C00029": "UDP-D-glucose",
+        "C00052": "UDP-D-galactose",
+        "C00043": "UDP-N-acetyl-alpha-D-glucosamine"
+    },
+    "ABUTD": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "CATp": {
+        "C00027": "H2O2"
+    },
+    "T2M26DCOAHLx": {
+        "C00877": "crotonyl-CoA"
+    },
+    "GULNDer": {
+        "C00004": "NADH",
+        "C05853": "Phenylethanol",
+        "C07328": "3-methyl-1-butanol",
+        "C07329": "3-Methylbutanal",
+        "C02201": "veratraldehyde",
+        "C00006": "NADP+",
+        "C01412": "Butanal",
+        "C06142": "butanol",
+        "C00903": "cinnamaldehyde",
+        "C02394": "cinnamyl alcohol",
+        "C00005": "NADPH",
+        "C00116": "glycerol",
+        "C00469": "ethanol",
+        "C00084": "acetaldehyde",
+        "C00003": "NAD+",
+        "C07113": "acetophenone"
+    },
+    "ATPM": {
+        "C00002": "ATP"
+    },
+    "23CN2P2": {
+        "C03779": "bis-p-nitrophenyl phosphate",
+        "C03360": "p-nitrophenyl phosphate"
+    },
+    "DTTPDPn": {
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00029": "UDP-glucose",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "LALDO2x": {
+        "C00005": "NADPH",
+        "C00168": "Hydroxypyruvate",
+        "C00004": "NADH"
+    },
+    "r0163": {},
+    "ABTArm": {
+        "C00334": "4-aminobutanoate"
+    },
+    "DHAK": {
+        "C00184": "dihydroxyacetone",
+        "C00111": "glycerone phosphate"
+    },
+    "FADDPle": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "NDPK7n": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "ADPT": {
+        "C00262": "hypoxanthine",
+        "C00144": "GMP",
+        "C00385": "xanthine",
+        "C00130": "IMP",
+        "C00242": "guanine",
+        "C00119": "5-phospho-alpha-D-ribose 1-diphosphate"
+    },
+    "34HPLFM": {},
+    "HEX1": {
+        "C00031": "D-glucose",
+        "C00221": "beta-D-glucose",
+        "C00002": "ATP"
+    },
+    "URIDK2r": {
+        "C00364": "dTMP",
+        "C08159": "N1-[(E)-4-dihydroxyphosphonyl-but-2-enyl]-5-chlorouracil",
+        "C00002": "ATP",
+        "C00362": "dGMP",
+        "C00365": "dUMP"
+    },
+    "PGK": {
+        "C00008": "ADP",
+        "C00212": "L-ADP",
+        "C00236": "3-phospho-D-glyceroyl phosphate",
+        "C00002": "ATP",
+        "C00197": "3-phospho-D-glycerate"
+    },
+    "SALMCOM": {
+        "C09727": "epicatechin",
+        "C14209": "4-hydroxyestradiol",
+        "C00788": "epinephrine",
+        "C00547": "norepinephrine",
+        "C05301": "2-hydroxyestradiol",
+        "C06562": "catechin",
+        "C03758": "dopamine"
+    },
+    "ADSKn": {
+        "C00224": "adenosine-5'-phosphosulfate",
+        "C00002": "ATP"
+    },
+    "THMTP": {
+        "C03028": "thiamine triphosphate"
+    },
+    "AGDC": {
+        "C00357": "N-acetylglucosamine 6-phosphate",
+        "C04132": "N-acetyl-D-glucosamine 6-sulfate",
+        "C03878": "N-acetylglucosamine",
+        "C08349": "N-thioacetyl-D-glucosamine 6-phosphate"
+    },
+    "NDPK10m": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "ALATA_Lm": {
+        "C00026": "2-oxoglutarate",
+        "C00025": "L-glutamate",
+        "C00041": "L-alanine"
+    },
+    "DHPR": {
+        "C00268": "quinoid dihydrobiopterin",
+        "C02953": "quinoid 7,8-dihydrobiopterin",
+        "C00004": "NADH",
+        "D06272": "quinoid 6-methyl-7,8-dihydropterin"
+    },
+    "r0756": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "SPODMn": {
+        "C00007": "O2-"
+    },
+    "AIRCr": {
+        "C04751": "4-carboxy-5-aminoimidazole ribonucleotide"
+    },
+    "MTHFR3": {
+        "C00004": "NADH",
+        "C00005": "NADPH"
+    },
+    "CYANSTm": {
+        "C00957": "3-Mercaptopyruvate"
+    },
+    "PACCOAL": {
+        "C02181": "Phenoxyacetate",
+        "C07086": "phenylacetate",
+        "C00010": "CoA",
+        "C00002": "ATP",
+        "C05593": "3-hydroxyphenylacetate"
+    },
+    "PYK2": {
+        "C00074": "phosphoenolpyruvate",
+        "C00008": "ADP"
+    },
+    "RAHY": {
+        "C00004": "NADH",
+        "C02341": "omega-(p-nitrophenyl)dodecanoic acid",
+        "C00005": "NADPH"
+    },
+    "r0242": {
+        "C00002": "ATP",
+        "C02734": "Phenyl phosphate",
+        "C00008": "ADP",
+        "C03360": "p-nitrophenyl phosphate",
+        "C00020": "5'-AMP",
+        "C00074": "phosphoenolpyruvate",
+        "C00946": "2'-AMP",
+        "C01367": "3'-AMP",
+        "C03251": "D-glucose 6-phosphate"
+    },
+    "RPE": {
+        "C00199": "D-ribulose 5-phosphate"
+    },
+    "RBK": {
+        "C00002": "ATP"
+    },
+    "r0402": {
+        "C03243": "9,10-phenanthrenequinone",
+        "C00835": "sepiapterin"
+    },
+    "DNADDP": {
+        "C00029": "UDP-glucose",
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "RE1630R": {
+        "C09727": "epicatechin",
+        "C14209": "4-hydroxyestradiol",
+        "C00788": "epinephrine",
+        "C00547": "norepinephrine",
+        "C05301": "2-hydroxyestradiol",
+        "C06562": "catechin",
+        "C03758": "dopamine"
+    },
+    "ALCD2y": {
+        "C00004": "NADH",
+        "C00756": "octan-1-ol",
+        "C00546": "Pyruvaldehyde",
+        "C00005": "NADPH",
+        "C00084": "acetaldehyde",
+        "C00006": "NADP+",
+        "C01412": "Butanal",
+        "C00469": "ethanol",
+        "C06142": "butan-1-ol",
+        "C01845": "2-propanol",
+        "C16834": "pentan-1-ol"
+    },
+    "HMGLm": {
+        "C00356": "(S)-3-hydroxy-3-methylglutaryl-CoA"
+    },
+    "ALOX52": {},
+    "ACGAMPM": {
+        "C20328": "N-acetyl-alpha-D-glucosamine"
+    },
+    "ALDD2x": {
+        "C00003": "NAD+",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C01412": "Butyraldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "DPCOAPP": {
+        "C00224": "adenosine 5'-phosphosulfate",
+        "C00029": "UDP-glucose",
+        "C00002": "ATP",
+        "C03779": "bis(4-nitrophenyl)phosphate",
+        "C00008": "ADP",
+        "C00842": "TDP-glucose",
+        "C00015": "UDP",
+        "C00498": "ADP-glucose"
+    },
+    "FA140ACPHi": {
+        "C00517": "palmitoyl-[acyl-carrier protein]"
+    },
+    "TYRTAim": {
+        "C00079": "L-phenylalanine",
+        "C00082": "L-tyrosine",
+        "C01100": "L-Histidinol phosphate",
+        "C00123": "L-leucine"
+    },
+    "BHMT": {
+        "C03172": "S-methyl-L-methionine",
+        "C00155": "L-homocysteine",
+        "C00719": "betaine"
+    },
+    "RE0935E": {
+        "C01936": "maltohexaose",
+        "C01518": "nigerose",
+        "C00897": "starch",
+        "C01835": "maltotriose",
+        "C00089": "Sucrose",
+        "C01083": "trehalose",
+        "C02052": "maltotetraose",
+        "C00252": "isomaltose",
+        "C00317": "amylopectin",
+        "C19632": "kojibiose",
+        "C01971": "maltose"
+    },
+    "PTHPS": {
+        "C04895": "6-(L-erythro-1,2-dihydroxypropyl 3-triphosphate)-7,8-dihydropterin"
+    },
+    "PUNP6": {
+        "C00214": "thymidine"
+    },
+    "ALDD19x_P": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "RE2972R": {
+        "C00002": "ATP"
+    },
+    "HGDm": {},
+    "MDHp": {
+        "C00003": "NAD+",
+        "C00149": "L-malate",
+        "C00004": "NADH",
+        "C00711": "malate",
+        "C00036": "oxaloacetate"
+    },
+    "PSERT": {
+        "C06055": "4-(phosphonooxy)-L-threonine",
+        "C03232": "3-phosphonooxypyruvate",
+        "C01005": "3-O-phospho-L-serine"
+    },
+    "G6PDH1er": {},
+    "ALOX5": {},
+    "TKT1": {
+        "C00168": "Hydroxypyruvate",
+        "C01112": "D-arabinose 5-phosphate",
+        "C00231": "Xylulose 5-phosphate",
+        "C00279": "D-erythrose 4-phosphate",
+        "C00118": "D-glyceraldehyde 3-phosphate",
+        "C00673": "2-deoxy-D-ribose 5-phosphate",
+        "C00085": "D-fructose 6-phosphate",
+        "C03109": "D-threose 4-phosphate"
+    },
+    "UMPKm": {
+        "C00360": "dAMP"
+    },
+    "PTE8x": {
+        "C00412": "stearoyl-CoA",
+        "C01832": "lauroyl-CoA",
+        "C00154": "palmitoyl-CoA",
+        "C00014": "N-carbobenzoxy-L-tyrosine p-nitrophenyl ester"
+    },
+    "G6PDA": {
+        "C00085": "D-fructose 6-phosphate",
+        "C00352": "D-Glucosamine 6-phosphate"
+    },
+    "LDH_D": {
+        "C00003": "NAD+",
+        "C00168": "Hydroxypyruvate",
+        "C00004": "NADH",
+        "C00141": "2-ketoisovalerate",
+        "C00233": "2-ketoisocaproate",
+        "C00166": "phenylpyruvate",
+        "C00109": "2-oxobutyrate",
+        "C00036": "oxaloacetate",
+        "C00902": "2-ketocaproate"
+    },
+    "P450SCC1m": {
+        "C05443": "vitamin D3",
+        "C00187": "cholesterol"
+    },
+    "ME2": {
+        "C00003": "NAD+",
+        "C00149": "L-malate",
+        "C00006": "NADP+"
+    },
+    "PYDXPP": {
+        "C00018": "pyridoxal 5'-phosphate"
+    },
+    "ATPS4m_cho": {
+        "C00008": "ADP",
+        "C00002": "ATP"
+    },
+    "OMPDC": {
+        "C01103": "orotidine 5'-monophosphate"
+    },
+    "r0086": {
+        "C02362": "2-oxosuccinamate"
+    },
+    "r0082": {
+        "C00003": "NAD+",
+        "C00451": "DL-isocitrate",
+        "C00311": "isocitrate",
+        "C00006": "NADP+"
+    },
+    "NTD5l": {
+        "C00360": "5'-dAMP"
+    },
+    "r0642": {
+        "C00637": "Indole-3-acetaldehyde",
+        "C00903": "trans-cinnamaldehyde",
+        "C00006": "NADP+",
+        "C00969": "3-hydroxypropionaldehyde",
+        "C00193": "benzaldehyde",
+        "C00479": "propanal",
+        "C00601": "phenylacetaldehyde",
+        "C12307": "decanal",
+        "C00084": "acetaldehyde",
+        "C03167": "phosphonoacetaldehyde",
+        "C00003": "NAD+",
+        "C14390": "Heptanal",
+        "C01545": "octanal"
+    },
+    "LACZe": {
+        "C07064": "lactulose",
+        "C00123": "2,4-dinitrophenyl 2-acetamido-2-deoxy-alpha-D-galactopyranosyl-(1-3)-[alpha-L-fucopyranosyl-(1-2)]-beta-D-galactopyranoside",
+        "C04452": "4-nitrophenyl-beta-D-galactopyranoside",
+        "C01970": "lactose"
+    },
+    "HSDA": {
+        "C00155": "L-homocysteine",
+        "C02291": "L-cystathionine",
+        "C00097": "L-cysteine",
+        "C00979": "O-acetyl-L-serine"
+    },
+    "HSD3B11r": {
+        "C20252": "5-androstene-3,17-dione",
+        "C01227": "dehydroepiandrosterone",
+        "C00280": "androstene-3,17-dione"
+    },
+    "TRPO2": {
+        "C01718": "kynurenine",
+        "C00078": "L-tryptophan",
+        "C00525": "D-tryptophan"
+    },
+    "FA181ACPH": {
+        "C00517": "palmitoyl-[acyl-carrier protein]"
+    },
+    "PPNCL3": {
+        "C00063": "CTP"
+    },
+    "BILIRED": {
+        "C00004": "NADH"
+    },
+    "FUT91g_cho": {
+        "C00611": "N-acetyllactosamine",
+        "C00325": "GDP-beta-L-fucose",
+        "C01970": "D-lactose"
+    },
+    "CYTDK1": {
+        "C00475": "cytidine",
+        "C00299": "uridine"
+    },
+    "RE2030M": {},
+    "FK": {
+        "C01019": "L-fucose",
+        "C00002": "ATP"
+    },
+    "SBPP3er": {},
+    "NTD2m": {
+        "C00020": "5'-AMP",
+        "C00002": "ATP",
+        "C00008": "ADP",
+        "C00294": "Inosine",
+        "C00144": "5'-GMP",
+        "C00362": "5'-dGMP",
+        "C00130": "5'-IMP",
+        "C00360": "5'-dAMP",
+        "C03360": "p-nitrophenyl phosphate",
+        "D00423": "ribavirin",
+        "C00105": "5'-UMP"
+    },
+    "DURAD2": {
+        "C00106": "Uracil"
+    },
+    "GLYPHEHYc": {},
+    "DMATTx": {
+        "C00129": "isopentenyl diphosphate",
+        "C00235": "dimethylallyl diphosphate"
+    },
+    "ALDD19xr": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "NOS2": {
+        "C01661": "adriamycin",
+        "C00005": "NADPH",
+        "C06681": "mitomycin C",
+        "C05377": "menadione",
+        "C00533": "nitric oxide"
+    },
+    "ORPT": {
+        "C00295": "Orotate",
+        "C01103": "orotidine 5'-phosphate",
+        "C05682": "Phosphonoacetic acid"
+    },
+    "GLYAMDTRc": {},
+    "PHEOX": {
+        "C00123": "L-Leu",
+        "C00073": "L-methionine",
+        "C00078": "L-tryptophan",
+        "C00047": "L-lysine",
+        "C00079": "L-phenylalanine",
+        "C00041": "L-alanine"
+    },
+    "H2CO3D": {
+        "C00011": "CO2",
+        "C00288": "HCO3-",
+        "C00388": "histamine",
+        "C01353": "H2CO3"
+    },
+    "IMPC": {
+        "C04734": "5-Formamido-1-(5-phosphoribosyl)imidazole-4-carboxamide"
+    },
+    "P5CRm": {
+        "C00004": "NADH",
+        "C00005": "NADPH",
+        "C03912": "1-pyrroline-5-carboxylate",
+        "C00006": "NADP+"
+    },
+    "DURIPP": {
+        "C00214": "thymidine"
+    },
+    "AGMTm": {
+        "C00179": "agmatine"
+    },
+    "SPMS": {
+        "C00134": "putrescine",
+        "C01137": "S-adenosylmethioninamine"
+    },
+    "FBP26": {
+        "C00665": "fructose 2,6-bisphosphate"
+    },
+    "FMNAT": {
+        "C00061": "FMN",
+        "C00002": "ATP"
+    },
+    "MDRPD": {},
+    "MMSAD3m": {
+        "C00003": "NAD+",
+        "C00010": "CoA",
+        "C00349": "2-Methyl-3-oxopropanoate"
+    },
+    "3M4HDXPAC": {
+        "C00003": "NAD+",
+        "C01412": "Butyraldehyde",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "FUT31g_cho": {
+        "C00325": "GDP-beta-L-fucose",
+        "C18690": "Galbeta-(1-3)-GlcNAc-O-(CH2)8COOCH3",
+        "C00120": "Gal-beta-1,3GlcNAcO(CH2)3NHCO(CH2)5NH-biotin"
+    },
+    "CKc_cho": {
+        "C00008": "ADP",
+        "C00300": "Creatine",
+        "C00002": "ATP",
+        "C02305": "phosphocreatine"
+    },
+    "AATA": {
+        "C00123": "L-leucine",
+        "C00956": "L-2-aminoadipate",
+        "C00025": "L-glutamate"
+    },
+    "HACD1x": {
+        "C00003": "NAD+",
+        "C00332": "acetoacetyl-CoA",
+        "C00004": "NADH",
+        "C05267": "3-ketooctanoyl-CoA",
+        "C01144": "(S)-3-hydroxybutyryl-CoA"
+    },
+    "NDPK8": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "NDPK1": {
+        "C00044": "GTP",
+        "C00063": "CTP",
+        "C00002": "ATP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00363": "dTDP"
+    },
+    "NDPK5": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "RE1897C": {},
+    "CYTDK2m": {
+        "C00475": "cytidine",
+        "C00299": "uridine"
+    },
+    "GHMT2r": {
+        "C00065": "L-serine",
+        "C00740": "D-serine",
+        "C00101": "tetrahydrofolate"
+    },
+    "GULN3D": {},
+    "FACOAL40im": {
+        "C00010": "CoA",
+        "C00002": "ATP"
+    },
+    "41R2A1H12BOOX": {
+        "C00483": "tyramine",
+        "C03758": "dopamine",
+        "C00007": "O2",
+        "C04599": "1-Methyl-4-phenyl-1,2,3,6-tetrahydropyridine",
+        "C15562": "benzylamine",
+        "C00398": "tryptamine",
+        "C05332": "2-Phenylethylamine",
+        "C00780": "serotonin"
+    },
+    "DCK1n": {
+        "C02961": "1-beta-D-arabinofuranosylcytosine",
+        "D01370": "cladribine",
+        "C00214": "L-thymidine",
+        "C00002": "ATP",
+        "C07650": "2',2'-difluorodeoxycytidine",
+        "C00330": "2'-deoxyguanosine",
+        "D07966": "fludarabine",
+        "D03546": "clofarabine",
+        "D06255": "troxacitabine",
+        "C00075": "UTP",
+        "C00881": "deoxycytidine",
+        "C00559": "2'-deoxyadenosine",
+        "C02094": "(-)-beta-2',3'-dideoxy-3'-thiacytidine"
+    },
+    "THRD_L": {
+        "C00065": "L-Ser",
+        "C00188": "L-Thr"
+    },
+    "FDH": {
+        "C00003": "NAD+",
+        "C00006": "NADP+"
+    },
+    "ACACT6p": {
+        "C00332": "acetoacetyl-CoA",
+        "C00087": "acetoacetyl-S-pantetheine"
+    },
+    "GCC2bim": {
+        "C00051": "reduced H-protein",
+        "C12538": "NH4Cl",
+        "C00143": "5,10-methylenetetrahydrofolate"
+    },
+    "34DHPLACOX_NADP": {
+        "C00003": "NAD+",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C01412": "Butyraldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "H2CO3Dm": {
+        "C00011": "CO2",
+        "C00288": "HCO3-",
+        "C00388": "histamine",
+        "C01353": "H2CO3"
+    },
+    "ASNNm": {
+        "C02512": "3-Cyano-L-alanine"
+    },
+    "STS3": {},
+    "ACYP": {
+        "C06206": "benzoyl phosphate",
+        "C00227": "acetyl phosphate"
+    },
+    "r0708": {
+        "C00044": "GTP"
+    },
+    "r0707": {
+        "C03360": "p-nitrophenyl phosphate"
+    },
+    "r0670": {
+        "D01225": "thiamine diphosphate",
+        "C00141": "alpha-ketoisovaleric acid"
+    },
+    "XAO": {
+        "C00385": "xanthine",
+        "C00005": "NADPH",
+        "C00262": "hypoxanthine"
+    },
+    "LGTHL": {
+        "C03170": "trypanothione",
+        "C00546": "methylglyoxal",
+        "C00064": "glutathione-methylglyoxal hemithioacetal",
+        "C00014": "N-[3-[(4-aminobutyl)amino]propyl]-L-gamma-glutamyl-L-cysteinylglycine",
+        "C05730": "glutathionylspermidine"
+    },
+    "GLUN": {
+        "C00064": "L-glutamine",
+        "C00008": "ADP",
+        "C00002": "ATP",
+        "C01342": "NH4+"
+    },
+    "AP4AH1": {},
+    "GK1m": {
+        "C00362": "dGMP",
+        "C00144": "GMP"
+    },
+    "NDPK1m": {
+        "C00363": "dTDP",
+        "C00063": "CTP",
+        "C00459": "TTP",
+        "C00705": "dCDP",
+        "C00044": "GTP",
+        "C00002": "ATP"
+    },
+    "3MOX4HOXPGALDOX_NADP": {
+        "C00003": "NAD+",
+        "C00479": "propionaldehyde",
+        "C07329": "Isovaleraldehyde",
+        "C08497": "trans-2-hexenal",
+        "C00006": "NADP+",
+        "C06754": "Chloroacetaldehyde",
+        "C00084": "acetaldehyde",
+        "C01412": "Butyraldehyde",
+        "C00193": "benzaldehyde"
+    },
+    "RE2513N": {
+        "C00027": "H2O2",
+        "C00090": "catechol",
+        "C01755": "SCN-",
+        "C03758": "dopamine",
+        "C00087": "phenyl propan-2-yl sulfide"
+    },
+    "RE2513E": {
+        "C00090": "catechol",
+        "C01755": "SCN-",
+        "C03758": "dopamine",
+        "C00087": "phenyl propan-2-yl sulfide",
+        "C00027": "H2O2"
+    },
+    "SBTR": {
+        "C14448": "Glyoxal",
+        "C09094": "geranylgeraniol",
+        "C01126": "trans,trans-farnesol",
+        "C02154": "DL-glyceraldehyde",
+        "C14696": "1-nonanol",
+        "C00191": "D-glucuronate",
+        "C01545": "1-octanal",
+        "C00031": "D-glucose",
+        "C00124": "D-galactose",
+        "C00193": "benzaldehyde",
+        "C01412": "1-butanal",
+        "C01471": "acrolein",
+        "C01633": "1-Decanol",
+        "C00546": "methylglyoxal",
+        "C00556": "benzyl alcohol",
+        "D05158": "Pyridine-3-methanol",
+        "C00181": "D-xylose",
+        "C11129": "isatin",
+        "C07327": "Pyridine-3-aldehyde"
+    },
+    "CHLSTD78I": {},
+    "34DHOXPEGOX": {
+        "C06317": "Vanillyl alcohol",
+        "C10761": "4-methoxybenzaldehyde",
+        "C00756": "Octanol",
+        "C01710": "1-Indanol",
+        "C00854": "Cyclohexanol",
+        "C00207": "acetone",
+        "C00473": "all-trans-retinol",
+        "C06142": "n-butanol",
+        "C16834": "1-Pentanol",
+        "C08317": "12-hydroxylauric acid methyl ester",
+        "C01380": "ethylene glycol",
+        "C07328": "3-methyl-1-butanol",
+        "C01545": "octanal",
+        "C01949": "2-Pentanone",
+        "C00469": "ethanol",
+        "C01412": "Butyraldehyde",
+        "C15492": "3,4-dihydro-retinol",
+        "C03352": "3-methoxybenzylalcohol",
+        "C07113": "acetophenone",
+        "C00004": "NADH",
+        "C01845": "propan-2-ol",
+        "C00006": "NADP+",
+        "C02394": "cinnamyl alcohol",
+        "C05979": "Propanol",
+        "C08279": "methylcrotonyl alcohol",
+        "C00601": "phenylacetaldehyde",
+        "C00005": "NADPH",
+        "C00903": "trans-cinnamaldehyde",
+        "C00556": "benzyl alcohol",
+        "C00003": "NAD+",
+        "C00414": "cyclohexanone",
+        "C00376": "all-trans-retinal",
+        "C00132": "methanol",
+        "C00193": "benzaldehyde",
+        "C17268": "1-phenyl-1,2-propanedione",
+        "C00084": "acetaldehyde",
+        "C06647": "4-chloroacetophenone"
+    },
+    "CPPPGO": {
+        "C03263": "Coproporphyrinogen-III"
+    },
+    "PI5P4Kn_cho": {
+        "C00002": "ATP"
+    },
+    "SELMETAT": {
+        "C11227": "L-ethionine",
+        "C00073": "L-methionine",
+        "C00002": "ATP",
+        "C00019": "S-adenosylmethionine"
+    },
+    "UDPGD": {
+        "C00003": "NAD+",
+        "C00029": "UDP-glucose",
+        "C00015": "UDP"
+    },
+    "MTAP": {
+        "C00170": "5'-methylthioadenosine",
+        "C00387": "guanosine",
+        "C00212": "adenosine",
+        "C00294": "Inosine"
+    },
+    "GF6PTA": {
+        "C00064": "L-glutamine",
+        "C00025": "L-glutamate",
+        "C00085": "D-fructose 6-phosphate"
+    }
 }
