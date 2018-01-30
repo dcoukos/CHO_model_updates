@@ -9,6 +9,8 @@ from DataTreatment import openJson, write
 
 
 def extractBiggKeggs(reactions, cm_param, p_number):
+    # TODO: further optimize this function by looking only through the
+        # metbolites if reactions have an EC number.
     """Extracts Kegg metabolite IDs from iCHOv1.xml.
 
         In order to match turnover data between BRENDA and the BiGG model, we
@@ -34,6 +36,8 @@ def extractBiggKeggs(reactions, cm_param, p_number):
     """
     if cm_param == 'model':
         handler = open('iCHOv1.xml').read()
+    elif cm_param == 'k1-model':
+        handler = open('iCHOv1_K1_final.xml').read()
     else:
         handler = open('Unit Tests/sample_xml.xml').read()
     soup = Soup(handler, 'xml')
@@ -59,9 +63,11 @@ def extractBiggKeggs(reactions, cm_param, p_number):
                     if 'identifiers.org/kegg.compound' in link['resource']:
                         local_model[react_id]['reactants'][rid].append(
                             link['resource'][37:])
+                        no_kegg = False
                     elif 'identifiers.org/kegg.drug' in link['resource']:
                         local_model[react_id]['reactants'][rid].append(
                             link['resource'][33:])
+                        no_kegg = False
                     elif 'identifiers.org/kegg.glycan' in link['resource']:
                         local_model[react_id]['reactants'][rid].append(
                             link['resource'][35:])
@@ -79,9 +85,11 @@ def extractBiggKeggs(reactions, cm_param, p_number):
                     if 'identifiers.org/kegg.compound' in link['resource']:
                         local_model[react_id]['products'][pid].append(
                             link['resource'][37:])
+                        no_kegg = False
                     elif 'identifiers.org/kegg.drug' in link['resource']:
                         local_model[react_id]['products'][pid].append(
                             link['resource'][33:])
+                        no_kegg = False
                     elif 'identifiers.org/kegg.glycan' in link['resource']:
                         local_model[react_id]['products'][pid].append(
                             link['resource'][35:])
@@ -103,7 +111,7 @@ def getBrendaKeggs(reactions, process):
     # TODO: Rewrite program to call this function with multiprocessing
     total = len(reactions)
     if process == 1:
-        bar = Bar('Retrieving kegg codes for brenda ouput: ', max=total)
+        bar = Bar('Retrieving kegg codes for brenda output: ', max=total)
     metabolite_to_KEGG = {}
     metabolite_no_KEGG = {}
     for bigg_id in reactions:
@@ -123,9 +131,7 @@ def getBrendaKeggs(reactions, process):
                     kegg_id = str(json.loads(cts_output.text)[0]['result'][0])
                     metabolite_to_KEGG[bigg_id][kegg_id] = metabolite
                     request_counter = 3
-            # TODO: What type of error is expected to be thrown here?
-            # This may be a source of missing entries.
-                except IndexError:  # Just a guess!
+                except (KeyError, IndexError):
                     if request_counter == 2:
                         metabolite_no_KEGG[bigg_id].append(metabolite)
                     request_counter = request_counter + 1
@@ -134,9 +140,13 @@ def getBrendaKeggs(reactions, process):
 
 
 if __name__ == '__main__' and len(sys.argv) > 1:
-    if sys.argv[1] == 'model' or sys.argv[1] == 'test-model':
+    if sys.argv[1] == 'model' or sys.argv[1] == 'test-model'\
+            or sys.argv[1] == 'k1-model':
         print('Opening model...')
-        model = cobra.io.read_sbml_model('iCHOv1.xml')
+        if sys.argv[1] == 'model' or sys.argv[1] == 'test-model':
+            model = cobra.io.read_sbml_model('iCHOv1.xml')
+        elif sys.argv[1] == 'k1-model':
+            model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
         reactions1 = []
         reactions2 = []
         reactions3 = []
@@ -175,6 +185,8 @@ if __name__ == '__main__' and len(sys.argv) > 1:
         local_model.update(lm_4.get())
         if sys.argv[1] == 'model':
             write('JSONs/iCHOv1_keggs.json', local_model)
+        elif sys.argv[1] == 'k1-model':
+            write('JSONs/iCHOv1_K1_keggs.json', local_model)
         else:
             write('Unit Tests/iCHOv1_keggs_test.json', local_model)
     elif sys.argv[1] == 'brenda-keggs':
@@ -198,25 +210,20 @@ if __name__ == '__main__' and len(sys.argv) > 1:
                 reactions4[reaction] = treated_brenda_output[reaction]
             counter = counter + 1
         with Pool(processes=4) as pool:
-            r_set1 = pool.apply_async(getBrendaKeggs, (reactions1, 1,))
+            bk1 = pool.apply_async(getBrendaKeggs, (reactions1, 1,))
             print('Process on core 1 started')
-            r_set2 = pool.apply_async(getBrendaKeggs, (reactions2, 2,))
+            bk2 = pool.apply_async(getBrendaKeggs, (reactions2, 2,))
             print('Process on core 2 started')
-            r_set3 = pool.apply_async(getBrendaKeggs, (reactions3, 3,))
+            bk3 = pool.apply_async(getBrendaKeggs, (reactions3, 3,))
             print('Process on core 3 started')
-            r_set4 = pool.apply_async(getBrendaKeggs, (reactions4, 4,))
+            bk4 = pool.apply_async(getBrendaKeggs, (reactions4, 4,))
             print('Process on core 4 started')
             pool.close()
             pool.join()
-        brenda_keggs.update(r_set1[0].get())
-        brenda_keggs.update(r_set2[0].get())
-        brenda_keggs.update(r_set3[0].get())
-        brenda_keggs.update(r_set4[0].get())
-
-        no_keggs.update(r_set1[1].get())
-        no_keggs.update(r_set2[1].get())
-        no_keggs.update(r_set3[1].get())
-        no_keggs.update(r_set4[1].get())
+        brenda_keggs.update(bk1.get())
+        brenda_keggs.update(bk2.get())
+        brenda_keggs.update(bk3.get())
+        brenda_keggs.update(bk4.get())
 
         write('JSONs/brenda_keggs.json', brenda_keggs)
-        write('JSONs/brenda_no_keggs.json', no_keggs)
+        # write('JSONs/brenda_no_keggs.json', no_keggs)
