@@ -1,0 +1,37 @@
+{
+    "GLNLASEer": {
+        "C06606": "Paraoxon",
+        "C01880": "epsilon-caprolactone",
+        "C01770": "gamma-butyrolactone",
+        "C02240": "delta-valerolactone",
+        "C02274": "dihydrocoumarin"
+    },
+    "GTHPe": {
+        "C00051": "GSH",
+        "C00027": "H2O2"
+    },
+    "TRDRm": {
+        "C00004": "NADH",
+        "C00282": "Hordeum vulgare thioredoxin disulfide h2",
+        "C00027": "hydrogen peroxide",
+        "C18902": "methylseleninate",
+        "C00248": "Lipoamide",
+        "C00005": "NADPH",
+        "C03840": "5-hydroxy-1,4-naphthoquinone"
+    },
+    "CYSTS": {
+        "C05330": "homocysteine",
+        "C00155": "L-homocysteine",
+        "C02291": "L-cystathionine",
+        "C00097": "L-cysteine",
+        "C00065": "L-serine"
+    },
+    "GTHPm": {
+        "C00051": "GSH",
+        "C00027": "H2O2"
+    },
+    "MCD": {
+        "C00083": "malonyl-CoA"
+    },
+    "RE1845C": {}
+}

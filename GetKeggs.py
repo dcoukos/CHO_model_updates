@@ -113,12 +113,15 @@ def getBrendaKeggs(reactions, process):
     if process == 1:
         bar = Bar('Retrieving kegg codes for brenda output: ', max=total)
     metabolite_to_KEGG = {}
-    metabolite_no_KEGG = {}
     for bigg_id in reactions:
-        bar.next()
+        if process == 1:
+            bar.next()
+        if reactions[bigg_id] == {}:
+            continue
         metabolite_to_KEGG[bigg_id] = {}
-        metabolite_no_KEGG[bigg_id] = []
         for metabolite in reactions[bigg_id]:
+            if reactions[bigg_id][metabolite] == []:
+                continue
             request_counter = 0
             while request_counter < 3:
                 try:
@@ -132,11 +135,9 @@ def getBrendaKeggs(reactions, process):
                     metabolite_to_KEGG[bigg_id][kegg_id] = metabolite
                     request_counter = 3
                 except (KeyError, IndexError):
-                    if request_counter == 2:
-                        metabolite_no_KEGG[bigg_id].append(metabolite)
                     request_counter = request_counter + 1
 
-    return metabolite_to_KEGG, metabolite_no_KEGG
+    return metabolite_to_KEGG
 
 
 if __name__ == '__main__' and len(sys.argv) > 1:
@@ -189,11 +190,15 @@ if __name__ == '__main__' and len(sys.argv) > 1:
             write('JSONs/iCHOv1_K1_keggs.json', local_model)
         else:
             write('Unit Tests/iCHOv1_keggs_test.json', local_model)
-    elif sys.argv[1] == 'brenda-keggs':
+    elif sys.argv[1] == 'brenda-keggs' or sys.argv[1] == 'brenda-test':
         print('Opening brenda output...')
-        treated_brenda_output = openJson('JSONs/treated_BRENDA_output.json')
+        if sys.argv[1] == 'brenda-keggs':
+            treated_brenda_output = openJson(
+                'JSONs/treated_BRENDA_output.json')
+        elif sys.argv[1] == 'brenda-test':
+            treated_brenda_output = openJson(
+                'Unit Tests/sample_brenda_output.json')
         brenda_keggs = {}
-        no_keggs = {}
         reactions1 = {}
         reactions2 = {}
         reactions3 = {}

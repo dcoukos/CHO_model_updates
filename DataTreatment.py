@@ -2,7 +2,6 @@ import os
 import json
 import copy
 import pickle
-import requests
 import cobra
 from enum import Enum, auto  # Enum breaks spyder autocomplete
 from fuzzywuzzy import fuzz
@@ -61,8 +60,6 @@ def treatTurnoverData():
 
     storeBiggRepresentation()
     treated_output = openJson('JSONs/treated_BRENDA_output.json')
-    if os.stat('JSONs/BRENDA_KEGG_IDs.json') == 0:
-        brendaToKegg(treated_output)
     brenda_keggs = correctJson('JSONs/BRENDA_KEGG_IDs.json')
     brenda_no_kegg = openJson('JSONs/BRENDA_no_KEGG.json')
 
@@ -442,57 +439,6 @@ def findClosestOrganism(metabolite_entries):
     return None, None
 
 
-def brendaToKegg(data):
-    '''Tries to match BRENDA metabolite names to KEGG ids.
-
-        BRENDA metabolites that can be matched to a KEGG id are stored in
-        JSONs/BRENDA_KEGG_IDs.json and those that cannot are stored in
-        JSONs/BRENDA_no_KEGG.json. This is to counteract the long time it takes
-        to collect data.
-
-
-    Args:
-        data: Keys: reaction IDs. Values: data from BRENDA.
-    Note:
-        Data passed to this function must at least have this format:
-        { reaction1:{ metabolite1: ...,
-                      metabolite2: ...,
-                      metabolite3: ...,
-                     },
-            ...
-        }
-
-    Note: I have already run this from Cossio's computer, and the JSON files
-            are already populated.
-
-     TODO: ARE NOT POPULATED CORRECTLY
-
-    '''
-
-    for reaction in data:
-        [brenda_kegg_ids, brenda_no_kegg] = getKeggIds(data[reaction].keys())
-        kegg_data = {}
-        no_kegg_data = []
-        try:
-            kegg_data_r = open('JSONs/BRENDA_KEGG_IDs.json')
-        except ValueError:
-            kegg_data_r = {}
-        try:
-            no_kegg_data_r = open('JSONs/BRENDA_no_KEGG.json')
-        except ValueError:
-            no_kegg_data_r = {}
-        for metabolite in brenda_kegg_ids:
-            kegg_data.update({metabolite: brenda_kegg_ids[metabolite]})
-
-        for metabolite in brenda_no_kegg:
-            no_kegg_data.append(metabolite)
-
-        kegg_data_r.update({reaction: kegg_data})
-        no_kegg_data_r.update({reaction: no_kegg_data})
-        write('JSONs/BRENDA_KEGG_IDs.json', kegg_data_r)
-        write('JSONs/BRENDA_no_KEGG.json', no_kegg_data_r)
-
-
 def correctJson(path):
     ''' Ensures that KEGG codes are the keys and metabolite names are the values.
 
@@ -656,69 +602,6 @@ def storeBiggRepresentation():
 def loadGlobalBigg():
     global BIGG_MODEL
     BIGG_MODEL = pickle.load('bigg_model_object.pickle')
-
-
-def downloadModelKeggs():
-    # TODO: how to check this method?
-    # TODO: Make sure that this is loading the CHO model from the xml, and not
-        # the general bigg database!
-    '''Downloads kegg IDs of metabolites in BiGG model.
-
-    This function is responsible for calling addKeggToMetabolites, which will
-    try to query the chemical translation service for the kegg ids. It handles
-    forward and reverse reactions separately, and if a kegg is found, it
-    updates the with_kegg attribute of the enzyme.
-
-    '''
-    global BIGG_MODEL
-
-    for reaction in BIGG_MODEL:
-        for reactant in BIGG_MODEL[reaction].forward:
-            kegg_found, kegg_id = addKeggToMetabolites(reactant)[0]
-            if kegg_found:
-                BIGG_MODEL[reaction].with_kegg[kegg_id] = reactant.name
-        for product in BIGG_MODEL[reaction].backward:
-            kegg_found, kegg_id = addKeggToMetabolites(product)[0]
-            if kegg_found:
-                BIGG_MODEL[reaction].with_kegg[kegg_id] = product.name
-
-    saveBiggModel()
-
-# TODO: Delete this function if unnecessary.
-'''def addKeggToMetabolites(metabolite):
-    ''Adds the kegg id to the local representation of the BiGG Model.
-
-    Uses requests to query the chemical translation service for the kegg id of
-    the metabolite, which is then added to the kegg attribute of the
-    Metabolite.
-
-    Returns:
-        bool: True if metabolite kegg was found, false if it was not found.
-            This allows the calling function to add the metabolite to the dict
-            of metabolites with a corresponding KEGG ID.
-        kegg: This is the kegg code of the
-    ''
-    request_counter = 0
-
-    while request_counter < 3:
-        try:
-            metabolite_name = metabolite.name
-            if " - reduced" in metabolite_name:
-                metabolite_name = "reduced " + metabolite_name[:-10]
-            cts_output = requests.get("http://cts.fiehnlab.ucdavis.edu/"
-                                      "service/convert/Chemical%20Name/"
-                                      "KEGG/"+metabolite_name)
-            kegg = [str(json.loads(cts_output.text)[0]['result'][0])]
-            metabolite.kegg = kegg
-            print('Metabolite ' + metabolite_name + 'kegg found.')
-            return True, kegg
-        # TODO: What type of error is this supposed to throw?
-        except:
-            print('EXCEPTED')
-            request_counter = request_counter + 1
-            continue
-
-    return False, None'''
 
 
 def saveBiggModel():
