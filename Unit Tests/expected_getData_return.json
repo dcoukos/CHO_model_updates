@@ -1,0 +1,171 @@
+[
+  {
+      "wild-type": false,
+      "organism": "Mus musculus",
+      "turnover": "0.02"
+  },
+  {
+      "wild-type": true,
+      "organism": "Caenorhabditis elegans",
+      "turnover": "0.052"
+  },
+  {
+      "wild-type": false,
+      "organism": "Rattus norvegicus",
+      "turnover": "0.243"
+  },
+  {
+      "wild-type": false,
+      "organism": "Solanum lycopersicum",
+      "turnover": "0.38"
+  },
+  {
+      "wild-type": false,
+      "organism": "Entamoeba histolytica",
+      "turnover": "0.5"
+  },
+  {
+      "wild-type": false,
+      "organism": "Entamoeba histolytica",
+      "turnover": "1.25"
+  },
+  {
+      "wild-type": false,
+      "organism": "Sulfolobus solfataricus",
+      "turnover": "1.3"
+  },
+  {
+      "wild-type": false,
+      "organism": "Escherichia coli",
+      "turnover": "2.38"
+  },
+  {
+      "wild-type": false,
+      "organism": "Mus musculus",
+      "turnover": "3.5"
+  },
+  {
+      "wild-type": false,
+      "organism": "Caenorhabditis elegans",
+      "turnover": "4.03"
+  },
+  {
+      "wild-type": false,
+      "organism": "Caenorhabditis elegans",
+      "turnover": "5.3"
+  },
+  {
+      "wild-type": false,
+      "organism": "Homo sapiens",
+      "turnover": "5.58"
+  },
+  {
+      "wild-type": false,
+      "organism": "Homo sapiens",
+      "turnover": "8.1"
+  },
+  {
+      "wild-type": true,
+      "organism": "Caenorhabditis elegans",
+      "turnover": "10.17"
+  },
+  {
+      "wild-type": false,
+      "organism": "Escherichia coli",
+      "turnover": "13.2"
+  },
+  {
+      "wild-type": false,
+      "organism": "Anopheles gambiae",
+      "turnover": "14.3"
+  },
+  {
+      "wild-type": false,
+      "organism": "Anopheles gambiae",
+      "turnover": "15.4"
+  },
+  {
+      "wild-type": false,
+      "organism": "Anopheles gambiae",
+      "turnover": "15.7"
+  },
+  {
+      "wild-type": false,
+      "organism": "Mus musculus",
+      "turnover": "19.97"
+  },
+  {
+      "wild-type": true,
+      "organism": "Escherichia coli",
+      "turnover": "22"
+  },
+  {
+      "wild-type": true,
+      "organism": "Escherichia coli",
+      "turnover": "22.8"
+  },
+  {
+      "wild-type": true,
+      "organism": "Mus musculus",
+      "turnover": "25"
+  },
+  {
+      "wild-type": true,
+      "organism": "Homo sapiens",
+      "turnover": "25.78"
+  },
+  {
+      "wild-type": true,
+      "organism": "Homo sapiens",
+      "turnover": "27.4"
+  },
+  {
+      "wild-type": true,
+      "organism": "Mus musculus",
+      "turnover": "29.5"
+  },
+  {
+      "wild-type": true,
+      "organism": "Mus musculus",
+      "turnover": "37"
+  },
+  {
+      "wild-type": true,
+      "organism": "Mus musculus",
+      "turnover": "37.88"
+  },
+  {
+      "wild-type": true,
+      "organism": "Rattus norvegicus",
+      "turnover": "41.7"
+  },
+  {
+      "wild-type": true,
+      "organism": "Homo sapiens",
+      "turnover": "46.57"
+  },
+  {
+      "wild-type": true,
+      "organism": "Rattus norvegicus",
+      "turnover": "50"
+  },
+  {
+      "wild-type": true,
+      "organism": "Aeropyrum pernix",
+      "turnover": "63.2"
+  },
+  {
+      "wild-type": true,
+      "organism": "Bos taurus",
+      "turnover": "1030"
+  },
+  {
+      "wild-type": true,
+      "organism": "Bos taurus",
+      "turnover": "1200"
+  },
+  {
+      "wild-type": true,
+      "organism": "Bos taurus",
+      "turnover": "1300"
+  } ]

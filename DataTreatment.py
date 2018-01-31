@@ -1,9 +1,9 @@
 import os
+import sys
 import json
 import copy
 import cobra
 from enum import Enum, auto  # Enum breaks spyder autocomplete
-from fuzzywuzzy import fuzz
 '''
     This file contains functions pertaining to the treatment of the data that
     is returned from BRENDA, including functions that find the KEGG Ids of that
@@ -14,18 +14,15 @@ from fuzzywuzzy import fuzz
 # pylint: disable=too-many-branches, too-many-return-statements
 # pylint: disable=W0603,R1704,R0902,C0103
 
-# TODO: Is this function really necessary?
-'''
-def initializeModelUpdate():
-    ''Creates deep copy of BiGG Model representation, to which updated
-        information will be added. '
 
-    MODEL_UPDATE = copy.deepcopy(BIGG_MODEL)
-    if MODEL_UPDATE is None or MODEL_UPDATE == {}:
-        raise NoDataError'''
+def initializeModelUpdate(model):
+    '''Creates deep copy of BiGG Model representation, to which updated
+        information will be added. '''
+
+    return copy.deepcopy(model)
 
 
-def treatTurnoverData():
+def treatTurnoverData(path_to_brenda_output, path_to_keggs):
     '''Filters and eliminates unnecessary data, choosing best turnover data.
 
     This function is meant specifically for data of the DataType.turnover Enum.
@@ -33,80 +30,33 @@ def treatTurnoverData():
     wild-type, and magnitude) occur in functions called by
     treatTurnoverData().
     '''
-
     model = openModelAsDict('iCHOv1.xml')
+
     potential_updates = {}
 
-    treated_output = openJson('JSONs/treated_BRENDA_output.json')
-    brenda_keggs = correctJson('JSONs/brenda_keggs.json')
+    treated_output = openJson(path_to_brenda_output)
+    brenda_keggs = correctJson(path_to_keggs)
 
-    loadKeggsIntoModel(model, 'JSONs/brenda_keggs.json')
-    eliminateUnmatchable(model, potential_updates,
-                         treated_output, brenda_keggs)
+    loadKeggsIntoModel(model, path_to_keggs)
+    matchById(model, potential_updates, treated_output, brenda_keggs)
     selectBestData(potential_updates, DataType.turnover)
-    applyNewData(potential_updates, DataType.turnover)
+    # TODO: potential_updates must have only one metabolite per enzyme
+    # direction at this point. 
+    applyBestData(model, potential_updates, DataType.turnover)
 
-
-def eliminateUnmatchable(model, potential_updates, treated_brenda_output,
-                         brenda_keggs):
-    '''Eliminates entries from BRENDA which cannot be matched to model data.
-
-    The return from BRENDA is quite large, and only useful if pertinent to
-    metabolites in the model. The data must therefore be pruned. When correct
-    matches are found they are added to a new data structure, which is also
-    organized for forward and backwards reactions.
-
-    Args:
-        potential_updates: empty dict which will contain Enzyme entries. This
-            dict is where the incoming data will be processed and selected.
-        treated_brenda_output: This is a dict containing data from BRENDA. Keys
-            are reaction Ids. First order of keys are BiGG reaction Ids, and
-            the second orderkeys are the names of metabolites in BRENDA.
-            Thereafter there is a list of outputs, obtained programatically
-            from BRENDA.
-        brenda_keggs: dict containing KEGG ids and metabolite names in BRENDA.
-            First order of keys are BiGG reaction Ids, and the second order
-            keys are the names of metabolites in BRENDA.
-
-    Note:
-        Data passed to this function as treated_brenda_output, brenda_keggs,
-        and brenda_no_kegg must at least have this format:
-            { reaction1:{ metabolite1: ...,
-                          metabolite2: ...,
-                          metabolite3: ...,
-                         },
-                ...
-            }
-
-    '''
-    global BIGG_MODEL
-
-    '''unmatched = '''
-    matchById(potential_updates, brenda_keggs,
-              treated_brenda_output, DataType.turnover, BIGG_MODEL)
-
-    '''
-    We will not match by name, as the risk of unwanted matches between related,
-    but distinct metabolites is too high. The match by name function is
-    untested.
-    matchByName(potential_updates, unmatched, treated_brenda_output,
-                DataType.turnover)
-    matchByName(potential_updates, brenda_no_kegg, treated_brenda_output,
-                DataType.turnover)'''
-
-    return potential_updates
+    # TODO: apply appropriate return type.
 
 
 def loadKeggsIntoModel(model, path_to_keggs):
     '''Which model is this supposed to use again?'''
     kegg_dict = openJson(path_to_keggs)
     for enzyme in model:
-        if enzyme.bigg in kegg_dict:
-            enzyme.with_kegg = kegg_dict[enzyme]
+        if model[enzyme].bigg in kegg_dict:
+            model[enzyme].with_kegg = kegg_dict[enzyme]
 
 
-def matchById(potential_updates, brenda_keggs, treated_brenda_output,
-              data_type, BIGG_MODEL):
+def matchById(model, potential_updates, brenda_keggs, treated_brenda_output,
+              data_type):
     # TODO: Make sure that 'BIGG_MODEL' is the iCHOv1 model and not the bigg
         # global model.
     '''Tries to match metabolites by KEGG Id.
@@ -124,7 +74,7 @@ def matchById(potential_updates, brenda_keggs, treated_brenda_output,
             from BRENDA.
         data_type: DataType which tells matchById how to add new data to the
             potential_updates dict.
-        BIGG_MODEL: variable containing the representation of the BIGG_MODEL.
+        model: variable containing the representation of the model.
             Necessary as an argument for testing purposes.
 
     Return:
@@ -132,18 +82,18 @@ def matchById(potential_updates, brenda_keggs, treated_brenda_output,
     '''
     unmatched = {}
 
-    for bigg_ID in BIGG_MODEL:
+    for bigg_ID in model:
         unmatched[bigg_ID] = []
         potential_updates[bigg_ID] = Enzyme(bigg_ID)
         if bigg_ID in treated_brenda_output and treated_brenda_output[bigg_ID]\
                 != {} and bigg_ID in brenda_keggs:
             for kegg in brenda_keggs[bigg_ID]:
-                if kegg in BIGG_MODEL[bigg_ID].with_kegg:
-                    if BIGG_MODEL[bigg_ID].with_kegg[kegg] in BIGG_MODEL[
+                if kegg in model[bigg_ID].with_kegg:
+                    if model[bigg_ID].with_kegg[kegg] in model[
                             bigg_ID].forward and treated_brenda_output[
                             bigg_ID][brenda_keggs[bigg_ID][kegg]] != []:
                         name = brenda_keggs[bigg_ID][kegg]
-                        bigg_name = BIGG_MODEL[bigg_ID].with_kegg[kegg]
+                        bigg_name = model[bigg_ID].with_kegg[kegg]
                         potential_updates[bigg_ID].forward[bigg_name] = []
                         data = getData(treated_brenda_output[bigg_ID],
                                        name, data_type)
@@ -155,11 +105,11 @@ def matchById(potential_updates, brenda_keggs, treated_brenda_output,
                                         brenda_keggs[bigg_ID][kegg],
                                         kegg=kegg,
                                         **data[index]))
-                    elif BIGG_MODEL[bigg_ID].with_kegg[kegg] in BIGG_MODEL[
+                    elif model[bigg_ID].with_kegg[kegg] in model[
                             bigg_ID].backward and treated_brenda_output[
                             bigg_ID][brenda_keggs[bigg_ID][kegg]] != []:
                         name = brenda_keggs[bigg_ID][kegg]
-                        bigg_name = BIGG_MODEL[bigg_ID].with_kegg[kegg]
+                        bigg_name = model[bigg_ID].with_kegg[kegg]
                         potential_updates[bigg_ID].backward[bigg_name] = []
                         data = getData(treated_brenda_output[bigg_ID],
                                        name, data_type)
@@ -179,49 +129,6 @@ def matchById(potential_updates, brenda_keggs, treated_brenda_output,
                     unmatched[bigg_ID].append(brenda_keggs[bigg_ID][kegg])
 
     return unmatched
-
-
-def matchByName(potential_updates, unmatched, treated_brenda_output,
-                data_type):
-    '''Tries to fuzzy match metabolite names that cannot be matched via KEGG.
-
-    Args:
-        potential_updates: dict which will contain Enzyme entries. This
-            dict is where the incoming data will be processed and selected.
-            Metabolite entries which are matched are added here.
-        unmatched: dict of the metabolite entries from BRENDA which have not
-            yet been matched to BiGG metabolite by previous function calls.
-        treated_brenda_output: This is a dict containing data from BRENDA.
-            Keys are reaction Ids. First order of keys are BiGG reaction Ids,
-            and the second order keys are the names of metabolites in BRENDA.
-            Thereafter there is a list of outputs, obtained programatically
-            from BRENDA.
-        data_type: DataType which tells matchById how to add new data to the
-            potential_updates dict.
-
-    '''
-
-    global BIGG_MODEL
-
-    for reaction in unmatched:
-        for metabolite in unmatched[reaction]:
-            # REACTANT IS A KEY TO MATCH WITH METABOLITE
-            for reactant in BIGG_MODEL[reaction].forward:
-                if fuzz.token_set_ratio(metabolite, reactant.name) > 0.85:
-                    data = getData(treated_brenda_output[reaction], metabolite,
-                                   data_type)
-                    for entry in data:
-                        potential_updates[reaction].forward[
-                            reactant.name].append(MetaboliteCandidate(
-                                reactant.name, data=entry))
-            for product in BIGG_MODEL[reaction].backward:
-                if fuzz.token_set_ratio(metabolite, product.name) > 0.85:
-                    data = getData(treated_brenda_output[reaction], metabolite,
-                                   data_type)
-                    for entry in data:
-                        potential_updates[reaction].backward[
-                            product.name].append(MetaboliteCandidate(
-                                product.name, data=entry))
 
 
 def selectBestData(model_updates, data_type):
@@ -356,6 +263,8 @@ def chooseHighestTurnover(metabolite_entries):
 
     if highest_metabolite == '':
         return None
+    print(metabolite_entries[highest_metabolite][
+                             highest_index].returnAttributes())
     return metabolite_entries[highest_metabolite][highest_index]
 
 
@@ -489,7 +398,7 @@ def isNumber(s):
 
 
 def getData(reaction, metabolite, data_type):
-    '''Chooses data to give to matchers.
+    '''Chooses data to give to matchById.
 
     This function is intended to improve code reusability so that the parent
     functions can treat the data without knowing what type of data it is.
@@ -525,25 +434,33 @@ def getData(reaction, metabolite, data_type):
     return metabolite_data
 
 
-def applyNewData(updates, data_type):
+def applyBestData(model, updates, data_type):
     '''Adds updated data to global MODEL_UPDATES variable
+        The best data is already pared down at this point.
 
     Args:
         updates: updated model information. dict of Enzymes.
         data_type: type of data being added to model.
     '''
-    global MODEL_UPDATE
+    # TODO: ensure that incoming model udpate only has one metabolite per
+    # enzyme direction.
+
+    model_update = initializeModelUpdate(model)
+    if model_update is None or model_update == {}:
+        raise NoDataError
     for reaction in updates:
         for metabolite in updates[reaction].forward:
-            MODEL_UPDATE[reaction].forward[metabolite] = \
+            model_update[reaction].forward[metabolite] = \
                 Metabolite.initFromDict(updates[reaction].forward[
                     metabolite.returnAttributes()])
+        # TODO: what is going on here? Is returnAttributes supposed to supply
+        # the best candidate or not? Below definitely not the correct syntax.
         for metabolite in updates[reaction].backward:
-            MODEL_UPDATE[reaction].backward[metabolite] = \
+            model_update[reaction].backward[metabolite] = \
                 Metabolite.initFromDict(updates[reaction].backward[
                     metabolite.returnAttributes()])
         if data_type is DataType.turnover:
-            MODEL_UPDATE[reaction].chooseHighestTurnovers()
+            model_update[reaction].applyHighestTurnover()
 
 
 def getEcNumber(reaction):
@@ -570,9 +487,9 @@ def openModelAsDict(path):
         This creates and pickles a representation of the BiGG Model which
         should be a little bit easier to work with.
     '''
-    bigg_model = cobra.io.load_json_model(path)
+    iCHO_model = cobra.io.read_sbml_model(path)
     model = {}
-    for reaction in bigg_model.reactions:
+    for reaction in iCHO_model.reactions:
         model[reaction.id] = Enzyme(reaction.id)
 
         for reactant in reaction.reactants:
@@ -639,7 +556,7 @@ class Enzyme():
             enz = Enzyme(self.bigg)
         return enz
 
-    def chooseHighestTurnovers(self):
+    def applyHighestTurnover(self):
         '''Chooses best value from forward metabolites.
 
             This function sets the value of forward_tunover and
@@ -648,10 +565,19 @@ class Enzyme():
         Note: The data must already be narrowed down to one entry per
             metabolite. Otherwise, this function will break
         '''
-        if self.forward is not None:
-            self.forward_turnover = self.forward.turnover
-        if self.backward is not None:
-            self.backward_turnover = self.backward.turnover
+        counter = 0
+        try:
+            counter += 1
+            print('Turnovers applied: ' + str(counter))
+            if self.forward is not None:
+                print(len(self.forward))
+                # BUG: Sometimes this returns with 2 metabolties
+                print(self.forward.keys())
+                self.forward_turnover = self.forward['turnover']
+            if self.backward is not None:
+                self.backward_turnover = self.backward['turnover']
+        except KeyError:
+            print(self.forward)
 
     def getDict(self):
         '''
@@ -792,11 +718,13 @@ class MetaboliteCandidate(Metabolite):
                     self.wild_type = value
 
     def returnAttributes(self):
+        '''Only intended to be used by the best selection - Does not
+            return organism or wild_type'''
         return {
             'name': self.name,
             'bigg': self.bigg,
             'kegg': self.kegg,
-            'turnover': self.turn,
+            'turnover': self.turnover,
             'specific activity': self.specific_activity,
             'molecular weight': self.molecular_weight
             }
@@ -829,3 +757,10 @@ class NoDataError(BadDataError):
 
 class NotNumericError(ValueError):
     '''Not numeric.'''
+
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        new_data = treatTurnoverData('JSONs/treated_brenda_output.json',
+                                     'JSONs/brenda_keggs.json')
+        # write new data as dict --> add constraints to Cobra model.
