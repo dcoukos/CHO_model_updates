@@ -8,8 +8,16 @@
     xml from BiGG did.
 '''
 import cobra
+import json
+from multiprocessing.pool import Pool
 from bs4 import BeautifulSoup as Soup
 from progress.bar import Bar
+
+
+def write(path, data):
+    '''Shortened call to JSON dumps with indent = 4'''
+    with open(path, 'w') as wr:
+        json.dump(data, wr, indent=4)
 
 
 def MatchReaction(bid, reactants, products, reactions):
@@ -24,7 +32,6 @@ def MatchReaction(bid, reactants, products, reactions):
     p_names = []
     for product in products:
         p_names.append('M_' + product.id)
-    names = r_names + p_names
     for reaction in reactions:
         try:
             reactant_list = reaction.find('listOfReactants')
@@ -37,32 +44,70 @@ def MatchReaction(bid, reactants, products, reactions):
                 rids.append(reactant['species'])
             for product in k1_products:
                 pids.append(product['species'])
-            k1_metabolites = rids + pids
-            if k1_metabolites == names:
+            if rids == r_names and pids == p_names:
                 return reaction['id']
         except AttributeError:
             pass
+    return None
 
 
-if __name__ == '__main__':
-    print('Loading models....')
-    bigg_model = cobra.io.read_sbml_model('iCHOv1.xml')
+def mainSubProcess(reactions, process):
     k1_model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
-    print('Parsing xml into a beautiful soup....')
     handler = open('iCHOv1.xml').read()
-    bigg_xml = Soup(handler, 'xml')
     handler = open('iCHOv1_K1_final.xml').read()
     k1_xml = Soup(handler, 'xml')
-    v1_to_k1 = {}
-    # xml_bigg_reactions = bigg_xml.find_all('reaction')
+    total = len(reactions)
+    if process == 1:
+        bar = Bar('Matching models ', max=total)
     xml_k1_reactions = k1_xml.find_all('reaction')
-    total = len(bigg_model.reactions)
-    bar = Bar('Matching models ', max=total)
-    for reaction in bigg_model.reactions:
+    v1_to_k1 = {}
+    for reaction in reactions:
         if reaction.id not in k1_model.reactions:
             reactants_bigg = reaction.reactants
             products_bigg = reaction.products
             v1_to_k1[reaction.id] = MatchReaction(reaction.id, reactants_bigg,
                                                   products_bigg,
                                                   xml_k1_reactions)
-        bar.next()
+        if process == 1:
+            bar.next()
+    return v1_to_k1
+
+
+if __name__ == '__main__':
+    print('Loading models....')
+    bigg_model = cobra.io.read_sbml_model('iCHOv1.xml')
+
+    v1_to_k1 = {}
+    reactions1 = []
+    reactions2 = []
+    reactions3 = []
+    reactions4 = []
+    counter = 0
+    for reaction in bigg_model.reactions:
+        if counter % 4 == 0:
+            reactions1.append(reaction)
+        if counter % 4 == 1:
+            reactions2.append(reaction)
+        if counter % 4 == 2:
+            reactions3.append(reaction)
+        if counter % 4 == 3:
+            reactions4.append(reaction)
+        counter = counter + 1
+    with Pool(processes=4) as pool:
+        lm_1 = pool.apply_async(mainSubProcess, (reactions1, 1,))
+        print('Process on core 1 started')
+        lm_2 = pool.apply_async(mainSubProcess, (reactions2, 2,))
+        print('Process on core 2 started')
+        lm_3 = pool.apply_async(mainSubProcess, (reactions3, 3,))
+        print('Process on core 3 started')
+        lm_4 = pool.apply_async(mainSubProcess, (reactions4, 4,))
+        print('Process on core 4 started')
+        print('Porting k1 xml file to processes...')
+        pool.close()
+        pool.join()
+    v1_to_k1.update(lm_1.get())
+    v1_to_k1.update(lm_2.get())
+    v1_to_k1.update(lm_3.get())
+    v1_to_k1.update(lm_4.get())
+
+    write('JSONs/v1_to_k1.json', v1_to_k1)

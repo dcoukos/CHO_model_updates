@@ -1,7 +1,6 @@
 import os
 import json
 import copy
-import pickle
 import cobra
 from enum import Enum, auto  # Enum breaks spyder autocomplete
 from fuzzywuzzy import fuzz
@@ -15,35 +14,15 @@ from fuzzywuzzy import fuzz
 # pylint: disable=too-many-branches, too-many-return-statements
 # pylint: disable=W0603,R1704,R0902,C0103
 
-# TODO:
-''' Make sure that model Kegg IDs are organized like such
-    {
-     EC NUMBER 1: {
-             KEGG 1: NAME,
-             KEGG 2: NAME,
-             KEGG 3: NAME
-     },
-     EC NUMBER 2: {
-             KEGG 1: NAME,
-             KEGG 2: NAME,
-             KEGG 3: NAME
-     },
-     ...
-    }
-
-THIS DICT MUST BE PROPERLY POPULATED BEFORE THE MATCH BY ID FUNCTION CAN WORK.
-
+# TODO: Is this function really necessary?
 '''
-
-
 def initializeModelUpdate():
-    '''Creates deep copy of BiGG Model representation, to which updated
-        information will be added. '''
-    global MODEL_UPDATE
-    global BIGG_MODEL
+    ''Creates deep copy of BiGG Model representation, to which updated
+        information will be added. '
+
     MODEL_UPDATE = copy.deepcopy(BIGG_MODEL)
     if MODEL_UPDATE is None or MODEL_UPDATE == {}:
-        raise NoDataError
+        raise NoDataError'''
 
 
 def treatTurnoverData():
@@ -55,22 +34,21 @@ def treatTurnoverData():
     treatTurnoverData().
     '''
 
-    global MODEL_UPDATE
+    model = openModelAsDict('iCHOv1.xml')
     potential_updates = {}
 
-    storeBiggRepresentation()
     treated_output = openJson('JSONs/treated_BRENDA_output.json')
-    brenda_keggs = correctJson('JSONs/BRENDA_KEGG_IDs.json')
-    brenda_no_kegg = openJson('JSONs/BRENDA_no_KEGG.json')
+    brenda_keggs = correctJson('JSONs/brenda_keggs.json')
 
-    eliminateUnmatchable(potential_updates, treated_output, brenda_keggs,
-                         brenda_no_kegg)
+    loadKeggsIntoModel(model, 'JSONs/brenda_keggs.json')
+    eliminateUnmatchable(model, potential_updates,
+                         treated_output, brenda_keggs)
     selectBestData(potential_updates, DataType.turnover)
     applyNewData(potential_updates, DataType.turnover)
 
 
-def eliminateUnmatchable(potential_updates, treated_brenda_output,
-                         brenda_keggs, brenda_no_kegg):
+def eliminateUnmatchable(model, potential_updates, treated_brenda_output,
+                         brenda_keggs):
     '''Eliminates entries from BRENDA which cannot be matched to model data.
 
     The return from BRENDA is quite large, and only useful if pertinent to
@@ -89,8 +67,6 @@ def eliminateUnmatchable(potential_updates, treated_brenda_output,
         brenda_keggs: dict containing KEGG ids and metabolite names in BRENDA.
             First order of keys are BiGG reaction Ids, and the second order
             keys are the names of metabolites in BRENDA.
-        brenda_no_kegg: dict containing metabolites for which no KEGG id was
-            found.
 
     Note:
         Data passed to this function as treated_brenda_output, brenda_keggs,
@@ -121,8 +97,18 @@ def eliminateUnmatchable(potential_updates, treated_brenda_output,
     return potential_updates
 
 
+def loadKeggsIntoModel(model, path_to_keggs):
+    '''Which model is this supposed to use again?'''
+    kegg_dict = openJson(path_to_keggs)
+    for enzyme in model:
+        if enzyme.bigg in kegg_dict:
+            enzyme.with_kegg = kegg_dict[enzyme]
+
+
 def matchById(potential_updates, brenda_keggs, treated_brenda_output,
               data_type, BIGG_MODEL):
+    # TODO: Make sure that 'BIGG_MODEL' is the iCHOv1 model and not the bigg
+        # global model.
     '''Tries to match metabolites by KEGG Id.
 
     Args:
@@ -578,44 +564,24 @@ def cleanMetaboliteNames(brenda_metabolites):
     pass
 
 
-def storeBiggRepresentation():
+def openModelAsDict(path):
     '''Creates and stores a representation of the BiGG Model.
 
         This creates and pickles a representation of the BiGG Model which
         should be a little bit easier to work with.
     '''
-    global BIGG_MODEL
-    bigg_model = cobra.io.load_json_model('JSONs/BIGG_master_modle.json')
-
+    bigg_model = cobra.io.load_json_model(path)
+    model = {}
     for reaction in bigg_model.reactions:
-        BIGG_MODEL[reaction.id] = Enzyme(reaction.id)
+        model[reaction.id] = Enzyme(reaction.id)
 
         for reactant in reaction.reactants:
-            BIGG_MODEL[reaction.id].forward[reactant.name] = Metabolite(
+            model[reaction.id].forward[reactant.name] = Metabolite(
                 reactant.name, bigg=reactant.id)
         for reactant in reaction.products:
-            BIGG_MODEL[reaction.id].backward[reactant.name] = Metabolite(
+            model[reaction.id].backward[reactant.name] = Metabolite(
                 reactant.name, bigg=reactant.id)
-    pickle.dump(BIGG_MODEL, 'bigg_model_object.pickle', protocol=-1)
-
-
-def loadGlobalBigg():
-    global BIGG_MODEL
-    BIGG_MODEL = pickle.load('bigg_model_object.pickle')
-
-
-def saveBiggModel():
-    '''Stores model using pickle module.
-
-    '''
-    global BIGG_MODEL
-    pickle_out = open('BiGG_model.pickle', 'wb')
-    pickle.dump(BIGG_MODEL, pickle_out)
-    pickle_out.close()
-
-
-BIGG_MODEL = {}  # Probably not the best way to do this...
-MODEL_UPDATE = {}
+    return model
 
 
 class DataType(Enum):
