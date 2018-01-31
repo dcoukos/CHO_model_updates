@@ -118,24 +118,6 @@ class MatchById(unittest.TestCase):
                              correct_potential_updates_as_dict,
                              msg='Potential updates incorrect.')
 
-    def test_matchById_unmatched(self):
-        '''Tests that the unmatched dict returns correctly. '''
-        potential_updates = {}
-        unmatched = matchById(potential_updates,
-                              MatchById.brenda_keggs,
-                              MatchById.treated_brenda_output,
-                              MatchById.data_type,
-                              MatchById.simple_test_model)
-        write('Unit Tests/return_matchById_unmatched.json', unmatched)
-
-        # unmatched only needs to return the BRENDA names of the unmatched
-        # metabolites. matchByName will look for the data. (Maintains code
-        # similarity.)
-        for reaction in MatchById.correct_unmatched:
-            self.assertListEqual(sorted(MatchById.correct_unmatched[reaction]),
-                                 sorted(unmatched[reaction]), msg='Unmatched '
-                                 'return incorrect.')
-
 
 class SelectBestData(unittest.TestCase):
     '''contains unit tests for selectBestData
@@ -202,12 +184,7 @@ class SelectBestData(unittest.TestCase):
                     enzyme].getSimpleDict()
             if enzyme_dict != {}:
                 data_test_backward_dict[enzyme] = enzyme_dict
-
-        '''
-        one_is_equal = (correct_data_dict == data_test_forward_dict) or\
-            (correct_data_dict == data_test_backward_dict)
-        self.assertTrue(one_is_equal)
-        '''
+                
         with open('Unit Tests/test_data_selection_output.json', 'w') \
                 as outfile:
             json.dump(data_test_forward_dict, outfile, indent=4)

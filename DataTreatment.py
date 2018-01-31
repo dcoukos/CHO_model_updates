@@ -38,10 +38,12 @@ def treatTurnoverData(path_to_brenda_output, path_to_keggs):
     brenda_keggs = correctJson(path_to_keggs)
 
     loadKeggsIntoModel(model, path_to_keggs)
-    matchById(model, potential_updates, treated_output, brenda_keggs)
+    matchById(model, potential_updates, treated_output, brenda_keggs,
+              DataType.turnover)
     selectBestData(potential_updates, DataType.turnover)
+
     # TODO: potential_updates must have only one metabolite per enzyme
-    # direction at this point. 
+    # direction at this point.
     applyBestData(model, potential_updates, DataType.turnover)
 
     # TODO: apply appropriate return type.
@@ -121,14 +123,8 @@ def matchById(model, potential_updates, brenda_keggs, treated_brenda_output,
                                         brenda_keggs[bigg_ID][kegg],
                                         kegg=kegg,
                                         **data[index]))
-                    elif treated_brenda_output[bigg_ID][brenda_keggs[bigg_ID][
-                            kegg]] != []:
-                        unmatched[bigg_ID].append(brenda_keggs[bigg_ID][kegg])
-                elif treated_brenda_output[bigg_ID][brenda_keggs[
-                        bigg_ID][kegg]] != []:
-                    unmatched[bigg_ID].append(brenda_keggs[bigg_ID][kegg])
-
-    return unmatched
+        # CHANGED: deleted returning unmatched. No longer interested because
+            # we don't match by name.
 
 
 def selectBestData(model_updates, data_type):
@@ -170,24 +166,24 @@ def selectBestData(model_updates, data_type):
         # except TypeError:
         #     pass
         # SAME as above but for reverse reaction
-
-        try:
-            for metabolite_name in model_updates[reaction].backward:
-                print(metabolite_name)
-                filtered_by_organism[reaction].backward[metabolite_name] = []
-                closest_organism, indices = findClosestOrganism(model_updates[
-                    reaction].backward[metabolite_name])
-                best_found = False
-                for organism in Organism:
-                    if best_found is False and closest_organism is not None:
-                        for index in indices[organism]:
-                            filtered_by_organism[reaction].backward[
-                                metabolite_name].append(model_updates[
-                                    reaction].backward[metabolite_name][index])
-                            if organism is closest_organism:
-                                best_found = True
-        except TypeError:
-            pass
+        # TODO: why are there exception blocks here?
+        # try:
+        for metabolite_name in model_updates[reaction].backward:
+            print(metabolite_name)
+            filtered_by_organism[reaction].backward[metabolite_name] = []
+            closest_organism, indices = findClosestOrganism(model_updates[
+                reaction].backward[metabolite_name])
+            best_found = False
+            for organism in Organism:
+                if best_found is False and closest_organism is not None:
+                    for index in indices[organism]:
+                        filtered_by_organism[reaction].backward[
+                            metabolite_name].append(model_updates[
+                                reaction].backward[metabolite_name][index])
+                        if organism is closest_organism:
+                            best_found = True
+        # except TypeError:
+            # pass
 
     filtered_by_wild_type = {}
     for reaction in filtered_by_organism:
@@ -211,35 +207,40 @@ def selectBestData(model_updates, data_type):
     # except TypeError:
         # pass
         # SAME as above but for reverse reactions
-        try:
-            for metabolite_name in filtered_by_organism[reaction].backward:
-                wild_type = []
-                for entry in filtered_by_organism[reaction].backward[
-                        metabolite_name]:
-                    if entry.wild_type is not None:
-                        wild_type.append(entry)
-                if wild_type != []:
-                    filtered_by_wild_type[reaction].backward[
-                        metabolite_name] = wild_type
-                else:
-                    filtered_by_wild_type[reaction].backward[
-                        metabolite_name] = copy.copy(filtered_by_organism
-                                                     [reaction].backward[
-                                                         metabolite_name])
-        except TypeError:
-            pass
+    # TODO: why are there exception blocks here?
+        # try:
+        for metabolite_name in filtered_by_organism[reaction].backward:
+            wild_type = []
+            for entry in filtered_by_organism[reaction].backward[
+                    metabolite_name]:
+                if entry.wild_type is not None:
+                    wild_type.append(entry)
+            if wild_type != []:
+                filtered_by_wild_type[reaction].backward[
+                    metabolite_name] = wild_type
+            else:
+                filtered_by_wild_type[reaction].backward[
+                    metabolite_name] = copy.copy(filtered_by_organism
+                                                 [reaction].backward[
+                                                     metabolite_name])
+        # except TypeError:
+            # pass
 
     # -----Choose data according to magnitude preference.-----------------
     # work on filtered_by_wild_type)
-
+# TODO: below block should return a single metabolite per direction
+# TODO: Why is there a key for the metabolite that was being returned?
     if data_type is DataType.turnover:
+        print('Selecting highest turnover')
         for reaction in filtered_by_wild_type:
             if filtered_by_wild_type[reaction].forward != {}:
-                model_updates[reaction].forward = chooseHighestTurnover(
+                data = chooseHighestTurnover(
                     filtered_by_wild_type[reaction].forward)
+                model_updates[reaction].forward = data
             if filtered_by_wild_type[reaction].backward != {}:
-                model_updates[reaction].backward = chooseHighestTurnover(
+                data = chooseHighestTurnover(
                     filtered_by_wild_type[reaction].backward)
+                model_updates[reaction].backward = data
 
 
 def chooseHighestTurnover(metabolite_entries):
@@ -263,8 +264,8 @@ def chooseHighestTurnover(metabolite_entries):
 
     if highest_metabolite == '':
         return None
-    print(metabolite_entries[highest_metabolite][
-                             highest_index].returnAttributes())
+
+    # NOTE: Returns a dict.
     return metabolite_entries[highest_metabolite][highest_index]
 
 
@@ -449,17 +450,17 @@ def applyBestData(model, updates, data_type):
     if model_update is None or model_update == {}:
         raise NoDataError
     for reaction in updates:
-        for metabolite in updates[reaction].forward:
-            model_update[reaction].forward[metabolite] = \
-                Metabolite.initFromDict(updates[reaction].forward[
-                    metabolite.returnAttributes()])
-        # TODO: what is going on here? Is returnAttributes supposed to supply
-        # the best candidate or not? Below definitely not the correct syntax.
-        for metabolite in updates[reaction].backward:
-            model_update[reaction].backward[metabolite] = \
-                Metabolite.initFromDict(updates[reaction].backward[
-                    metabolite.returnAttributes()])
+        # BUG: forward and backward metabolites still have name.
+        print(str(model[reaction].forward))
+        print(str(model[reaction].backward))
+        model_update[reaction].forward = \
+            model[reaction].forward.returnAttributes()
+        model_update[reaction].backward = \
+            model[reaction].backward.returnAttributes()
         if data_type is DataType.turnover:
+            # WARNING: applyHighestTurnover requires that highest metabolites
+            # be chosen and forward and backward be replaced with dicts from
+            # those metabolites
             model_update[reaction].applyHighestTurnover()
 
 
@@ -622,7 +623,7 @@ class Enzyme():
         return return_dict
 
     def getSimpleDict(self):
-        '''Function only meant for testing purposes, to be compared against
+        '''Function only meant for TESTING purposes, to be compared against
         JSON files.'''
         return_dict = {}
         try:
