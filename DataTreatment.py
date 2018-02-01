@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import copy
+import statistics
 import cobra
 from enum import Enum, auto  # Enum breaks spyder autocomplete
 '''
@@ -15,6 +16,47 @@ from enum import Enum, auto  # Enum breaks spyder autocomplete
 # pylint: disable=W0603,R1704,R0902,C0103
 
 
+def importWeights(model_update):
+    '''Adds molecular weights to model enzymes'''
+    mol_info = openJson('JSONs/molecular_weights.json')
+    for bigg_id in mol_info:
+        if 'molecular_weights' in mol_info[bigg_id]:
+            if mol_info[bigg_id]['molecular_weights'] != []:
+                max_weight = max(mol_info[bigg_id]['molecular_weights'])
+                model_update[bigg_id].molecular_weight = max_weight
+
+
+def calculateSpecificActivities(model_update):
+    for bigg_id in model_update:
+        if model_update[bigg_id].f_spec_act is None:
+            mol_weight = model_update[bigg_id].molecular_weight
+            turnover = model_update[bigg_id].f_turnover
+            if mol_weight is not None and turnover is not None:
+                model_update[bigg_id].f_spec_act = float(mol_weight/turnover)
+        if model_update[bigg_id].b_spec_act is None:
+            mol_weight = model_update[bigg_id].molecular_weight
+            turnover = model_update[bigg_id].b_turnover
+            if mol_weight is not None and turnover is not None:
+                model_update[bigg_id].b_spec_act = float(mol_weight/turnover)
+
+    for bigg_id in model_update:
+        median = medianSpecificActivites()
+        if model_update[bigg_id].f_spec_act is None:
+            model_update[bigg_id].f_spec_act = median
+        if model_update[bigg_id].b_spec_act is None:
+            model_update[bigg_id].b_spec_act = median
+
+
+def medianSpecificActivites(model_update):
+    activities = []
+    for bigg_id in model_update:
+        if model_update[bigg_id].f_spec_act is not None:
+            activities.append(model_update[bigg_id].f_spec_act)
+        if model_update[bigg_id].b_spec_act is not None:
+            activities.append(model_update[bigg_id].b_spec_act)
+    return statistics.median(activities)
+
+
 def initializeModelUpdate(model):
     '''Creates deep copy of BiGG Model representation, to which updated
         information will be added. '''
@@ -22,7 +64,8 @@ def initializeModelUpdate(model):
     return copy.deepcopy(model)
 
 
-def treatTurnoverData(path_to_brenda_output, path_to_keggs):
+def treatTurnoverData(path_to_brenda_output, path_to_keggs,
+                      path_to_iCHO_keggs):
     '''Filters and eliminates unnecessary data, choosing best turnover data.
 
     This function is meant specifically for data of the DataType.turnover Enum.
@@ -30,39 +73,46 @@ def treatTurnoverData(path_to_brenda_output, path_to_keggs):
     wild-type, and magnitude) occur in functions called by
     treatTurnoverData().
     '''
+    # TODO: should the model be opened as a dict or as a cobra model?
     model = openModelAsDict('iCHOv1.xml')
 
     potential_updates = {}
 
     treated_output = openJson(path_to_brenda_output)
-    brenda_keggs = correctJson(path_to_keggs)
-
-    loadKeggsIntoModel(model, path_to_keggs)
-    matchById(model, potential_updates, treated_output, brenda_keggs,
+    # brenda_keggs = correctJson(path_to_keggs)
+    brenda_keggs = openJson('JSONs/brenda_keggs.json')
+    loadKeggsIntoModel(model, path_to_iCHO_keggs)
+    matchById(model, potential_updates, brenda_keggs, treated_output,
               DataType.turnover)
-    print(potential_updates['10FTHF5GLUtl'].forward)
-    # Is this an empty metabolite?  --> yes
     selectBestData(potential_updates, DataType.turnover)
-
-    # TODO: potential_updates must have only one metabolite per enzyme
-    # direction at this point.
     applyBestData(model, potential_updates, DataType.turnover)
-
-    # TODO: apply appropriate return type.
 
 
 def loadKeggsIntoModel(model, path_to_keggs):
     '''Which model is this supposed to use again?'''
     kegg_dict = openJson(path_to_keggs)
+    corrected_dict = {}
+    for enzyme in kegg_dict:
+        corrected_dict[enzyme] = {}
+        corrected_dict[enzyme]['reactants'] = {}
+        corrected_dict[enzyme]['products'] = {}
+        for name in kegg_dict[enzyme]['reactants']:
+            if kegg_dict[enzyme]['reactants'][name] is not None:
+                corrected_dict[enzyme]['reactants'].update(
+                    {code: name for code in kegg_dict
+                     [enzyme]['reactants'][name]})
+        for name in kegg_dict[enzyme]['products']:
+            if kegg_dict[enzyme]['products'][name] is not None:
+                corrected_dict[enzyme]['products'].update(
+                    {code: name for code in kegg_dict
+                     [enzyme]['products'][name]})
     for enzyme in model:
-        if model[enzyme].bigg in kegg_dict:
-            model[enzyme].with_kegg = kegg_dict[enzyme]
+        if model[enzyme].bigg in corrected_dict:
+            model[enzyme].with_kegg = corrected_dict[enzyme]
 
 
 def matchById(model, potential_updates, brenda_keggs, treated_brenda_output,
               data_type):
-    # TODO: Make sure that 'BIGG_MODEL' is the iCHOv1 model and not the bigg
-        # global model.
     '''Tries to match metabolites by KEGG Id.
 
     Args:
@@ -85,16 +135,9 @@ def matchById(model, potential_updates, brenda_keggs, treated_brenda_output,
         unmatched: dict of BRENDA metabolites that could not be matched by name
     '''
     unmatched = {}
-    # Somewhere here the metabolite is not being added to the forward
-    #    dictionary
-    # TODO: Should have had an error. Is someone reading iCHOv1_keggs?
-    # Nobody is reading that file.
 
     # TODO: Things to check:
-    #   1. Where are the keggs from the iCHOv1 model being matched? Should be
-    #        in addKeggsToModel or some such shazam.
-    #   2. What happens to the entries that have null Kegg codes. How is the
-    #       new data going to be added to the iCHOv1 model?
+
     #   3. How does the program handle empty data so as to not add to handle
     #       empty data correctly and not throw an error. (Remember not throwing
     #       an error does not mean that the situation is handled correctly.)
@@ -104,45 +147,42 @@ def matchById(model, potential_updates, brenda_keggs, treated_brenda_output,
         if bigg_ID in treated_brenda_output and treated_brenda_output[bigg_ID]\
                 != {} and bigg_ID in brenda_keggs:
             for kegg in brenda_keggs[bigg_ID]:
-                if kegg in model[bigg_ID].with_kegg:
-                    if model[bigg_ID].with_kegg[kegg] in model[
-                            bigg_ID].forward and treated_brenda_output[
-                            bigg_ID][brenda_keggs[bigg_ID][kegg]] != []:
-                        name = brenda_keggs[bigg_ID][kegg]
-                        bigg_name = model[bigg_ID].with_kegg[kegg]
-                        potential_updates[bigg_ID].forward[bigg_name] = []
-                        data = getData(treated_brenda_output[bigg_ID],
-                                       name, data_type)
-                        for index, entry in enumerate(treated_brenda_output[
-                                bigg_ID][brenda_keggs[bigg_ID][kegg]]):
-                            potential_updates[bigg_ID].forward[
-                                bigg_name].append(
-                                MetaboliteCandidate(
-                                        brenda_keggs[bigg_ID][kegg],
-                                        kegg=kegg,
-                                        **data[index]))
-                    elif model[bigg_ID].with_kegg[kegg] in model[
-                            bigg_ID].backward and treated_brenda_output[
-                            bigg_ID][brenda_keggs[bigg_ID][kegg]] != []:
-                        name = brenda_keggs[bigg_ID][kegg]
-                        bigg_name = model[bigg_ID].with_kegg[kegg]
-                        potential_updates[bigg_ID].backward[bigg_name] = []
-                        data = getData(treated_brenda_output[bigg_ID],
-                                       name, data_type)
-                        for index, entry in enumerate(treated_brenda_output[
-                                bigg_ID][brenda_keggs[bigg_ID][kegg]]):
-                            potential_updates[bigg_ID].backward[
-                                bigg_name].append(
-                                MetaboliteCandidate(
-                                        brenda_keggs[bigg_ID][kegg],
-                                        kegg=kegg,
-                                        **data[index]))
+                if kegg in model[bigg_ID].with_kegg['reactants'] and\
+                        treated_brenda_output[bigg_ID][brenda_keggs[
+                        bigg_ID][kegg]] != []:
+                    name = brenda_keggs[bigg_ID][kegg]
+                    bigg_name = model[bigg_ID].with_kegg['reactants'][kegg]
+                    # TODO: what if the name in the xml file does not match the
+                    #       name in the cobra model?
+                    potential_updates[bigg_ID].forward[bigg_name] = []
+                    data = getData(treated_brenda_output[bigg_ID],
+                                   name, data_type)
+                    for index, entry in enumerate(treated_brenda_output[
+                            bigg_ID][brenda_keggs[bigg_ID][kegg]]):
+                        potential_updates[bigg_ID].forward[
+                            bigg_name].append(
+                            MetaboliteCandidate(
+                                    brenda_keggs[bigg_ID][kegg],
+                                    kegg=kegg,
+                                    **data[index]))
+                elif kegg in model[bigg_ID].with_kegg['products'] and\
+                        treated_brenda_output[bigg_ID][brenda_keggs[
+                        bigg_ID][kegg]] != []:
+                    name = brenda_keggs[bigg_ID][kegg]
+                    bigg_name = model[bigg_ID].with_kegg['products'][kegg]
+                    potential_updates[bigg_ID].backward[bigg_name] = []
+                    data = getData(treated_brenda_output[bigg_ID],
+                                   name, data_type)
+                    for index, entry in enumerate(treated_brenda_output[
+                            bigg_ID][brenda_keggs[bigg_ID][kegg]]):
+                        potential_updates[bigg_ID].backward[
+                            bigg_name].append(
+                            MetaboliteCandidate(
+                                    brenda_keggs[bigg_ID][kegg],
+                                    kegg=kegg,
+                                    **data[index]))
         # CHANGED: deleted returning unmatched. No longer interested because
             # we don't match by name.
-    # CHECK: could this be because the value is null in iCHOv1_keggs
-    # for 10FTHF5GLUtl?
-    assert '10FTHF5GLUtl' in model
-    print(potential_updates['10FTHF5GLUtl'].forward)
 
 
 def selectBestData(model_updates, data_type):
@@ -158,17 +198,35 @@ def selectBestData(model_updates, data_type):
             be placed.
 
     '''
-    # TODO: but model updates is empty!!!!!
-    # first the data must be filtered by organism.
+    # FIXME: eliminate entries with turnover = -999
+    filtered_by_organism = selectBestOrganismEntries(model_updates)
+
+    filtered_by_wild_type = selectWildTypeEntries(filtered_by_organism)
+
+    # -----Choose data according to magnitude preference.-----------------
+    if data_type is DataType.turnover:
+        for reaction in filtered_by_wild_type:
+            if filtered_by_wild_type[reaction].forward != {}:
+                data = chooseHighestTurnover(
+                    filtered_by_wild_type[reaction].forward)
+                model_updates[reaction].forward = data
+            if filtered_by_wild_type[reaction].backward != {}:
+                data = chooseHighestTurnover(
+                    filtered_by_wild_type[reaction].backward)
+                model_updates[reaction].backward = data
+    # FIXME: This should add a Metabolite...or should it....
+
+
+def selectBestOrganismEntries(model_updates):
     filtered_by_organism = {}
     for reaction in model_updates:
-        # checked
-        filtered_by_organism[reaction] = model_updates[
-                reaction].copyOnlyEnzyme()
-        # try:
+        #TODO: see if the error is in the copyOnlyEnzyme method.
+        filtered_by_organism[reaction] = model_updates[reaction].copyOnlyEnzyme()
+        #NOTE: does not enter when copying whole enzyme and deleting forward and backward.
+        #
         for metabolite_name in model_updates[reaction].forward:
-            print(metabolite_name)
-            filtered_by_organism[reaction].forward[metabolite_name] = []
+            if metabolite_name not in filtered_by_organism[reaction].forward:
+                filtered_by_organism[reaction].forward[metabolite_name] = []
             (closest_organism, indices) = findClosestOrganism(model_updates[
                 reaction].forward[metabolite_name])
             best_found = False
@@ -178,17 +236,12 @@ def selectBestData(model_updates, data_type):
                         filtered_by_organism[reaction].forward[
                                 metabolite_name].append(model_updates[
                                     reaction].forward[metabolite_name][index])
-                        print(model_updates[
-                            reaction].forward[metabolite_name][index].turnover)
+                        #FIXME: does not enter in here for '2HBO'
+                        print(reaction + ': ' + filtered_by_organism[reaction].forward[
+                                metabolite_name][0].turnover)
                         if organism is closest_organism:
                             best_found = True
-        # except TypeError:
-        #     pass
-        # SAME as above but for reverse reaction
-        # TODO: why are there exception blocks here?
-        # try:
         for metabolite_name in model_updates[reaction].backward:
-            print(metabolite_name)
             filtered_by_organism[reaction].backward[metabolite_name] = []
             closest_organism, indices = findClosestOrganism(model_updates[
                 reaction].backward[metabolite_name])
@@ -201,14 +254,14 @@ def selectBestData(model_updates, data_type):
                                 reaction].backward[metabolite_name][index])
                         if organism is closest_organism:
                             best_found = True
-        # except TypeError:
-            # pass
-    print(filtered_by_organism['10FTHF5GLUtl'].forward)  # TODO: Porque Pablo?
+    return filtered_by_organism
+
+
+def selectWildTypeEntries(filtered_by_organism):
     filtered_by_wild_type = {}
     for reaction in filtered_by_organism:
         filtered_by_wild_type[reaction] = filtered_by_organism[
                 reaction].copyOnlyEnzyme()
-    # try:
         for metabolite_name in filtered_by_organism[reaction].forward:
             wild_type = []
             for entry in filtered_by_organism[reaction].forward[
@@ -223,11 +276,6 @@ def selectBestData(model_updates, data_type):
                     metabolite_name] = copy.copy(filtered_by_organism
                                                  [reaction].forward[
                                                      metabolite_name])
-    # except TypeError:
-        # pass
-        # SAME as above but for reverse reactions
-    # TODO: why are there exception blocks here?
-        # try:
         for metabolite_name in filtered_by_organism[reaction].backward:
             wild_type = []
             for entry in filtered_by_organism[reaction].backward[
@@ -242,26 +290,7 @@ def selectBestData(model_updates, data_type):
                     metabolite_name] = copy.copy(filtered_by_organism
                                                  [reaction].backward[
                                                      metabolite_name])
-        # except TypeError:
-            # pass
-
-    # -----Choose data according to magnitude preference.-----------------
-    # work on filtered_by_wild_type)
-# TODO: below block should return a single metabolite per direction
-# TODO: Why is there a key for the metabolite that was being returned?
-    if data_type is DataType.turnover:
-        print('Selecting highest turnover')
-        for reaction in filtered_by_wild_type:
-            if filtered_by_wild_type[reaction].forward != {}:
-                data = chooseHighestTurnover(
-                    filtered_by_wild_type[reaction].forward)
-                model_updates[reaction].forward = data
-            if filtered_by_wild_type[reaction].backward != {}:
-                data = chooseHighestTurnover(
-                    filtered_by_wild_type[reaction].backward)
-                model_updates[reaction].backward = data
-
-    print(model_updates['10FTHF5GLUtl'].forward)
+    return filtered_by_wild_type
 
 
 def chooseHighestTurnover(metabolite_entries):
@@ -472,13 +501,20 @@ def applyBestData(model, updates, data_type):
         raise NoDataError
     for reaction in updates:
         # TODO: figure out why the forward and backward return values are {}
-        print(reaction)
-        print(str(updates[reaction].forward))
-        print(str(updates[reaction].backward))
-        model_update[reaction].forward = \
-            model[reaction].forward.returnAttributes()
-        model_update[reaction].backward = \
-            model[reaction].backward.returnAttributes()
+        # FIXME: forward and backward are still a dict.
+        # FIXME: forward dict is empty.
+        # TODO: test for empty data
+        print('aBD - printing updates.forward for a reaction: \n\t'
+              + str(updates[reaction].forward))
+        print('aBD - printing BiGG id: ' + reaction)
+        if updates[reaction].forward:
+            assert len(updates[reaction].forward.keys()) == 1
+            model_update[reaction].forward_tunover = \
+                updates[reaction].forward['turnover']
+        if updates[reaction].backward:
+            assert len(updates[reaction].backward.keys()) == 1
+            model_update[reaction].backward_turnover = \
+                updates[reaction].forward['turnover']
         if data_type is DataType.turnover:
             # WARNING: applyHighestTurnover requires that highest metabolites
             # be chosen and forward and backward be replaced with dicts from
@@ -571,6 +607,7 @@ class Enzyme():
         self.backward_turnover = None
         self.has_f_wild_type = None
         self.has_b_wild_type = None
+        self.molecular_weight = None
 
     def copyOnlyEnzyme(self):
         if self.EC:
@@ -591,11 +628,8 @@ class Enzyme():
         counter = 0
         try:
             counter += 1
-            print('Turnovers applied: ' + str(counter))
             if self.forward is not None:
-                print(len(self.forward))
                 # BUG: Sometimes this returns with 2 metabolties
-                print(self.forward.keys())
                 self.forward_turnover = self.forward['turnover']
             if self.backward is not None:
                 self.backward_turnover = self.backward['turnover']
@@ -619,8 +653,6 @@ class Enzyme():
                     met_representation['turnover'] = entry.turnover
                     met_representation['specific activity'] = \
                         entry.specific_activity
-                    met_representation['molecular weight'] = \
-                        entry.molecular_weight
                     met_representation['organism'] = entry.organism
                     met_representation['wild-type'] = entry.wild_type
         except TypeError:
@@ -636,8 +668,6 @@ class Enzyme():
                     met_representation['turnover'] = entry.turnover
                     met_representation['specific activity'] = \
                         entry.specific_activity
-                    met_representation['molecular weight'] = \
-                        entry.molecular_weight
                     met_representation['organism'] = entry.organism
                     met_representation['wild-type'] = entry.wild_type
         except TypeError:
@@ -655,7 +685,6 @@ class Enzyme():
                 'kegg': self.forward.kegg,
                 'turnover': self.forward.turnover,
                 'specific activity': self.forward.specific_activity,
-                'molecular weight': self.forward.molecular_weight,
                 'organism': self.forward.organism
                 }
         except KeyError:
@@ -667,7 +696,6 @@ class Enzyme():
                 'kegg': self.backward.kegg,
                 'turnover': self.backward.turnover,
                 'specific activity': self.backward.specific_activity,
-                'molecular weight': self.backward.molecular_weight,
                 'organism': self.backward.organism
                 }
         except KeyError:
@@ -690,9 +718,10 @@ class Metabolite():
     '''
 
     def __init__(self, name, bigg=None, kegg=None, **kwargs):
+        # CHANGED: molecular_weight is now an attribute of the enzyme, not of
+        #           metabolite.
         '''TODO: Some info on this constructor'''
         self.turnover = None
-        self.molecular_weight = None
         self.specific_activity = None
         self.name = name
         if bigg is None:
@@ -709,8 +738,6 @@ class Metabolite():
                     self.turnover = data
                 if identifier == 'specific activity':
                     self.specific_activity = data
-                if identifier == 'molecular weight':
-                    self.molecular_weight = data
 
     def initFromDict(self, **kwargs):
 
@@ -749,7 +776,6 @@ class MetaboliteCandidate(Metabolite):
             'kegg': self.kegg,
             'turnover': self.turnover,
             'specific activity': self.specific_activity,
-            'molecular weight': self.molecular_weight
             }
 
 
@@ -785,5 +811,6 @@ class NotNumericError(ValueError):
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         new_data = treatTurnoverData('JSONs/treated_brenda_output.json',
-                                     'JSONs/brenda_keggs.json')
+                                     'JSONs/brenda_keggs.json',
+                                     'JSONs/iCHOv1_keggs.json')
         # write new data as dict --> add constraints to Cobra model.
