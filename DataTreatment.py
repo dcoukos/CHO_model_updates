@@ -40,8 +40,8 @@ def treatTurnoverData(path_to_brenda_output, path_to_keggs):
     loadKeggsIntoModel(model, path_to_keggs)
     matchById(model, potential_updates, treated_output, brenda_keggs,
               DataType.turnover)
-    print(potential_updates['10FTHF5GLUtl'].forward)  # Is this an empty metabolite? 
-
+    print(potential_updates['10FTHF5GLUtl'].forward)
+    # Is this an empty metabolite?  --> yes
     selectBestData(potential_updates, DataType.turnover)
 
     # TODO: potential_updates must have only one metabolite per enzyme
@@ -85,7 +85,19 @@ def matchById(model, potential_updates, brenda_keggs, treated_brenda_output,
         unmatched: dict of BRENDA metabolites that could not be matched by name
     '''
     unmatched = {}
+    # Somewhere here the metabolite is not being added to the forward
+    #    dictionary
+    # TODO: Should have had an error. Is someone reading iCHOv1_keggs?
+    # Nobody is reading that file.
 
+    # TODO: Things to check:
+    #   1. Where are the keggs from the iCHOv1 model being matched? Should be
+    #        in addKeggsToModel or some such shazam.
+    #   2. What happens to the entries that have null Kegg codes. How is the
+    #       new data going to be added to the iCHOv1 model?
+    #   3. How does the program handle empty data so as to not add to handle
+    #       empty data correctly and not throw an error. (Remember not throwing
+    #       an error does not mean that the situation is handled correctly.)
     for bigg_ID in model:
         unmatched[bigg_ID] = []
         potential_updates[bigg_ID] = Enzyme(bigg_ID)
@@ -127,6 +139,10 @@ def matchById(model, potential_updates, brenda_keggs, treated_brenda_output,
                                         **data[index]))
         # CHANGED: deleted returning unmatched. No longer interested because
             # we don't match by name.
+    # CHECK: could this be because the value is null in iCHOv1_keggs
+    # for 10FTHF5GLUtl?
+    assert '10FTHF5GLUtl' in model
+    print(potential_updates['10FTHF5GLUtl'].forward)
 
 
 def selectBestData(model_updates, data_type):
@@ -142,8 +158,7 @@ def selectBestData(model_updates, data_type):
             be placed.
 
     '''
-    print(model_updates['10FTHF5GLUtl'].forward)  # TODO: Porque Pablo?
-
+    # TODO: but model updates is empty!!!!!
     # first the data must be filtered by organism.
     filtered_by_organism = {}
     for reaction in model_updates:
@@ -188,7 +203,7 @@ def selectBestData(model_updates, data_type):
                             best_found = True
         # except TypeError:
             # pass
-
+    print(filtered_by_organism['10FTHF5GLUtl'].forward)  # TODO: Porque Pablo?
     filtered_by_wild_type = {}
     for reaction in filtered_by_organism:
         filtered_by_wild_type[reaction] = filtered_by_organism[
