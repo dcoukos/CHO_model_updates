@@ -40,6 +40,8 @@ def treatTurnoverData(path_to_brenda_output, path_to_keggs):
     loadKeggsIntoModel(model, path_to_keggs)
     matchById(model, potential_updates, treated_output, brenda_keggs,
               DataType.turnover)
+    print(potential_updates['10FTHF5GLUtl'].forward)  # Is this an empty metabolite? 
+
     selectBestData(potential_updates, DataType.turnover)
 
     # TODO: potential_updates must have only one metabolite per enzyme
@@ -140,6 +142,8 @@ def selectBestData(model_updates, data_type):
             be placed.
 
     '''
+    print(model_updates['10FTHF5GLUtl'].forward)  # TODO: Porque Pablo?
+
     # first the data must be filtered by organism.
     filtered_by_organism = {}
     for reaction in model_updates:
@@ -241,6 +245,8 @@ def selectBestData(model_updates, data_type):
                 data = chooseHighestTurnover(
                     filtered_by_wild_type[reaction].backward)
                 model_updates[reaction].backward = data
+
+    print(model_updates['10FTHF5GLUtl'].forward)
 
 
 def chooseHighestTurnover(metabolite_entries):
@@ -450,9 +456,10 @@ def applyBestData(model, updates, data_type):
     if model_update is None or model_update == {}:
         raise NoDataError
     for reaction in updates:
-        # BUG: forward and backward metabolites still have name.
-        print(str(model[reaction].forward))
-        print(str(model[reaction].backward))
+        # TODO: figure out why the forward and backward return values are {}
+        print(reaction)
+        print(str(updates[reaction].forward))
+        print(str(updates[reaction].backward))
         model_update[reaction].forward = \
             model[reaction].forward.returnAttributes()
         model_update[reaction].backward = \
