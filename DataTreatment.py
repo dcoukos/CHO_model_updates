@@ -84,8 +84,8 @@ def treatTurnoverData(path_to_brenda_output, path_to_keggs,
     loadKeggsIntoModel(model, path_to_iCHO_keggs)
     matchById(model, potential_updates, brenda_keggs, treated_output,
               DataType.turnover)
-    selectBestData(potential_updates, DataType.turnover)
-    applyBestData(model, potential_updates, DataType.turnover)
+    updates = selectBestData(potential_updates)
+    applyBestData(model, updates, DataType.turnover)
 
 
 def loadKeggsIntoModel(model, path_to_keggs):
@@ -185,7 +185,7 @@ def matchById(model, potential_updates, brenda_keggs, treated_brenda_output,
             # we don't match by name.
 
 
-def selectBestData(model_updates, data_type):
+def selectBestData(model_updates):
     '''Selects best data to add to model based on selection criteria
 
     This function selects the best data based on Organism, wild-type, and the
@@ -203,23 +203,41 @@ def selectBestData(model_updates, data_type):
 
     filtered_by_wild_type = selectWildTypeEntries(filtered_by_organism)
 
+    filtered_by_magnitude = selectByTurnover(filtered_by_wild_type)
+
+    return filtered_by_magnitude
+    # FIXME: Somewhere below, the elminated data is being recopied.
     # -----Choose data according to magnitude preference.-----------------
-    if data_type is DataType.turnover:
-        for reaction in filtered_by_wild_type:
-            if filtered_by_wild_type[reaction].forward != {}:
-                data = chooseHighestTurnover(
-                    filtered_by_wild_type[reaction].forward)
-                model_updates[reaction].forward = data
+    # if data_type is DataType.turnover:
+
+
+def selectByTurnover(filtered_by_wild_type):
+    filtered_by_magnitude = {}
+    for reaction in filtered_by_wild_type:
+        filtered_by_magnitude[reaction] = Enzyme(reaction)
+        if filtered_by_wild_type[reaction].forward != {}:
+            data = chooseHighestTurnover(
+                filtered_by_wild_type[reaction].forward)
+            filtered_by_magnitude[reaction].forward = data
+            # If it prints, then it means that there are some Returns
+            # with multiple output values. (i.e. dict with two keys. )
+            try:
                 print(len(data))
-            if model_updates[reaction].forward is None:
-                model_updates[reaction].forward = {}
-            if filtered_by_wild_type[reaction].backward != {}:
-                data = chooseHighestTurnover(
-                    filtered_by_wild_type[reaction].backward)
+            except TypeError:
+                pass
+        if filtered_by_magnitude[reaction].forward is None:
+            filtered_by_magnitude[reaction].forward = {}
+        if filtered_by_magnitude[reaction].backward != {}:
+            data = chooseHighestTurnover(
+                filtered_by_wild_type[reaction].backward)
+            try:
                 print(len(data))
-                model_updates[reaction].backward = data
-            if model_updates[reaction].backward is None:
-                model_updates[reaction].backward = {}
+            except TypeError:
+                pass
+            filtered_by_magnitude[reaction].backward = data
+        if filtered_by_magnitude[reaction].backward is None:
+            filtered_by_magnitude[reaction].backward = {}
+    return filtered_by_magnitude
 
 
 def selectBestOrganismEntries(model_updates):
@@ -303,8 +321,6 @@ def chooseHighestTurnover(metabolite_entries):
     if highest_metabolite == '':
         return None
 
-    # NOTE: Returns a dict.
-    # TODO: Make this return a MetaboliteCandidate
     best_metabolite = metabolite_entries[highest_metabolite][highest_index]
     assert isinstance(best_metabolite, MetaboliteCandidate)
     return best_metabolite
@@ -485,11 +501,14 @@ def applyBestData(model, updates, data_type):
         data_type: type of data being added to model.
     '''
     # TODO: next line suspect.
-    model_update = initializeModelUpdate(model)
+    '''model_update = initializeModelUpdate(model)
     if model_update is None or model_update == {}:
-        raise NoDataError
+        raise NoDataError'''
+    model_update = {}
     for reaction in updates:
+        model_update[reaction] = updates[reaction].copyOnlyEnzyme()
         if updates[reaction].forward != {}:
+            print(reaction)
             model_update[reaction].forward = \
                 updates[reaction].forward.returnAttributes()
         if updates[reaction].backward != {}:
@@ -602,20 +621,11 @@ class Enzyme():
         Note: The data must already be narrowed down to one entry per
             metabolite. Otherwise, this function will break
         '''
-        counter = 0
-        try:
-            # FIXME: KeyError
-            # TODO: find out why there are multiple entries....
-            counter += 1
-            if self.forward is not None:
-                # BUG: Sometimes this returns with 2 metabolties
-                self.forward_turnover = self.forward['turnover']
-            if self.backward is not None:
-                self.backward_turnover = self.backward['turnover']
-        except KeyError:
-            # print(self.forward)
-            # print('reaction: ' + self.bigg)
-            pass
+        if self.forward is not None:
+            self.forward_turnover = self.forward['turnover']
+        if self.backward is not None:
+            self.backward_turnover = self.backward['turnover']
+
 
     def getDict(self):
         '''
