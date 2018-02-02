@@ -4,6 +4,7 @@ import json
 import copy
 import statistics
 import cobra
+import pickle
 from enum import Enum, auto  # Enum breaks spyder autocomplete
 '''
     This file contains functions pertaining to the treatment of the data that
@@ -24,37 +25,68 @@ def importWeights(model_update):
             if mol_info[bigg_id]['molecular_weights'] != []:
                 max_weight = max(mol_info[bigg_id]['molecular_weights'])
                 model_update[bigg_id].molecular_weight = max_weight
+                # TODO: should this be the min weight?
 
 
-def calculateSpecificActivities(model_update):
+def exportData(model_update):
+    simple_data = {}
+    for bigg_id in model_update:
+        simple_data[bigg_id] = {}
+        simple_data[bigg_id]['forward'] = model_update[bigg_id].f_spec_act
+        simple_data[bigg_id]['backward'] = model_update[bigg_id].b_spec_act
+    write('JSONs/model_updates.json', simple_data)
+
+
+def fillData(model_update):
+    fillEmptyValues(model_update)
     for bigg_id in model_update:
         if model_update[bigg_id].f_spec_act is None:
-            mol_weight = model_update[bigg_id].molecular_weight
-            turnover = model_update[bigg_id].f_turnover
-            if mol_weight is not None and turnover is not None:
-                model_update[bigg_id].f_spec_act = float(mol_weight/turnover)
+            model_update[bigg_id].f_spec_act = \
+                float(model_update[bigg_id].forward_turnover) / \
+                float(model_update[bigg_id].molecular_weight)
         if model_update[bigg_id].b_spec_act is None:
-            mol_weight = model_update[bigg_id].molecular_weight
-            turnover = model_update[bigg_id].b_turnover
-            if mol_weight is not None and turnover is not None:
-                model_update[bigg_id].b_spec_act = float(mol_weight/turnover)
+            model_update[bigg_id].b_spec_act = \
+                float(model_update[bigg_id].backward_turnover) / \
+                float(model_update[bigg_id].molecular_weight)
 
+# CHANGED: I am now calculating the median molecular weights and turnovers
+    # separately, to have access to more data.
+
+
+def medianTurnovers(model_update):
+    turnovers = []
     for bigg_id in model_update:
-        median = medianSpecificActivites()
-        if model_update[bigg_id].f_spec_act is None:
-            model_update[bigg_id].f_spec_act = median
-        if model_update[bigg_id].b_spec_act is None:
-            model_update[bigg_id].b_spec_act = median
+        if model_update[bigg_id].forward_turnover is not None:
+            turnovers.append(model_update[bigg_id].forward_turnover)
+        if model_update[bigg_id].backward_turnover is not None:
+            turnovers.append(model_update[bigg_id].backward_turnover)
+    return statistics.median(turnovers)
 
 
-def medianSpecificActivites(model_update):
-    activities = []
+def medianWeights(model_update):
+    importWeights(model_update)
+    weights = []
     for bigg_id in model_update:
-        if model_update[bigg_id].f_spec_act is not None:
-            activities.append(model_update[bigg_id].f_spec_act)
-        if model_update[bigg_id].b_spec_act is not None:
-            activities.append(model_update[bigg_id].b_spec_act)
-    return statistics.median(activities)
+        if model_update[bigg_id].molecular_weight is not None:
+            weights.append(model_update[bigg_id].molecular_weight)
+    return statistics.median(weights)
+
+
+def fillEmptyValues(model_update):
+    for bigg_id in model_update:
+        if model_update[bigg_id].forward_turnover == {}:
+            model_update[bigg_id].forward_turnover is None
+        if model_update[bigg_id].backward_turnover == {}:
+            model_update[bigg_id].backward_turnover is None
+    median_turnover = medianTurnovers(model_update)
+    median_weight = medianWeights(model_update)
+    for bigg_id in model_update:
+        if model_update[bigg_id].forward_turnover is None:
+            model_update[bigg_id].forward_turnover = median_turnover
+        if model_update[bigg_id].backward_turnover is None:
+            model_update[bigg_id].backward_turnover = median_turnover
+        if model_update[bigg_id].molecular_weight is None:
+            model_update[bigg_id].molecular_weight = median_weight
 
 
 def initializeModelUpdate(model):
@@ -85,7 +117,9 @@ def treatTurnoverData(path_to_brenda_output, path_to_keggs,
     matchById(model, potential_updates, brenda_keggs, treated_output,
               DataType.turnover)
     updates = selectBestData(potential_updates)
-    applyBestData(model, updates, DataType.turnover)
+    model_update = applyBestData(model, updates, DataType.turnover)
+    fillData(model_update)
+    exportData(model_update)
 
 
 def loadKeggsIntoModel(model, path_to_keggs):
@@ -516,7 +550,7 @@ def applyBestData(model, updates, data_type):
                 updates[reaction].backward.returnAttributes()
         if data_type is DataType.turnover:
             model_update[reaction].applyHighestTurnover()
-
+    return model_update
 
 def getEcNumber(reaction):
     '''Gets EC number to make new Enzyme object. "Flat is better than nested"
@@ -604,6 +638,8 @@ class Enzyme():
         self.has_f_wild_type = None
         self.has_b_wild_type = None
         self.molecular_weight = None
+        self.f_spec_act = None
+        self.b_spec_act = None
 
     def copyOnlyEnzyme(self):
         if self.EC:
@@ -615,17 +651,16 @@ class Enzyme():
     def applyHighestTurnover(self):
         '''Chooses best value from forward metabolites.
 
-            This function sets the value of forward_tunover and
+            This function sets the value of forward_turnover and
             backward_turnover.
 
         Note: The data must already be narrowed down to one entry per
             metabolite. Otherwise, this function will break
         '''
-        if self.forward is not None:
+        if self.forward is not None and self.forward != {}:
             self.forward_turnover = self.forward['turnover']
-        if self.backward is not None:
+        if self.backward is not None and self.backward != {}:
             self.backward_turnover = self.backward['turnover']
-
 
     def getDict(self):
         '''
