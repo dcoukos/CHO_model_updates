@@ -210,50 +210,48 @@ def selectBestData(model_updates, data_type):
                 data = chooseHighestTurnover(
                     filtered_by_wild_type[reaction].forward)
                 model_updates[reaction].forward = data
+                print(len(data))
+            if model_updates[reaction].forward is None:
+                model_updates[reaction].forward = {}
             if filtered_by_wild_type[reaction].backward != {}:
                 data = chooseHighestTurnover(
                     filtered_by_wild_type[reaction].backward)
+                print(len(data))
                 model_updates[reaction].backward = data
-    # FIXME: This should add a Metabolite...or should it....
+            if model_updates[reaction].backward is None:
+                model_updates[reaction].backward = {}
 
 
 def selectBestOrganismEntries(model_updates):
     filtered_by_organism = {}
     for reaction in model_updates:
-        #TODO: see if the error is in the copyOnlyEnzyme method.
-        filtered_by_organism[reaction] = model_updates[reaction].copyOnlyEnzyme()
-        #NOTE: does not enter when copying whole enzyme and deleting forward and backward.
-        #
+        filtered_by_organism[reaction] = model_updates[
+                                            reaction].copyOnlyEnzyme()
+        filtered_by_organism[reaction].forward = {}
+        filtered_by_organism[reaction].backward = {}
         for metabolite_name in model_updates[reaction].forward:
             if metabolite_name not in filtered_by_organism[reaction].forward:
                 filtered_by_organism[reaction].forward[metabolite_name] = []
             (closest_organism, indices) = findClosestOrganism(model_updates[
                 reaction].forward[metabolite_name])
-            best_found = False
             for organism in Organism:
-                if best_found is False and closest_organism is not None:
+                if organism == closest_organism:
                     for index in indices[organism]:
                         filtered_by_organism[reaction].forward[
                                 metabolite_name].append(model_updates[
                                     reaction].forward[metabolite_name][index])
-                        #FIXME: does not enter in here for '2HBO'
-                        print(reaction + ': ' + filtered_by_organism[reaction].forward[
-                                metabolite_name][0].turnover)
-                        if organism is closest_organism:
-                            best_found = True
+
         for metabolite_name in model_updates[reaction].backward:
-            filtered_by_organism[reaction].backward[metabolite_name] = []
-            closest_organism, indices = findClosestOrganism(model_updates[
+            if metabolite_name not in filtered_by_organism[reaction].backward:
+                filtered_by_organism[reaction].backward[metabolite_name] = []
+            (closest_organism, indices) = findClosestOrganism(model_updates[
                 reaction].backward[metabolite_name])
-            best_found = False
             for organism in Organism:
-                if best_found is False and closest_organism is not None:
+                if organism == closest_organism:
                     for index in indices[organism]:
                         filtered_by_organism[reaction].backward[
-                            metabolite_name].append(model_updates[
-                                reaction].backward[metabolite_name][index])
-                        if organism is closest_organism:
-                            best_found = True
+                                metabolite_name].append(model_updates[
+                                    reaction].backward[metabolite_name][index])
     return filtered_by_organism
 
 
@@ -266,30 +264,20 @@ def selectWildTypeEntries(filtered_by_organism):
             wild_type = []
             for entry in filtered_by_organism[reaction].forward[
                     metabolite_name]:
-                if entry.wild_type is not None:
+                if entry.wild_type is True:
                     wild_type.append(entry)
             if wild_type != []:
                 filtered_by_wild_type[reaction].forward[
                     metabolite_name] = wild_type
-            else:
-                filtered_by_wild_type[reaction].forward[
-                    metabolite_name] = copy.copy(filtered_by_organism
-                                                 [reaction].forward[
-                                                     metabolite_name])
         for metabolite_name in filtered_by_organism[reaction].backward:
             wild_type = []
             for entry in filtered_by_organism[reaction].backward[
                     metabolite_name]:
-                if entry.wild_type is not None:
+                if entry.wild_type is True:
                     wild_type.append(entry)
             if wild_type != []:
                 filtered_by_wild_type[reaction].backward[
                     metabolite_name] = wild_type
-            else:
-                filtered_by_wild_type[reaction].backward[
-                    metabolite_name] = copy.copy(filtered_by_organism
-                                                 [reaction].backward[
-                                                     metabolite_name])
     return filtered_by_wild_type
 
 
@@ -316,7 +304,10 @@ def chooseHighestTurnover(metabolite_entries):
         return None
 
     # NOTE: Returns a dict.
-    return metabolite_entries[highest_metabolite][highest_index]
+    # TODO: Make this return a MetaboliteCandidate
+    best_metabolite = metabolite_entries[highest_metabolite][highest_index]
+    assert isinstance(best_metabolite, MetaboliteCandidate)
+    return best_metabolite
 
 
 def findClosestOrganism(metabolite_entries):
@@ -493,32 +484,18 @@ def applyBestData(model, updates, data_type):
         updates: updated model information. dict of Enzymes.
         data_type: type of data being added to model.
     '''
-    # TODO: ensure that incoming model udpate only has one metabolite per
-    # enzyme direction.
-
+    # TODO: next line suspect.
     model_update = initializeModelUpdate(model)
     if model_update is None or model_update == {}:
         raise NoDataError
     for reaction in updates:
-        # TODO: figure out why the forward and backward return values are {}
-        # FIXME: forward and backward are still a dict.
-        # FIXME: forward dict is empty.
-        # TODO: test for empty data
-        print('aBD - printing updates.forward for a reaction: \n\t'
-              + str(updates[reaction].forward))
-        print('aBD - printing BiGG id: ' + reaction)
-        if updates[reaction].forward:
-            assert len(updates[reaction].forward.keys()) == 1
-            model_update[reaction].forward_tunover = \
-                updates[reaction].forward['turnover']
-        if updates[reaction].backward:
-            assert len(updates[reaction].backward.keys()) == 1
-            model_update[reaction].backward_turnover = \
-                updates[reaction].forward['turnover']
+        if updates[reaction].forward != {}:
+            model_update[reaction].forward = \
+                updates[reaction].forward.returnAttributes()
+        if updates[reaction].backward != {}:
+            model_update[reaction].backward = \
+                updates[reaction].backward.returnAttributes()
         if data_type is DataType.turnover:
-            # WARNING: applyHighestTurnover requires that highest metabolites
-            # be chosen and forward and backward be replaced with dicts from
-            # those metabolites
             model_update[reaction].applyHighestTurnover()
 
 
@@ -627,6 +604,8 @@ class Enzyme():
         '''
         counter = 0
         try:
+            # FIXME: KeyError
+            # TODO: find out why there are multiple entries....
             counter += 1
             if self.forward is not None:
                 # BUG: Sometimes this returns with 2 metabolties
@@ -634,7 +613,9 @@ class Enzyme():
             if self.backward is not None:
                 self.backward_turnover = self.backward['turnover']
         except KeyError:
-            print(self.forward)
+            # print(self.forward)
+            # print('reaction: ' + self.bigg)
+            pass
 
     def getDict(self):
         '''
