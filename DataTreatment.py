@@ -4,7 +4,6 @@ import json
 import copy
 import statistics
 import cobra
-import pickle
 from enum import Enum, auto  # Enum breaks spyder autocomplete
 '''
     This file contains functions pertaining to the treatment of the data that
