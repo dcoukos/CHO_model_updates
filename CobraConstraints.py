@@ -1,6 +1,5 @@
 import cobra
 import json
-from progress.bar import Bar
 
 
 def main():
@@ -18,7 +17,7 @@ def main():
         coefficients_backward[reaction] = model_updates[reaction]['backward']
 
     flux_constraint(model, reactions, coefficients_forward,
-                    coefficients_backward)
+                    coefficients_backward, bound=0.055)
 
 
 def openJson(path):
@@ -27,43 +26,27 @@ def openJson(path):
         return json.load(r)
 
 
-def enzymatic_expression(cobra_model, reactions, coefficients_forward,
-                         coefficients_reverse):
-    """
-    A linear expression of the form,
-        cf[1] vf[1] + cb[1] vb[1] + ...
-    where vf[i], vb[i] are the forward and reverse fluxes of reaction i, and
-    cf = coefficients_forward, cb = coefficients_reverse are dictionaries
-    containing the coefficients of each reaction.
-
-    Author: Jorge Fernandez-de-Cossio-Diaz
-    """
-    total = len(reactions)
-    bar = Bar('Adding reaction coefficients to expression: ', max=total)
-    expr = 0
-    for bigg_id in reactions:
-        rxn = cobra_model.reactions.get_by_id(bigg_id)
-        assert 0 <= coefficients_forward[bigg_id] < float('inf')
-        assert 0 <= coefficients_reverse[bigg_id] < float('inf')
-        expr += coefficients_forward[bigg_id] * rxn.forward_variable
-        expr += coefficients_reverse[bigg_id] * rxn.reverse_variable
-        bar.next()
-    return expr
-
-
-def flux_constraint(cobra_model, reactions, coefficients_forward,
-                    coefficients_reverse):
+def flux_constraint(cobra_model, coefficients_forward, coefficients_reverse,
+                    bound=1):
     """
     Adds a linear constrain of the form
         0 <= cf[1] vf[1] + cb[1] vb[1] + ... <= 1
     where vf[i], vb[i] are the forward and reverse fluxes of reaction i, and
-    cf = coefficients_forward, cb = coefficients_backward are dictionaries.
+    cf = coefficients_forward, cb = coefficients_backward are dictionaries
 
     Author: Jorge Fernandez-de-Cossio-Diaz
     """
-    expr = enzymatic_expression(cobra_model, reactions, coefficients_forward,
-                                coefficients_reverse)
-    cobra_model.problem.Constraint(expr, lb=0, ub=1)
+    coefficients = dict()
+    for (bigg_id, cf) in coefficients_forward.items():
+        rxn = cobra_model.reactions.get_by_id(bigg_id)
+        coefficients[rxn.forward_variable] = cf
+    for (bigg_id, cr) in coefficients_reverse.items():
+        rxn = cobra_model.reactions.get_by_id(bigg_id)
+        coefficients[rxn.reverse_variable] = cr
+    constraint = cobra_model.problem.Constraint(0, lb=0, ub=bound)
+    cobra_model.add_cons_vars(constraint)
+    cobra_model.solver.update()
+    constraint.set_linear_coefficients(coefficients=coefficients)
 
 
 if __name__ == '__main__':
