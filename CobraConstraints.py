@@ -1,23 +1,19 @@
 import cobra
 import json
+from optlang.symbolics import Zero
 
 
 def main():
-    model_updates = openJson('JSONs/model_updates.json')
-    model = cobra.io.read_sbml_model('iCHOv1.xml')
-
-    reactions = []
-    for reaction in model.reactions:
-        reactions.append(reaction.id)
-
-    coefficients_forward = {}
-    coefficients_backward = {}
-    for reaction in model_updates:
-        coefficients_forward[reaction] = model_updates[reaction]['forward']
-        coefficients_backward[reaction] = model_updates[reaction]['backward']
-
-    flux_constraint(model, reactions, coefficients_forward,
-                    coefficients_backward, bound=0.055)
+    k1_model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
+    k1_updates = openJson('JSONs/k1_updates.json')
+    coef_forward = {}
+    coef_backward = {}
+    release_bounds(k1_model)
+    enzyme_mass = set_enzyme_mass(coef_forward, coef_backward)
+    flux_constraint(k1_model, coef_forward, coef_backward, enzyme_mass)
+    get_coefficients(k1_updates, coef_forward, coef_backward)
+    fba_and_min_enzyme(k1_model, coef_forward, coef_backward)
+    k1_model.summary()
 
 
 def openJson(path):
@@ -47,6 +43,62 @@ def flux_constraint(cobra_model, coefficients_forward, coefficients_reverse,
     cobra_model.add_cons_vars(constraint)
     cobra_model.solver.update()
     constraint.set_linear_coefficients(coefficients=coefficients)
+
+
+def get_coefficients(model_updates, coef_forward, coef_backward):
+    for reaction in model_updates:
+        coef_forward[reaction] = model_updates[reaction]['forward']
+        coef_backward[reaction] = model_updates[reaction]['backward']
+
+
+def fba_and_min_enzyme(cobra_model, coefficients_forward,
+                       coefficients_reverse):
+    """
+    Performs FBA follows by minimization of enzyme content
+    """
+
+    with cobra_model as model:
+        model.optimize()
+        cobra.util.fix_objective_as_constraint(model)
+        set_enzymatic_objective(model, coefficients_forward,
+                                coefficients_reverse)
+        sol = cobra_model.optimize()
+        return sol
+
+
+def release_bounds(model):
+    for rxn in model.reactions:
+        if rxn.upper_bound == rxn.lower_bound:
+            if rxn.upper_bound < 0:
+                rxn.upper_bound = 0
+            if rxn.upper_bound > 0:
+                rxn.lower_bound = 0
+
+
+def set_enzymatic_objective(cobra_model, coefficients_forward,
+                            coefficients_reverse):
+    coefficients = {}
+    for (bigg_id, cf) in coefficients_forward.items():
+        rxn = cobra_model.reactions.get_by_id(bigg_id)
+        coefficients[rxn.forward_variable] = cf
+    for (bigg_id, cr) in coefficients_reverse.items():
+        rxn = cobra_model.reactions.get_by_id(bigg_id)
+        coefficients[rxn.reverse_variable] = cr
+
+    cobra_model.objective = \
+        cobra_model.problem.Objective(Zero, direction='min', sloppy=True,
+                                      name="min_enzymatic")
+
+    cobra_model.objective.set_linear_coefficients(coefficients=coefficients)
+
+
+def set_enzyme_mass(coef_forward, coef_backward):
+    enzyme_mass = 0
+    for rxn, cf in coef_forward.items():
+        enzyme_mass += cf * max(sol.fluxes[rxn], 0)
+    for rxn, cb in coef_backward.items():
+        enzyme_mass -= cb * min(sol.fluxes[rxn], 0)
+    return enzyme_mass
 
 
 if __name__ == '__main__':
