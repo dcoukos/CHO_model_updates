@@ -7,11 +7,18 @@
     This is because the xml for this model did not contain EC codes, while the
     xml from BiGG did.
 '''
-import cobra
+import sys
 import json
+import cobra
 from multiprocessing.pool import Pool
 from bs4 import BeautifulSoup as Soup
 from progress.bar import Bar
+
+
+def openJson(path):
+    '''Shortened call to open JSON files.'''
+    with open(path) as r:
+        return json.load(r)
 
 
 def write(path, data):
@@ -74,40 +81,64 @@ def mainSubProcess(reactions, process):
 
 
 if __name__ == '__main__':
-    print('Loading models....')
-    bigg_model = cobra.io.read_sbml_model('iCHOv1.xml')
+    if len(sys.argv) == 1:
+        print('Loading models....')
+        bigg_model = cobra.io.read_sbml_model('iCHOv1.xml')
 
-    v1_to_k1 = {}
-    reactions1 = []
-    reactions2 = []
-    reactions3 = []
-    reactions4 = []
-    counter = 0
-    for reaction in bigg_model.reactions:
-        if counter % 4 == 0:
-            reactions1.append(reaction)
-        if counter % 4 == 1:
-            reactions2.append(reaction)
-        if counter % 4 == 2:
-            reactions3.append(reaction)
-        if counter % 4 == 3:
-            reactions4.append(reaction)
-        counter = counter + 1
-    with Pool(processes=4) as pool:
-        lm_1 = pool.apply_async(mainSubProcess, (reactions1, 1,))
-        print('Process on core 1 started')
-        lm_2 = pool.apply_async(mainSubProcess, (reactions2, 2,))
-        print('Process on core 2 started')
-        lm_3 = pool.apply_async(mainSubProcess, (reactions3, 3,))
-        print('Process on core 3 started')
-        lm_4 = pool.apply_async(mainSubProcess, (reactions4, 4,))
-        print('Process on core 4 started')
-        print('Porting k1 xml file to processes...')
-        pool.close()
-        pool.join()
-    v1_to_k1.update(lm_1.get())
-    v1_to_k1.update(lm_2.get())
-    v1_to_k1.update(lm_3.get())
-    v1_to_k1.update(lm_4.get())
+        v1_to_k1 = {}
+        reactions1 = []
+        reactions2 = []
+        reactions3 = []
+        reactions4 = []
+        counter = 0
+        for reaction in bigg_model.reactions:
+            if counter % 4 == 0:
+                reactions1.append(reaction)
+            if counter % 4 == 1:
+                reactions2.append(reaction)
+            if counter % 4 == 2:
+                reactions3.append(reaction)
+            if counter % 4 == 3:
+                reactions4.append(reaction)
+            counter = counter + 1
+        with Pool(processes=4) as pool:
+            lm_1 = pool.apply_async(mainSubProcess, (reactions1, 1,))
+            print('Process on core 1 started')
+            lm_2 = pool.apply_async(mainSubProcess, (reactions2, 2,))
+            print('Process on core 2 started')
+            lm_3 = pool.apply_async(mainSubProcess, (reactions3, 3,))
+            print('Process on core 3 started')
+            lm_4 = pool.apply_async(mainSubProcess, (reactions4, 4,))
+            print('Process on core 4 started')
+            print('Porting k1 xml file to processes...')
+            pool.close()
+            pool.join()
+        v1_to_k1.update(lm_1.get())
+        v1_to_k1.update(lm_2.get())
+        v1_to_k1.update(lm_3.get())
+        v1_to_k1.update(lm_4.get())
 
-    write('JSONs/v1_to_k1.json', v1_to_k1)
+        write('JSONs/v1_to_k1.json', v1_to_k1)
+    else:
+        conv_dict = openJson('JSONs/v1_to_k1.json')
+        k1_to_v1 = {}
+        updates = openJson('JSONS/model_updates.json')
+        k1_model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
+        k1_updates = {}
+        median = 0.0045541255196209504
+        for v1 in conv_dict:
+            k1_id = conv_dict[v1]
+            if k1_id is not None:
+                k1_to_v1[k1_id[2:]] = v1
+
+        for rxn in k1_model.reactions:
+            rxn_id = rxn.id
+            if rxn_id in updates:
+                k1_updates[rxn_id] = updates[rxn_id]
+            elif rxn_id in k1_to_v1:
+                k1_updates[rxn_id] = updates[k1_to_v1[rxn_id]]
+            else:
+                k1_updates[rxn_id] = {}
+                k1_updates[rxn_id]['forward'] = median
+                k1_updates[rxn_id]['backward'] = median
+        write('JSONs/k1_updates.json', k1_updates)
