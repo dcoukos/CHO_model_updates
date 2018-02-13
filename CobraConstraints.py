@@ -1,5 +1,6 @@
-import cobra
 import json
+import pandas
+import cobra
 from optlang.symbolics import Zero
 
 
@@ -9,7 +10,10 @@ def main():
     coef_forward = {}
     coef_backward = {}
     release_bounds(k1_model)
-    enzyme_mass = set_enzyme_mass(coef_forward, coef_backward)
+    sol = k1_model.optimze()
+    # TODO: solution used before it is defined? I have added a first FBA to
+    #           estimate the enzyme mass.
+    enzyme_mass = set_enzyme_mass(sol, coef_forward, coef_backward)
     flux_constraint(k1_model, coef_forward, coef_backward, enzyme_mass)
     get_coefficients(k1_updates, coef_forward, coef_backward)
     fba_and_min_enzyme(k1_model, coef_forward, coef_backward)
@@ -92,13 +96,63 @@ def set_enzymatic_objective(cobra_model, coefficients_forward,
     cobra_model.objective.set_linear_coefficients(coefficients=coefficients)
 
 
-def set_enzyme_mass(coef_forward, coef_backward):
+def constrain_uptakes(model, xi):
+    # TODO: Write mathematical representation of constraint.
+    '''Uptake is defined by culture conditions, but this should depend _only_
+    on xi. We consider that the metabolite concentrations and such in the
+    culture are at a steady state. '''
+    v_glc = 0.9  # mM/min
+    v_aa = 0.09  # mM/min
+    # TODO: On what time interval are uptakes defined in the model.
+    IMDM = pandas.read_table('IMDM.txt', comment='#', sep='\s+')
+    conc = {}
+    for index, row in IMDM.iterrows():
+        conc[row['id']] = row['mM']
+    for met in conc:
+        if met == 'glc_D_e':
+            model.reactions.get_by_id('EX_glc_e_').lower_bound = \
+                min(v_glc, conc[met]/xi)
+        else:
+            name = met.split('_')[0]
+            model.reactions.get_by_id('EX_' + name + '_e_').lower_bound = \
+                min(v_aa, conc[met]/xi)
+
+
+def set_enzyme_mass(solution, coef_forward, coef_backward):
     enzyme_mass = 0
     for rxn, cf in coef_forward.items():
-        enzyme_mass += cf * max(sol.fluxes[rxn], 0)
+        enzyme_mass += cf * max(solution.fluxes[rxn], 0)
     for rxn, cb in coef_backward.items():
-        enzyme_mass -= cb * min(sol.fluxes[rxn], 0)
+        enzyme_mass -= cb * min(solution.fluxes[rxn], 0)
     return enzyme_mass
+
+
+def define_exports(solution):
+    exports = {}
+    for label, flux in solution.fluxes.items():
+        if flux > 0 and label[:2] == 'EX':
+            exports[label] = flux
+    return exports
+
+
+def define_imports(solution):
+    imports = {}
+    for label, flux in solution.fluxes.items():
+        if flux < 0 and label[:2] == 'EX':
+            imports[label] = flux
+    return imports
+
+
+def osmolarity(imports, exports):
+    osmo = float(0)
+    permeable = ['o2_e', 'co2_e', 'h2o_e']
+    for mol in imports:
+        if mol not in permeable:
+            osmo -= imports[mol]
+    for mol in exports:
+        if mol not in permeable:
+            osmo += exports[mol]
+    return osmo
 
 
 if __name__ == '__main__':
