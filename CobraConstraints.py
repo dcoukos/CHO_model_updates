@@ -110,12 +110,16 @@ def constrain_uptakes(model, xi):
         conc[row['id']] = row['mM']
     for met in conc:
         if met == 'glc_D_e':
+            if xi == 0:
+                return v_glc
             model.reactions.get_by_id('EX_glc_e_').lower_bound = \
-                min(v_glc, conc[met]/xi)
+                -min(v_glc, conc[met]/xi)
         else:
+            if xi == 0:
+                return v_aa
             name = met.split('_')[0]
             model.reactions.get_by_id('EX_' + name + '_e_').lower_bound = \
-                min(v_aa, conc[met]/xi)
+                -min(v_aa, conc[met]/xi)
 
 
 def set_enzyme_mass(solution, coef_forward, coef_backward):
@@ -127,20 +131,17 @@ def set_enzyme_mass(solution, coef_forward, coef_backward):
     return enzyme_mass
 
 
-def define_exports(solution):
-    exports = {}
-    for label, flux in solution.fluxes.items():
-        if flux > 0 and label[:2] == 'EX':
-            exports[label] = flux
-    return exports
+def exchanges_secretion(cobra_model):
+    "Subset of exchanges that can secrete."
+    return [rxn for rxn in cobra_model.exchanges if
+            not rxn.products and rxn.upper_bound > 0 or
+            not rxn.reactants and rxn.lower_bound < 0]
 
-
-def define_imports(solution):
-    imports = {}
-    for label, flux in solution.fluxes.items():
-        if flux < 0 and label[:2] == 'EX':
-            imports[label] = flux
-    return imports
+def exchanges_consumption(cobra_model):
+    "Subset of exchanges that can consume."
+    return [rxn for rxn in cobra_model.exchanges if
+            not rxn.products and rxn.lower_bound < 0 or
+            not rxn.reactants and rxn.upper_bound > 0]
 
 
 def osmolarity(imports, exports):
