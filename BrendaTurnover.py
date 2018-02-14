@@ -12,54 +12,31 @@ import string
 import hashlib
 import json
 import SOAPpy
+import cobra_services as CS
 from SOAPpy import SOAPProxy
 from BRENDA_extract import getKeggIds
 
+
 def main():
     BRENDA_parameters = importBrendaParameters()
-    BRENDA_output = importBrendaEntries(BRENDA_parameters)
-    saveBrendaOutput(BRENDA_output)
-    treated_output = treatBrendaOutput(BRENDA_output)
-    saveTreatedEntries()
+    treated_output = importBrendaEntries(BRENDA_parameters)
+    simplified_output = simplifyBrendaOutput(treated_output)
+    saveTreatedEntries(simplified_output)
 
 
 def importBrendaParameters():
     with open('JSONs/BRENDA_parameters.json', 'r') as json_file:
         return json.load(json_file)
-    
+
 
 def importBrendaTurnovers(BRENDA_parameters):
     output = {}
     for ID in BRENDA_parameters:
         EC_number = BRENDA_parameters[ID][0]
-        reactants = BRENDA_parameters[ID][2]
-        try:
-            # in some intranets an issue: how to use a web proxy for WS. Here
-            # we assume a set environment variable 'http_proxy'.·
-            # This is common in unix environments. SOAPpy does not like
-            # a leading 'http://'
-            if os.environ.has_key("http_proxy"):
-                my_http_proxy=os.environ["http_proxy"].replace("http://","")
-            else:
-                 my_http_proxy=None
+        # TODO : include this as a parameter somewhere to remove acc. info
+        raw_output = CS.brenda(EC_number, 'cossio@cim.sld.cu', 'Feynman')
+        treated_output = CS.parse_brenda_raw_output(raw_output)
 
-            from SOAPpy import SOAPProxy ## for usage without WSDL file
-
-            endpointURL = "http://www.brenda-enzymes.org/soap/brenda_server.php"
-            proxy = SOAPProxy(endpointURL, http_proxy=my_http_proxy)
-            #proxy = SOAPProxy(endpointURL)
-            password = hashlib.sha256("Feynman").hexdigest()
-            parameters = 'cossio@cim.sld.cu,'+password+',ecNumber*'+EC_number
-            new_EC = proxy.getEcNumber(parameters)
-            if('transferred to' in new_EC):
-                new_EC = new_EC.rsplit(' ', 1)[1]
-                new_EC = new_EC[:-1]
-                EC_number = new_EC
-                BRENDA_parameters[ID][0] = new_EC
-            output[ID] = proxy.getTurnoverNumber(parameters)
-            return output
-        except:
-            raise
     with open('JSONs/BRENDA_parameters_v2.json', 'w') as outfile:
         json.dump(output, outfile, indent=4)
 
@@ -67,18 +44,12 @@ def saveBrendaOutput(output):
     with open('JSONs/BRENDA_output.json', 'w') as outfile:
         json.dump(output, outfile, indent=4)
 
-def treatBrendaOutput(output):
+def simplifyBrendaOutput(output):
     '''
     Removes unnecessary parameters from entries and
     checks to see if enzymes characterized were
     wild-type or mutant.
     '''
-    treated_output = {}
-    treated_output = {ID: [{item.split('*')[0]: item.split('*')[1] 
-        for item in entry.split('#') 
-        if len(item.split('*')) > 1} 
-        for entry in output[ID].split('!')] for ID in output.keys()}
-
     treated_output_by_substrate = treated_output
     for ID in treated_output:
         new_entry = {}
@@ -93,12 +64,12 @@ def treatBrendaOutput(output):
 
     no_data = []
 
-    for ID in treated_output: 
+    for ID in treated_output:
         if output[ID] == '':
             no_turnover_data.append(ID)
         else:
             empty = bool
-            for substrate in treated_output[ID]:        
+            for substrate in treated_output[ID]:
                 commentary_treated = False
                 wild_type = False
                 for entry in treated_output[ID][substrate]:
@@ -124,16 +95,10 @@ def treatBrendaOutput(output):
                             entry['wild-type'] = False
 
 
-def saveTreatedEntries():
+def saveTreatedEntries(output):
     with open('JSONs/treated_BRENDA_output.json', 'w') as outfile:
-        json.dump(treated_output, outfile, indent=4)
+        json.dump(output, outfile, indent=4)
 
 
-def importKeggIds():
-    with open('JSONs/Model_KEGG_IDs.json', 'r') as json_file:
-        return json.load(json_file)
-    
-
-selectEntries()
-                
-main()
+if __name__ == '__main__':
+    main()
