@@ -107,10 +107,7 @@ def getBrendaKeggs(reactions, process):
     TODO: Make sure this returns the correct data structure for the
     metabolite_no_kegg.
     '''
-    # TODO: restructure function to work with Brenda return.
-    #       Source of data loss?
-    # TODO: make sure the function knows how to deal with empty data.
-    # TODO: Rewrite program to call this function with multiprocessing
+
     total = len(reactions)
     if process == 1:
         bar = Bar('Retrieving kegg codes for brenda output: ', max=total)

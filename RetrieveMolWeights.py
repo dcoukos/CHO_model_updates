@@ -222,8 +222,6 @@ def mainSubprocess(brenda_parameters, del_ec):
             print('Currently processing BiGG id: ' + ec_number)
             mol_weights[ec_number]['bigg ids'] = brenda_parameters[ec_number]
             try:
-                # TODO: continue modifying function so that it searches with
-                    # ec numbers directly, without accessing through bigg ids.
                 print(ec_number)
                 text = REST.kegg_get('ec:' + ec_number).read()
                 try:
@@ -339,7 +337,6 @@ if __name__ == '__main__':
             for ec in del_ec4:
                 mw_4.pop(ec, None)
     finally:
-        # TODO: rewrite how data is appended, remember to inverse the dicts!
         mol_weights.update(mw_1.get())
         mol_weights.update(mw_2.get())
         mol_weights.update(mw_3.get())
@@ -352,6 +349,5 @@ if __name__ == '__main__':
             for bigg_id in mol_weights[ec_number]['bigg ids']:
                 mol_weights_to_write[bigg_id] = {}
                 mol_weights_to_write[bigg_id]['ec_number'] = ec_number
-                # TODO: DO I LOSE THE EC NUMBER HERE?
                 mol_weights_to_write[bigg_id].update(mol_weights[ec_number])
         write('JSONs/molecular_weights.json', mol_weights_to_write)
