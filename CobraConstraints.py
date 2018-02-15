@@ -1,23 +1,46 @@
 import json
 import pandas
+import numpy
 import cobra
+from matplotlib.pyplot import scatter, draw, show
 from optlang.symbolics import Zero
+# TODO: add maintenance demand. 'ATP maintenance' lower bound = 1.
 
 
 def main():
     k1_model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
     k1_updates = openJson('JSONs/k1_updates.json')
+    population_dynamics(k1_model, k1_updates)
+
+
+def run_fba(model, updates):
     coef_forward = {}
     coef_backward = {}
-    release_bounds(k1_model)
-    sol = k1_model.optimze()
+    release_bounds(model)
+    model.reactions.DM_atp_c_.lower_bound = 1
     # TODO: solution used before it is defined? I have added a first FBA to
     #           estimate the enzyme mass.
-    enzyme_mass = set_enzyme_mass(sol, coef_forward, coef_backward)
-    flux_constraint(k1_model, coef_forward, coef_backward, enzyme_mass)
-    get_coefficients(k1_updates, coef_forward, coef_backward)
-    fba_and_min_enzyme(k1_model, coef_forward, coef_backward)
-    k1_model.summary()
+    # enzyme_mass = get_enzyme_mass(sol, coef_forward, coef_backward)
+    flux_constraint(model, coef_forward, coef_backward, 0.055)
+    get_coefficients(updates, coef_forward, coef_backward)
+    return fba_and_min_enzyme(model, coef_forward, coef_backward)
+
+
+def population_dynamics(model, updates, min_xi=0, max_xi=1000):
+    slices = 500
+    xis = []
+    osmolarities = []
+    medium_osmolarity = 280 * 0  # mM/L (estimate)
+    for xi in numpy.linspace(min_xi, max_xi, slices):
+        constrain_uptakes(model, xi)
+        sol = run_fba(model, updates)
+        osmo = osmolarity(model, sol)
+        xis.append(xi)
+        osmolarities.append(medium_osmolarity - osmo*xi)
+
+    scatter(xis, osmolarities)
+    draw()
+    show()
 
 
 def openJson(path):
@@ -30,7 +53,7 @@ def flux_constraint(cobra_model, coefficients_forward, coefficients_reverse,
                     bound=1):
     """
     Adds a linear constrain of the form
-        0 <= cf[1] vf[1] + cb[1] vb[1] + ... <= 1
+        0 <= cf[1] vf[1] + cb[1] vb[1] + ... <= bounds
     where vf[i], vb[i] are the forward and reverse fluxes of reaction i, and
     cf = coefficients_forward, cb = coefficients_backward are dictionaries
 
@@ -101,8 +124,8 @@ def constrain_uptakes(model, xi):
     '''Uptake is defined by culture conditions, but this should depend _only_
     on xi. We consider that the metabolite concentrations and such in the
     culture are at a steady state. '''
-    v_glc = 0.9  # mM/min
-    v_aa = 0.09  # mM/min
+    v_glc = 0.9*60  # mM/hour
+    v_aa = 0.09*60  # mM/hour
     # TODO: On what time interval are uptakes defined in the model.
     IMDM = pandas.read_table('IMDM.txt', comment='#', sep='\s+')
     conc = {}
@@ -118,11 +141,15 @@ def constrain_uptakes(model, xi):
             if xi == 0:
                 return v_aa
             name = met.split('_')[0]
-            model.reactions.get_by_id('EX_' + name + '_e_').lower_bound = \
-                -min(v_aa, conc[met]/xi)
+            try:
+                model.reactions.get_by_id('EX_' + name + '_e_').lower_bound = \
+                    -min(v_aa, conc[met]/xi)
+            except KeyError:
+                model.reactions.get_by_id('EX_' + name + '_L_e_').lower_bound \
+                    = -min(v_aa, conc[met]/xi)
 
 
-def set_enzyme_mass(solution, coef_forward, coef_backward):
+def get_enzyme_mass(solution, coef_forward, coef_backward):
     enzyme_mass = 0
     for rxn, cf in coef_forward.items():
         enzyme_mass += cf * max(solution.fluxes[rxn], 0)
@@ -131,23 +158,33 @@ def set_enzyme_mass(solution, coef_forward, coef_backward):
     return enzyme_mass
 
 
-def exchanges_secretion(cobra_model):
+def exchanges_secretion(cobra_model, solution):
     "Subset of exchanges that can secrete."
-    return [rxn for rxn in cobra_model.exchanges if
-            not rxn.products and rxn.upper_bound > 0 or
-            not rxn.reactants and rxn.lower_bound < 0]
+    import_list = [rxn for rxn in cobra_model.exchanges if
+                   not rxn.products and rxn.upper_bound > 0 or
+                   not rxn.reactants and rxn.lower_bound < 0]
+    imports = {}
+    for imp in import_list:
+        imports[imp.id] = solution.fluxes[imp.id]
+    return imports
 
 
-def exchanges_consumption(cobra_model):
+def exchanges_consumption(cobra_model, solution):
     "Subset of exchanges that can consume."
-    return [rxn for rxn in cobra_model.exchanges if
-            not rxn.products and rxn.lower_bound < 0 or
-            not rxn.reactants and rxn.upper_bound > 0]
+    export_list = [rxn for rxn in cobra_model.exchanges if
+                   not rxn.products and rxn.lower_bound < 0 or
+                   not rxn.reactants and rxn.upper_bound > 0]
+    exports = {}
+    for exp in export_list:
+        exports[exp.id] = solution.fluxes[exp.id]
+    return exports
 
 
-def osmolarity(imports, exports):
+def osmolarity(model, solution):
     osmo = float(0)
     permeable = ['o2_e', 'co2_e', 'h2o_e']
+    imports = exchanges_consumption(model, solution)
+    exports = exchanges_secretion(model, solution)
     for mol in imports:
         if mol not in permeable:
             osmo -= imports[mol]
