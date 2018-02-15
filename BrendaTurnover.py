@@ -23,12 +23,11 @@ def importBrendaParameters():
         return json.load(json_file)
 
 
-def importBrendaTurnovers(BRENDA_parameters):
+def importBrendaTurnovers(ec_numbers):
     output = {}
-    for ID in BRENDA_parameters:
-        EC_number = BRENDA_parameters[ID][0]
+    for ID in ec_numbers:
         # TODO : include this as a parameter somewhere to remove acc. info
-        raw_output = CS.brenda(EC_number, 'cossio@cim.sld.cu', 'Feynman')
+        raw_output = CS.brenda(ec_numbers[ID], 'cossio@cim.sld.cu', 'Feynman')
         output[ID] = CS.parse_brenda_raw_output(raw_output)
 
     return output
@@ -57,7 +56,6 @@ def simplifyBrendaOutput(output):
                         new_entry[description] = []
         output[ID] = new_entry
 
-    # TODO: what happens with entries with no data?
         if output[ID] != '':
             for substrate in output[ID]:
                 commentary_treated = False
@@ -85,6 +83,7 @@ def simplifyBrendaOutput(output):
                             entry['wild-type'] = False
             new_output[ID] = output[ID]
     return new_output
+
 
 def saveTreatedEntries(output):
     with open('JSONs/treated_BRENDA_output.json', 'w') as outfile:

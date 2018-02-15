@@ -137,6 +137,7 @@ def exchanges_secretion(cobra_model):
             not rxn.products and rxn.upper_bound > 0 or
             not rxn.reactants and rxn.lower_bound < 0]
 
+
 def exchanges_consumption(cobra_model):
     "Subset of exchanges that can consume."
     return [rxn for rxn in cobra_model.exchanges if

@@ -9,11 +9,9 @@ Test: in command line:
     python RetrieveUniProt.py 'Unit Tests/sample_brenda_parameters.json'
 """
 import sys
-import re
+import cobra_services as CS
 from multiprocessing import Pool
 from urllib.error import HTTPError
-from Bio.KEGG import REST
-from Bio.SeqUtils import molecular_weight
 from DataTreatment import openJson, write
 
 mammals = ['HSA', 'PTR', 'PPS', 'GGO', 'PON', 'NLE', 'MCC', 'MCF', 'RRO',
@@ -36,7 +34,7 @@ animals = ['HSA', 'PTR', 'PPS', 'GGO', 'PON', 'NLE', 'MCC', 'MCF', 'RRO',
            'LCM', 'CMK']
 
 
-def returnBestAddress(gene_list, loop):
+def returnBestAddress(genes, loop):
     """Searches for available genes matching kegg enzyme entry.
 
     This function searches 'sequentially'. It returns the best available model
@@ -47,10 +45,8 @@ def returnBestAddress(gene_list, loop):
 
     Parameters
     ----------
-    gene_list : list
-        minimally processed list of genes corresponding to enzyme from kegg.
-        each string in the list contains one or more gene addresses, with must
-        be further processed to be usable with the kegg api.
+    genes : dict
+        key: value pair is organism: address
     loop : string
         Indicates the highest potential group of matching organisms to search
         in.
@@ -62,58 +58,35 @@ def returnBestAddress(gene_list, loop):
 
     """
     if loop == 'best':
-        gene_dict = {}
-        for entry in gene_list:
-            split_seq = list(filter(None, re.split("[, \-:()]+", entry)))
-            f_seq = []
-            if split_seq == []:
-                continue
-            for entry in split_seq:
-                f_seq.append(entry.strip())
-            gene_dict[f_seq[0]] = list(filter(lambda x: x.isdigit(), f_seq))
-        if 'CGE' in gene_dict:
-            for index, entry in enumerate(gene_dict['CGE']):
-                gene_dict['CGE'][index] = 'cge: ' + entry
-            return gene_dict['CGE']
-        elif 'MMU' in gene_dict:
-            for index, entry in enumerate(gene_dict['MMU']):
-                gene_dict['MMU'][index] = 'mmu: ' + entry
-            return gene_dict['MMU']
-        elif 'RNO' in gene_dict:
-            for index, entry in enumerate(gene_dict['RNO']):
-                gene_dict['RNO'][index] = 'rno: ' + entry
-            return gene_dict['RNO']
-        elif 'HSA' in gene_dict:
-            for index, entry in enumerate(gene_dict['HSA']):
-                gene_dict['HSA'][index] = 'hsa: ' + entry
-            return gene_dict['HSA']
+        if 'CGE' in genes:
+            return genes['CGE']
+        elif 'MMU' in genes:
+            return genes['MMU']
+        elif 'RNO' in genes:
+            return genes['RNO']
+        elif 'HSA' in genes:
+            return genes['HSA']
         else:
             loop = 'mammals'
     if loop == 'mammals':
-        mammal_match = set(gene_dict.keys()).intersection(mammals)
+        mammal_match = set(genes.keys()).intersection(mammals)
         if bool(mammal_match):
             return mammal_match
         else:
             loop = 'vertebrates'
     if loop == 'vertebrates':
-        animal_match = set(gene_dict.keys()).intersection(animals)
+        animal_match = set(genes.keys()).intersection(animals)
         if bool(animal_match):
             return animal_match
         else:
             loop = 'csm'  # Stands for "common simple models"
     if loop == 'csm':
-        if 'DME' in gene_dict:
-            for index, entry in enumerate(gene_dict['CGE']):
-                gene_dict['DME'][index] = 'dme: ' + entry
-            return gene_dict['DME']
-        elif 'SCE' in gene_dict:
-            for index, entry in enumerate(gene_dict['SCE']):
-                gene_dict['SCE'][index] = 'sce: ' + entry
-            return gene_dict['SCE']
-        elif 'ECO' in gene_dict:
-            for index, entry in enumerate(gene_dict['ECO']):
-                gene_dict['ECO'][index] = 'eco: ' + entry
-            return gene_dict['ECO']
+        if 'DME' in genes:
+            return genes['DME']
+        elif 'SCE' in genes:
+            return genes['SCE']
+        elif 'ECO' in genes:
+            return genes['ECO']
 
 
 def loopHandler(mol_weights, ec_number, genes, loop):
@@ -146,28 +119,28 @@ def loopHandler(mol_weights, ec_number, genes, loop):
                 searching = False
                 return None
         searching = False
-    mol_weights[ec_number]['genes'] = []
-    mol_weights[ec_number]['sequences'] = []
-    mol_weights[ec_number]['molecular_weights'] = []
+    mol_weights[ec_number]['weights'] = []
     mol_weights[ec_number]['uniprot_ids'] = []
     if loop == 'best' or loop == 'csm':
         for address in best:
+            organism = best          # for readability
             try:
-                fillData(mol_weights, ec_number, address)
+                fillData(mol_weights, ec_number, organism, address)
             except HTTPError as err:
                 if err.code == 404:
                     pass
     else:
         for gene in best:
             for address in best[gene]:
+                organism = best[gene]          # for readability
                 try:
-                    fillData(mol_weights, ec_number, address)
+                    fillData(mol_weights, ec_number, organism, address)
                 except HTTPError as err:
                     if err.code == 404:
                         pass
 
 
-def fillData(mol_weights, ec_number, address):
+def fillData(mol_weights, ec_number, organism, address):
     """Searches kegg for enzyme uniprot id and AA sequence.
 
     Parameters
@@ -179,33 +152,21 @@ def fillData(mol_weights, ec_number, address):
     address : string
         gene address for sequence lookup.
     """
-    text = REST.kegg_get(address).read()
-    mol_weights[ec_number]['genes'].append(address)
-    start_index = text.index('AASEQ')
-    end_index = text.index('NTSEQ')
-    raw_code = text[start_index:end_index].split('\n', 1)[1]
-    code = raw_code.split('\n')
-    sequence = ''
-    for piece in code:
-        sequence = sequence + piece.strip()
-    mol_weights[ec_number]['sequences'].append(sequence)
-    ambigous_count = sequence.count('X')
-    mod_seqeunce = sequence.replace('X', '')
-    weight = molecular_weight(mod_seqeunce, seq_type='protein')
-    weight = weight + 110*ambigous_count  # Estimate
-    mol_weights[ec_number]['molecular_weights'].append(weight)
-    uni_index = text.find('UniProt')
-    if uni_index != -1:
-        mol_weights[ec_number]['uniprot_ids'].append(text[uni_index+9:
-                                                          uni_index+15])
+    mol_weights[ec_number]['genes'].append(organism.lower() + ':' + address)
+    sequence = CS.kegggene_to_sequence(organism, address)
+    weight = CS.sequence_weight(sequence)
+    mol_weights[ec_number]['weights'].append(weight)
+    uniprot = CS.kegggene_to_uniprotid(organism, address)
+    if uniprot:
+        mol_weights[ec_number]['uniprot_ids'].uniprot
 
 
-def mainSubprocess(brenda_parameters, del_ec):
+def mainSubprocess(bigg_ids, del_ec):
     """Main function called by each multiprocessing.process.
 
     Parameters
     ----------
-    brenda_parameters : dict
+    bigg_ids : dict
         key: ec_number. value: corresponding bigg ids.
     del_ec : list
         empty list which is appended to here containing depicrated ec numbers
@@ -215,74 +176,40 @@ def mainSubprocess(brenda_parameters, del_ec):
     dict
         key: ec number. value: all collected data in program by this process.
     """
+
     try:
         mol_weights = {}
-        for ec_number in brenda_parameters:  # WARNING: joblib may require list
+        for ec_number in bigg_ids:  # WARNING: joblib may require list
             mol_weights[ec_number] = {}
             print('Currently processing BiGG id: ' + ec_number)
-            mol_weights[ec_number]['bigg ids'] = brenda_parameters[ec_number]
+            mol_weights[ec_number]['bigg ids'] = bigg_ids[ec_number]
             try:
-                print(ec_number)
-                text = REST.kegg_get('ec:' + ec_number).read()
-                try:
-                    start_index = text.index('GENES') + 5
-                    end_index = text.index('DBLINKS')
-                except ValueError:
-                    continue
-                gene_string = text[start_index: end_index]
-                genes = gene_string.split('\n')
-                for index, gene in enumerate(genes):
-                    genes[index] = gene.strip()
-            # CHANGED: no need to select closest organism here. Done in
-            # returnBestAddress.
+                genes = CS.ecnumber_to_genes(ec_number)
             except HTTPError as err:
                 if err.code == 404:
                     print('Excepted: No entry for ec number: '+ec_number)
                     continue
                 else:
                     raise
-            except ValueError:
-                start_index = text.index('Now EC ')
-                new_ec = text[start_index+6: start_index+20].split(',')[0]
-                print('New ec : ' + new_ec)
-                mol_weights[new_ec] = mol_weights[ec_number]
-                del_ec.append(ec_number)
-                ec_number = new_ec
-                try:
-                    text = REST.kegg_get('ec:' + new_ec).read()
-                except HTTPError as err:
-                    if err.code == 404:
-                        print('Excepted: No entry for ec number: ' + new_ec)
-                        continue
-                    else:
-                        raise
-                try:
-                    start_index = text.index('GENES') + 5
-                    end_index = text.index('DBLINKS')
-                except ValueError:
-                    continue
-                gene_string = text[start_index: end_index]
-                genes = gene_string.split('\n')
-                for index, gene in enumerate(genes):
-                    genes[index] = gene.strip()
-            loop = 'best'
-            searching = True
-            while searching:
-                try:
-                    loopHandler(mol_weights, ec_number, genes, loop)
-                    searching = False
-                except HTTPError as err:
-                    if err.code == 404 and loop == 'csm':
+            if genes:
+                loop = 'best'
+                searching = True
+                while searching:
+                    try:
+                        loopHandler(mol_weights, ec_number, genes, loop)
                         searching = False
-                except TypeError as err:
-                    if loop == 'best':
-                        loop = 'mammals'
-                    if loop == 'mammals':
-                        loop = 'vertebrates'
-                    if loop == 'vertebrates':
-                        loop = 'csm'
-                    if loop == 'csm':
-                        searching = False
+                    except HTTPError as err:
+                        if err.code == 404 and loop == 'csm':
+                            searching = False
+                    except TypeError as err:
+                        if loop == 'best':
+                            loop = 'mammals'
+                        if loop == 'mammals':
+                            loop = 'vertebrates'
+                        if loop == 'vertebrates':
+                            loop = 'csm'
+                        if loop == 'csm':
+                            searching = False
     finally:
         return mol_weights
 
@@ -322,7 +249,7 @@ if __name__ == '__main__':
             del_ec2 = []
             del_ec3 = []
             del_ec4 = []
-            mw_1 = pool.apply_async(mainSubprocess, (sub_dict_1, del_ec1, ))
+            mw_1 = pool.apply_async(mainSubprocess, (sub_dict_1, del_ec1,))
             mw_2 = pool.apply_async(mainSubprocess, (sub_dict_2, del_ec2,))
             mw_3 = pool.apply_async(mainSubprocess, (sub_dict_3, del_ec3,))
             mw_4 = pool.apply_async(mainSubprocess, (sub_dict_4, del_ec4,))
