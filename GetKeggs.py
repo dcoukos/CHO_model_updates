@@ -2,6 +2,7 @@ import json
 import sys
 import requests
 import cobra
+import cobra_services as CS
 from multiprocessing import Pool
 from bs4 import BeautifulSoup as Soup
 from progress.bar import Bar
@@ -9,8 +10,6 @@ from DataTreatment import openJson, write
 
 
 def extractBiggKeggs(reactions, cm_param, p_number):
-    # TODO: further optimize this function by looking only through the
-        # metbolites if reactions have an EC number.
     """Extracts Kegg metabolite IDs from iCHOv1.xml.
 
         In order to match turnover data between BRENDA and the BiGG model, we
@@ -102,12 +101,6 @@ def extractBiggKeggs(reactions, cm_param, p_number):
 
 
 def getBrendaKeggs(reactions, process):
-    '''
-
-    TODO: Make sure this returns the correct data structure for the
-    metabolite_no_kegg.
-    '''
-
     total = len(reactions)
     if process == 1:
         bar = Bar('Retrieving kegg codes for brenda output: ', max=total)
@@ -121,20 +114,9 @@ def getBrendaKeggs(reactions, process):
         for metabolite in reactions[bigg_id]:
             if reactions[bigg_id][metabolite] == []:
                 continue
-            request_counter = 0
-            while request_counter < 3:
-                try:
-                    if ' - reduced' in metabolite:
-                        metabolite = 'reduced ' + metabolite[:-10]
-                    cts_output = requests.get(
-                                    'http://cts.fiehnlab.ucdavis.edu/'
-                                    'service/convert/Chemical%20Name/'
-                                    'KEGG/' + metabolite)
-                    kegg_id = str(json.loads(cts_output.text)[0]['result'][0])
-                    metabolite_to_KEGG[bigg_id][kegg_id] = metabolite
-                    request_counter = 3
-                except (KeyError, IndexError):
-                    request_counter = request_counter + 1
+            kegg = CS.cts(metabolite)
+            if kegg:
+                metabolite_to_KEGG[bigg_id] = kegg
 
     return metabolite_to_KEGG
 
