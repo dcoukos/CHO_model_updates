@@ -196,7 +196,7 @@ def osmolarity(model, solution):
     exports = exchanges_secretion(model, solution)
     for mol in imports:
         if mol not in permeable:
-            osmo -= imports[mol]
+            osmo += imports[mol]
     for mol in exports:
         if mol not in permeable:
             osmo += exports[mol]
