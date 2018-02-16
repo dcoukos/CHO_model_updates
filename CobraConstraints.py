@@ -61,8 +61,8 @@ def run_fba(model, updates, xi):
     # TODO: solution used before it is defined? I have added a first FBA to
     #           estimate the enzyme mass.
     # enzyme_mass = get_enzyme_mass(sol, coef_forward, coef_backward)
-    flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
     get_coefficients(updates, coef_forward, coef_backward)
+    flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
     return fba_and_min_enzyme(model, coef_forward, coef_backward)
 
 
@@ -266,7 +266,6 @@ def osmolarity(model, solution, xi):
     permeable = ['o2_e', 'co2_e', 'h2o_e']
     imports = exchanges_consumption(model, solution)
     exports = exchanges_secretion(model, solution)
-    # TODO: rewrite plotting function to work with dictionaries.
     for mol in imports:
         if mol not in permeable and imports[mol] < 0:
             osmo['total'] += imports[mol]
