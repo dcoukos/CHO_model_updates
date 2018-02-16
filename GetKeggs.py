@@ -1,6 +1,4 @@
-import json
 import sys
-import requests
 import cobra
 import cobra_services as CS
 from multiprocessing import Pool

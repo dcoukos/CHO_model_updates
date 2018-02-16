@@ -4,6 +4,9 @@ import numpy
 import cobra
 from matplotlib.pyplot import scatter, draw, show
 from optlang.symbolics import Zero
+from cobra.exceptions import Infeasible
+from progress.bar import Bar
+
 # TODO: add maintenance demand. 'ATP maintenance' lower bound = 1.
 
 
@@ -26,18 +29,24 @@ def run_fba(model, updates):
     return fba_and_min_enzyme(model, coef_forward, coef_backward)
 
 
-def population_dynamics(model, updates, min_xi=0, max_xi=1000):
-    slices = 500
+def population_dynamics(model, updates, min_xi=0, max_xi=1200):
+    # 1st infeasible value = 1202.9
+    slices = max_xi*2
     xis = []
     osmolarities = []
     medium_osmolarity = 280 * 0  # mM/L (estimate)
+    bar = Bar('Calculating osmolarities: ', max=slices)
     for xi in numpy.linspace(min_xi, max_xi, slices):
-        constrain_uptakes(model, xi)
-        sol = run_fba(model, updates)
-        osmo = osmolarity(model, sol)
-        xis.append(xi)
-        osmolarities.append(medium_osmolarity - osmo*xi)
-
+        bar.next()
+        try:
+            constrain_uptakes(model, xi)
+            sol = run_fba(model, updates)
+            osmo = osmolarity(model, sol)
+            xis.append(xi)
+            osmolarities.append(medium_osmolarity - osmo*xi)
+        except Infeasible:
+            print('xi value: ' + str(xi))
+            raise
     scatter(xis, osmolarities)
     draw()
     show()
