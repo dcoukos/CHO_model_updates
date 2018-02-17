@@ -1,16 +1,16 @@
 import os
 import sys
+import copy
 import json
 import pandas
 import numpy
 import cobra
-import matplotlib
 from matplotlib.pyplot import figure
 from optlang.symbolics import Zero
 from cobra.exceptions import Infeasible
 from progress.bar import Bar
 
-# TODO: add maintenance demand. 'ATP maintenance' lower bound = 1.
+# FIXME: solver status is infeasible before any minimization
 
 
 def main():
@@ -26,6 +26,8 @@ def find_max_xi(model, updates, tolerance=1):
     max_undefined = True
     print("finding an infeasible xi", end='')
     while max_undefined:
+        # FIXME: Why do I get an error why I comment the next two lines, and
+        # why does the speed not change?
         model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
         updates = openJson('JSONs/k1_updates.json')
         print('.', end='')
@@ -40,7 +42,8 @@ def find_max_xi(model, updates, tolerance=1):
         updates = openJson('JSONs/k1_updates.json')
         assert min_xi <= max_xi
         avg_xi = (max_xi + min_xi)/2
-        print('min_xi=', min_xi, ', max_xi=', max_xi, ', avg_xi=', avg_xi, flush=True)
+        print('min_xi=', min_xi, ', max_xi=', max_xi, ', avg_xi=', avg_xi,
+              flush=True)
         try:
             run_fba(model, updates, avg_xi)
             min_xi = avg_xi
@@ -58,28 +61,34 @@ def run_fba(model, updates, xi):
     coef_backward = {}
     release_bounds(model)
     model.reactions.DM_atp_c_.lower_bound = 1
-    # TODO: solution used before it is defined? I have added a first FBA to
-    #           estimate the enzyme mass.
-    # enzyme_mass = get_enzyme_mass(sol, coef_forward, coef_backward)
     get_coefficients(updates, coef_forward, coef_backward)
     flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
     return fba_and_min_enzyme(model, coef_forward, coef_backward)
 
 
-def population_osmolarities(model, updates, min_xi=0):
+def population_osmolarities(orig_model, updates, min_xi=0):
     # 1st infeasible value = 1202.9
     # max_xi = 1200/3
     enzyme_mass = sys.argv[1]
-    max_xi = find_max_xi(model, updates)
+    max_xi = find_max_xi(orig_model, updates)
     # max_xi = 1200
-    matplotlib.use('Agg')
     slices = (max_xi - min_xi)
     xis = []
     osmolarities = []
     exchanged = []
     medium_osmolarity = 280 * 0  # mM/L (estimate)
     bar = Bar('Calculating osmolarities: ', max=slices)
+    # TODO: is there a way to pass a copy each time instead of the same model?
+    #           From find_max_xi, we know this clearly does something
+    # Maybe because call to constraints was backwards?
+    # Can I deepcopy a cobra model?
+    # FIXME:
+    # Why is xi = 1.00095623439 infeasible?
+    # Why is xi = 0.00 infeasible? v_aa, v_glc too low?
     for xi in numpy.linspace(min_xi, max_xi, slices):
+        # model = copy.deepcopy(orig_model)
+        model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
+        updates = openJson('JSONs/k1_updates.json')
         bar.next()
         try:
             sol = run_fba(model, updates, xi)
@@ -107,7 +116,6 @@ def population_osmolarities(model, updates, min_xi=0):
             if mol not in exchanges:
                 exchanges[mol] = 0
             ex_over_ss.append(exchanges[mol])
-
         fig = figure()
         ax = fig.add_subplot(111)
         ax.set_title(mol + r' vs. $\xi$')
@@ -201,7 +209,12 @@ def constrain_uptakes(model, xi):
     on xi. We consider that the metabolite concentrations and such in the
     culture are at a steady state. '''
     v_glc = 0.9*60  # mM/hour
+    v_glc = .1
     v_aa = 0.09*60  # mM/hour
+    v_aa = .01 # Still infeasible when so high.
+    # FIXME: Changing these values changes behavior of find_max_xi.
+    # Bistable around min_xi = 0 and min_xi = 1200?
+    # If v_glc and v_aa are bigger, program fails with xi = 0 infeasible...
     # TODO: On what time interval are uptakes defined in the model.
     IMDM = pandas.read_table('IMDM.txt', comment='#', sep='\s+')
     conc = {}
@@ -210,19 +223,28 @@ def constrain_uptakes(model, xi):
     for met in conc:
         if met == 'glc_D_e':
             if xi == 0:
-                return v_glc
-            model.reactions.get_by_id('EX_glc_e_').lower_bound = \
-                -min(v_glc, conc[met]/xi)
+                    model.reactions.get_by_id('EX_glc_e_').lower_bound = -v_glc
+            else:
+                model.reactions.get_by_id('EX_glc_e_').lower_bound = \
+                    -min(v_glc, conc[met]/xi)
         else:
-            if xi == 0:
-                return v_aa
-            name = met.split('_')[0]
             try:
-                model.reactions.get_by_id('EX_' + name + '_e_').lower_bound = \
-                    -min(v_aa, conc[met]/xi)
+                name = met.split('_')[0]
+                if xi == 0:
+                    model.reactions.get_by_id(
+                        'EX_' + name + '_e_').lower_bound = -v_aa
+                else:
+                    model.reactions.get_by_id(
+                        'EX_' + name + '_e_').lower_bound = \
+                        -min(v_aa, conc[met]/xi)
             except KeyError:
-                model.reactions.get_by_id('EX_' + name + '_L_e_').lower_bound \
-                    = -min(v_aa, conc[met]/xi)
+                if xi == 0:
+                    model.reactions.get_by_id(
+                        'EX_' + name + '_L_e_').lower_bound = -v_aa
+                else:
+                    model.reactions.get_by_id(
+                        'EX_' + name + '_L_e_').lower_bound \
+                        = -min(v_aa, conc[met]/xi)
 
 
 def get_enzyme_mass(solution, coef_forward, coef_backward):
