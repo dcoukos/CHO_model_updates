@@ -108,7 +108,7 @@ def population_osmolarities(model, updates, min_xi=0):
     else:
         max_xi = find_max_xi(model, updates)
     # max_xi = 1200
-    slices = (max_xi - min_xi)/100
+    slices = (max_xi - min_xi)/50
     xis = []
     osmolarities = []
     exchanged = []
