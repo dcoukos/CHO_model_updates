@@ -5,12 +5,17 @@ import json
 import pandas
 import numpy
 import cobra
+from multiprocessing import Pool
 from matplotlib.pyplot import figure
 from optlang.symbolics import Zero
 from cobra.exceptions import Infeasible
 from progress.bar import Bar
 
 # FIXME: solver status is infeasible before any minimization
+# FIXME: python memory consumption out of hand. change backend?
+# FIXME: should not have to reload model at each manipulation. What is changin?
+# FIXME: too many figures.
+# TODO: should h2o2 be considered for osmolarity? Why is so much of it produced?
 
 
 def main():
@@ -66,30 +71,19 @@ def run_fba(model, updates, xi):
     return fba_and_min_enzyme(model, coef_forward, coef_backward)
 
 
-def population_osmolarities(orig_model, updates, min_xi=0):
-    # 1st infeasible value = 1202.9
-    # max_xi = 1200/3
-    enzyme_mass = sys.argv[1]
-    max_xi = find_max_xi(orig_model, updates)
-    # max_xi = 1200
-    slices = (max_xi - min_xi)
-    xis = []
-    osmolarities = []
+def subprocess(model, updates, min_xi, max_xi, slices, medium_osmolarity,
+               process=4):
+    if process == 1:
+        bar = Bar('Calculating osmolarities: ', max=slices)
     exchanged = []
-    medium_osmolarity = 280 * 0  # mM/L (estimate)
-    bar = Bar('Calculating osmolarities: ', max=slices)
-    # TODO: is there a way to pass a copy each time instead of the same model?
-    #           From find_max_xi, we know this clearly does something
-    # Maybe because call to constraints was backwards?
-    # Can I deepcopy a cobra model?
-    # FIXME:
-    # Why is xi = 1.00095623439 infeasible?
-    # Why is xi = 0.00 infeasible? v_aa, v_glc too low?
+    osmolarities = []
+    xis = []
     for xi in numpy.linspace(min_xi, max_xi, slices):
         # model = copy.deepcopy(orig_model)
         model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
         updates = openJson('JSONs/k1_updates.json')
-        bar.next()
+        if process == 1:
+            bar.next()
         try:
             sol = run_fba(model, updates, xi)
             osmo = osmolarity(model, sol, xi)
@@ -107,6 +101,52 @@ def population_osmolarities(orig_model, updates, min_xi=0):
         except Infeasible:
             print('xi value: ' + str(xi) + 'infeasible')
             break
+    return {
+        'xi': xis,
+        'osmolarities': osmolarities,
+        'ex': exchanged
+    }
+
+
+def population_osmolarities(model, updates, min_xi=0):
+    # 1st infeasible value = 1202.9
+    # max_xi = 1200/3
+    enzyme_mass = sys.argv[1]
+    if len(sys.argv) > 2:
+        max_xi = float(sys.argv[2])
+    else:
+        max_xi = find_max_xi(model, updates)
+    # max_xi = 1200
+    slices = (max_xi - min_xi)/100
+    xis = []
+    osmolarities = []
+    exchanged = []
+    medium_osmolarity = 280 * 0  # mM/L (estimate)
+    # TODO: is there a way to pass a copy each time instead of the same model?
+    #           From find_max_xi, we know this clearly does something
+    # Maybe because call to constraints was backwards?
+    # Can I deepcopy a cobra model?
+    # FIXME:
+    # Why is xi = 1.00095623439 infeasible?
+    # Why is xi = 0.00 infeasible? v_aa, v_glc too low?
+    q1 = (max_xi-min_xi)/4 + min_xi
+    q2 = (max_xi+min_xi)/2
+    q3 = 3*(max_xi-min_xi)/4 + min_xi
+    out = []
+    quarters = [min_xi, q1, q2, q3, max_xi]
+    with Pool(processes=4) as pool:
+        print('Started pool.')
+        for block in range(0, 4):
+            print('Starting process ' + str(block + 1))
+            out.append(pool.apply_async(subprocess, (model, updates,
+                       quarters[block], quarters[block + 1], slices,
+                       medium_osmolarity, block,)))
+        pool.close()
+        pool.join()
+    for output in out:
+        xis.extend(output.get()['xi'])
+        osmolarities.extend(output.get()['osmolarities'])
+        exchanged.extend(output.get()['ex'])
 
     bar = Bar('Drawing plots: ', max=len(exchanged))
     for mol in exchanged:
@@ -285,20 +325,27 @@ def osmolarity(model, solution, xi):
     '''
     osmo = {}
     osmo['total'] = float(0)
-    permeable = ['o2_e', 'co2_e', 'h2o_e']
+    permeable = ['o2_e', 'co2_e', 'h2o_e', 'h2o2_e']
     imports = exchanges_consumption(model, solution)
     exports = exchanges_secretion(model, solution)
     for mol in imports:
-        if mol not in permeable and imports[mol] < 0:
-            osmo['total'] += imports[mol]
+        if mol == 'dheas':  # Figure debug
+            print('dheas flux = ' + str(imports[mol]))
+        if imports[mol] < -0.001:
             osmo[mol] = imports[mol]
+            if mol not in permeable:
+                osmo['total'] += imports[mol]
     for mol in exports:
-        if mol not in permeable and exports[mol] > 0:
-            osmo['total'] += exports[mol]
+        if mol == 'dheas':  # Figure debug
+            print('dheas flux = ' + str(exports[mol]))
+        if exports[mol] > 0.001:
             osmo[mol] = exports[mol]
+            if mol not in permeable:
+                osmo['total'] += exports[mol]
     return osmo
 
 
 if __name__ == '__main__':
     assert len(sys.argv) > 1
     main()
+    print()
