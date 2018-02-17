@@ -13,9 +13,6 @@ from progress.bar import Bar
 
 # FIXME: solver status is infeasible before any minimization
 # FIXME: python memory consumption out of hand. change backend?
-# FIXME: should not have to reload model at each manipulation. What is changin?
-# FIXME: too many figures.
-# TODO: should h2o2 be considered for osmolarity? Why is so much of it produced?
 
 
 def main():
@@ -141,13 +138,13 @@ def population_osmolarities(model, updates, min_xi=0):
         xis.extend(output.get()['xi'])
         osmolarities.extend(output.get()['osmolarities'])
         exchanged.extend(output.get()['ex'])
-
-    lac_present = False
-    for entry in exchanged:
-        if 'lac' in entry:
-            lac_present = True
-    assert lac_present
-
+    '''
+        lac_present = False
+        for entry in exchanged:
+            if 'lac' in entry:
+                lac_present = True
+        assert lac_present
+    '''
     bar = Bar('Drawing plots: ', max=len(exchanged))
     for mol in exchanged:
         bar.next()
