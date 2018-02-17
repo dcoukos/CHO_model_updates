@@ -33,8 +33,6 @@ def find_max_xi(model, updates, tolerance=1):
     while max_undefined:
         # FIXME: Why do I get an error why I comment the next two lines, and
         # why does the speed not change?
-        model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
-        updates = openJson('JSONs/k1_updates.json')
         print('.', end='')
         try:
             run_fba(model, updates, max_xi)
@@ -43,8 +41,6 @@ def find_max_xi(model, updates, tolerance=1):
             max_undefined = False
     print("\nfinding max xi", end='')
     while max_xi - min_xi > tolerance:
-        model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
-        updates = openJson('JSONs/k1_updates.json')
         assert min_xi <= max_xi
         avg_xi = (max_xi + min_xi)/2
         print('min_xi=', min_xi, ', max_xi=', max_xi, ', avg_xi=', avg_xi,
@@ -80,8 +76,6 @@ def subprocess(model, updates, min_xi, max_xi, slices, medium_osmolarity,
     xis = []
     for xi in numpy.linspace(min_xi, max_xi, slices):
         # model = copy.deepcopy(orig_model)
-        model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
-        updates = openJson('JSONs/k1_updates.json')
         if process == 1:
             bar.next()
         try:
@@ -147,6 +141,12 @@ def population_osmolarities(model, updates, min_xi=0):
         xis.extend(output.get()['xi'])
         osmolarities.extend(output.get()['osmolarities'])
         exchanged.extend(output.get()['ex'])
+
+    lac_present = False
+    for entry in exchanged:
+        if 'lac' in entry:
+            lac_present = True
+    assert lac_present
 
     bar = Bar('Drawing plots: ', max=len(exchanged))
     for mol in exchanged:
