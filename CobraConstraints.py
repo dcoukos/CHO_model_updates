@@ -1,16 +1,18 @@
 import os
 import sys
+import copy
 import json
 import pandas
 import numpy
 import cobra
-import matplotlib
+from multiprocessing import Pool
 from matplotlib.pyplot import figure
 from optlang.symbolics import Zero
 from cobra.exceptions import Infeasible
 from progress.bar import Bar
 
-# TODO: add maintenance demand. 'ATP maintenance' lower bound = 1.
+# FIXME: solver status is infeasible before any minimization
+# FIXME: python memory consumption out of hand. change backend?
 
 
 def main():
@@ -26,8 +28,8 @@ def find_max_xi(model, updates, tolerance=1):
     max_undefined = True
     print("finding an infeasible xi", end='')
     while max_undefined:
-        model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
-        updates = openJson('JSONs/k1_updates.json')
+        # FIXME: Why do I get an error why I comment the next two lines, and
+        # why does the speed not change?
         print('.', end='')
         try:
             run_fba(model, updates, max_xi)
@@ -36,11 +38,10 @@ def find_max_xi(model, updates, tolerance=1):
             max_undefined = False
     print("\nfinding max xi", end='')
     while max_xi - min_xi > tolerance:
-        model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
-        updates = openJson('JSONs/k1_updates.json')
         assert min_xi <= max_xi
         avg_xi = (max_xi + min_xi)/2
-        print('min_xi=', min_xi, ', max_xi=', max_xi, ', avg_xi=', avg_xi, flush=True)
+        print('min_xi=', min_xi, ', max_xi=', max_xi, ', avg_xi=', avg_xi,
+              flush=True)
         try:
             run_fba(model, updates, avg_xi)
             min_xi = avg_xi
@@ -58,29 +59,22 @@ def run_fba(model, updates, xi):
     coef_backward = {}
     release_bounds(model)
     model.reactions.DM_atp_c_.lower_bound = 1
-    # TODO: solution used before it is defined? I have added a first FBA to
-    #           estimate the enzyme mass.
-    # enzyme_mass = get_enzyme_mass(sol, coef_forward, coef_backward)
     get_coefficients(updates, coef_forward, coef_backward)
     flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
     return fba_and_min_enzyme(model, coef_forward, coef_backward)
 
 
-def population_osmolarities(model, updates, min_xi=0):
-    # 1st infeasible value = 1202.9
-    # max_xi = 1200/3
-    enzyme_mass = sys.argv[1]
-    max_xi = find_max_xi(model, updates)
-    # max_xi = 1200
-    matplotlib.use('Agg')
-    slices = (max_xi - min_xi)
-    xis = []
-    osmolarities = []
+def subprocess(model, updates, min_xi, max_xi, slices, medium_osmolarity,
+               process=4):
+    if process == 1:
+        bar = Bar('Calculating osmolarities: ', max=slices)
     exchanged = []
-    medium_osmolarity = 280 * 0  # mM/L (estimate)
-    bar = Bar('Calculating osmolarities: ', max=slices)
+    osmolarities = []
+    xis = []
     for xi in numpy.linspace(min_xi, max_xi, slices):
-        bar.next()
+        # model = copy.deepcopy(orig_model)
+        if process == 1:
+            bar.next()
         try:
             sol = run_fba(model, updates, xi)
             osmo = osmolarity(model, sol, xi)
@@ -98,7 +92,59 @@ def population_osmolarities(model, updates, min_xi=0):
         except Infeasible:
             print('xi value: ' + str(xi) + 'infeasible')
             break
+    return {
+        'xi': xis,
+        'osmolarities': osmolarities,
+        'ex': exchanged
+    }
 
+
+def population_osmolarities(model, updates, min_xi=0):
+    # 1st infeasible value = 1202.9
+    # max_xi = 1200/3
+    enzyme_mass = sys.argv[1]
+    if len(sys.argv) > 2:
+        max_xi = float(sys.argv[2])
+    else:
+        max_xi = find_max_xi(model, updates)
+    # max_xi = 1200
+    slices = (max_xi - min_xi)/50
+    xis = []
+    osmolarities = []
+    exchanged = []
+    medium_osmolarity = 280 * 0  # mM/L (estimate)
+    # TODO: is there a way to pass a copy each time instead of the same model?
+    #           From find_max_xi, we know this clearly does something
+    # Maybe because call to constraints was backwards?
+    # Can I deepcopy a cobra model?
+    # FIXME:
+    # Why is xi = 1.00095623439 infeasible?
+    # Why is xi = 0.00 infeasible? v_aa, v_glc too low?
+    q1 = (max_xi-min_xi)/4 + min_xi
+    q2 = (max_xi+min_xi)/2
+    q3 = 3*(max_xi-min_xi)/4 + min_xi
+    out = []
+    quarters = [min_xi, q1, q2, q3, max_xi]
+    with Pool(processes=4) as pool:
+        print('Started pool.')
+        for block in range(0, 4):
+            print('Starting process ' + str(block + 1))
+            out.append(pool.apply_async(subprocess, (model, updates,
+                       quarters[block], quarters[block + 1], slices,
+                       medium_osmolarity, block,)))
+        pool.close()
+        pool.join()
+    for output in out:
+        xis.extend(output.get()['xi'])
+        osmolarities.extend(output.get()['osmolarities'])
+        exchanged.extend(output.get()['ex'])
+    '''
+        lac_present = False
+        for entry in exchanged:
+            if 'lac' in entry:
+                lac_present = True
+        assert lac_present
+    '''
     bar = Bar('Drawing plots: ', max=len(exchanged))
     for mol in exchanged:
         bar.next()
@@ -107,7 +153,6 @@ def population_osmolarities(model, updates, min_xi=0):
             if mol not in exchanges:
                 exchanges[mol] = 0
             ex_over_ss.append(exchanges[mol])
-
         fig = figure()
         ax = fig.add_subplot(111)
         ax.set_title(mol + r' vs. $\xi$')
@@ -201,7 +246,12 @@ def constrain_uptakes(model, xi):
     on xi. We consider that the metabolite concentrations and such in the
     culture are at a steady state. '''
     v_glc = 0.9*60  # mM/hour
+    v_glc = .1
     v_aa = 0.09*60  # mM/hour
+    v_aa = .01 # Still infeasible when so high.
+    # FIXME: Changing these values changes behavior of find_max_xi.
+    # Bistable around min_xi = 0 and min_xi = 1200?
+    # If v_glc and v_aa are bigger, program fails with xi = 0 infeasible...
     # TODO: On what time interval are uptakes defined in the model.
     IMDM = pandas.read_table('IMDM.txt', comment='#', sep='\s+')
     conc = {}
@@ -210,19 +260,28 @@ def constrain_uptakes(model, xi):
     for met in conc:
         if met == 'glc_D_e':
             if xi == 0:
-                return v_glc
-            model.reactions.get_by_id('EX_glc_e_').lower_bound = \
-                -min(v_glc, conc[met]/xi)
+                    model.reactions.get_by_id('EX_glc_e_').lower_bound = -v_glc
+            else:
+                model.reactions.get_by_id('EX_glc_e_').lower_bound = \
+                    -min(v_glc, conc[met]/xi)
         else:
-            if xi == 0:
-                return v_aa
-            name = met.split('_')[0]
             try:
-                model.reactions.get_by_id('EX_' + name + '_e_').lower_bound = \
-                    -min(v_aa, conc[met]/xi)
+                name = met.split('_')[0]
+                if xi == 0:
+                    model.reactions.get_by_id(
+                        'EX_' + name + '_e_').lower_bound = -v_aa
+                else:
+                    model.reactions.get_by_id(
+                        'EX_' + name + '_e_').lower_bound = \
+                        -min(v_aa, conc[met]/xi)
             except KeyError:
-                model.reactions.get_by_id('EX_' + name + '_L_e_').lower_bound \
-                    = -min(v_aa, conc[met]/xi)
+                if xi == 0:
+                    model.reactions.get_by_id(
+                        'EX_' + name + '_L_e_').lower_bound = -v_aa
+                else:
+                    model.reactions.get_by_id(
+                        'EX_' + name + '_L_e_').lower_bound \
+                        = -min(v_aa, conc[met]/xi)
 
 
 def get_enzyme_mass(solution, coef_forward, coef_backward):
@@ -263,20 +322,27 @@ def osmolarity(model, solution, xi):
     '''
     osmo = {}
     osmo['total'] = float(0)
-    permeable = ['o2_e', 'co2_e', 'h2o_e']
+    permeable = ['o2_e', 'co2_e', 'h2o_e', 'h2o2_e']
     imports = exchanges_consumption(model, solution)
     exports = exchanges_secretion(model, solution)
     for mol in imports:
-        if mol not in permeable and imports[mol] < 0:
-            osmo['total'] += imports[mol]
+        if mol == 'dheas':  # Figure debug
+            print('dheas flux = ' + str(imports[mol]))
+        if imports[mol] < -0.001:
             osmo[mol] = imports[mol]
+            if mol not in permeable:
+                osmo['total'] += imports[mol]
     for mol in exports:
-        if mol not in permeable and exports[mol] > 0:
-            osmo['total'] += exports[mol]
+        if mol == 'dheas':  # Figure debug
+            print('dheas flux = ' + str(exports[mol]))
+        if exports[mol] > 0.001:
             osmo[mol] = exports[mol]
+            if mol not in permeable:
+                osmo['total'] += exports[mol]
     return osmo
 
 
 if __name__ == '__main__':
     assert len(sys.argv) > 1
     main()
+    print()
