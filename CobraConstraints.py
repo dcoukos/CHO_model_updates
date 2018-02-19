@@ -25,11 +25,11 @@ def find_max_xi(model, updates, tolerance=1):
     min_xi = 0.
     max_xi = 1000.
     max_undefined = True
-    print("finding an infeasible xi", end='')
+    print("finding an infeasible xi")
     while max_undefined:
         # FIXME: Why do I get an error why I comment the next two lines, and
         # why does the speed not change?
-        print('.', end='')
+        print('.')
         try:
             run_fba(model, updates, max_xi)
             max_xi *= 2
@@ -45,7 +45,6 @@ def find_max_xi(model, updates, tolerance=1):
             run_fba(model, updates, avg_xi)
             min_xi = avg_xi
         except Infeasible:
-            print('Caught exception', flush=True)
             max_xi = avg_xi
     print('Returning ' + str(min_xi))
     return min_xi
@@ -53,15 +52,16 @@ def find_max_xi(model, updates, tolerance=1):
 
 def run_fba(model, updates, xi):
     enzyme_mass = float(sys.argv[1])
+    release_bounds(model)
     constrain_uptakes(model, xi)
     coef_forward = {}
     coef_backward = {}
-    release_bounds(model)
     model.reactions.DM_atp_c_.lower_bound = 1
-    get_coefficients(updates, coef_forward, coef_backward)
+    get_coefficients(updates, coef_forward, coef_backward, 3.6E6)
     flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
-    m_coefs = mitochondrial_coefs(model, coef_forward, coef_backward)
-    flux_constraint(model, *m_coefs, enzyme_mass)
+    # m_coefs = mitochondrial_coefs(model, coef_forward, coef_backward)
+    # FIXME: second call to flux_constraint freezes find_max_xi.
+    # flux_constraint(model, *m_coefs, enzyme_mass)
     return fba_and_min_enzyme(model, coef_forward, coef_backward)
 
 
@@ -88,7 +88,7 @@ def subprocess(model, updates, min_xi, max_xi, slices, medium_osmolarity,
             bar.next()
         try:
             sol = run_fba(model, updates, xi)
-            osmo = osmolarity(model, sol, xi)
+            osmo = osmolarity(model, sol)
             xis.append(xi)
             to_append = {}
             for mol in osmo:
@@ -117,19 +117,11 @@ def population_osmolarities(model, updates, min_xi=0):
         max_xi = float(sys.argv[2])
     else:
         max_xi = find_max_xi(model, updates)
-    # max_xi = 1200
     slices = (max_xi - min_xi)/50
     xis = []
     osmolarities = []
     exchanged = []
     medium_osmolarity = 280 * 0  # mM/L (estimate)
-    # TODO: is there a way to pass a copy each time instead of the same model?
-    #           From find_max_xi, we know this clearly does something
-    # Maybe because call to constraints was backwards?
-    # Can I deepcopy a cobra model?
-    # FIXME:
-    # Why is xi = 1.00095623439 infeasible?
-    # Why is xi = 0.00 infeasible? v_aa, v_glc too low?
     q1 = (max_xi-min_xi)/4 + min_xi
     q2 = (max_xi+min_xi)/2
     q3 = 3*(max_xi-min_xi)/4 + min_xi
@@ -201,12 +193,13 @@ def flux_constraint(cobra_model, coefficients_forward, coefficients_reverse,
     cobra_model.add_cons_vars(constraint)
     cobra_model.solver.update()
     constraint.set_linear_coefficients(coefficients=coefficients)
+    cobra_model.solver.update()
 
 
-def get_coefficients(model_updates, coef_forward, coef_backward):
+def get_coefficients(model_updates, coef_forward, coef_backward, mult=1):
     for reaction in model_updates:
-        coef_forward[reaction] = model_updates[reaction]['forward']
-        coef_backward[reaction] = model_updates[reaction]['backward']
+        coef_forward[reaction] = model_updates[reaction]['forward']*mult
+        coef_backward[reaction] = model_updates[reaction]['backward']*mult
 
 
 def fba_and_min_enzyme(cobra_model, coefficients_forward,
@@ -214,14 +207,11 @@ def fba_and_min_enzyme(cobra_model, coefficients_forward,
     """
     Performs FBA follows by minimization of enzyme content
     """
-
     with cobra_model as model:
-        model.optimize()
         cobra.util.fix_objective_as_constraint(model)
         set_enzymatic_objective(model, coefficients_forward,
                                 coefficients_reverse)
-        sol = cobra_model.optimize()
-        return sol
+        return model.optimize()
 
 
 def release_bounds(model):
@@ -255,8 +245,9 @@ def constrain_uptakes(model, xi):
     '''Uptake is defined by culture conditions, but this should depend _only_
     on xi. We consider that the metabolite concentrations and such in the
     culture are at a steady state. '''
-    v_glc = 5*60  # mM/hour
-    v_aa = 0.5*60  # mM/hour
+    v_glc = .5  # mmol/gDW/h
+    v_aa = 0.05
+
     # FIXME: Changing these values changes behavior of find_max_xi.
     # Bistable around min_xi = 0 and min_xi = 1200?
     # If v_glc and v_aa are bigger, program fails with xi = 0 infeasible...
@@ -264,14 +255,20 @@ def constrain_uptakes(model, xi):
     IMDM = pandas.read_table('IMDM.txt', comment='#', sep='\s+')
     conc = {}
     for index, row in IMDM.iterrows():
-        conc[row['id']] = row['mM']
+        conc[row['id']] = row['mM']/1000  # mM -> M
     for met in conc:
         if met == 'glc_D_e':
             if xi == 0:
                     model.reactions.get_by_id('EX_glc_e_').lower_bound = -v_glc
             else:
+                # TEST:
+
                 model.reactions.get_by_id('EX_glc_e_').lower_bound = \
                     -min(v_glc, conc[met]/xi)
+                '''
+                model.reactions.get_by_id('EX_glc_e_').lower_bound = \
+                    -conc[met]/xi
+                '''
         else:
             try:
                 name = met.split('_')[0]
@@ -279,9 +276,15 @@ def constrain_uptakes(model, xi):
                     model.reactions.get_by_id(
                         'EX_' + name + '_e_').lower_bound = -v_aa
                 else:
+                    # TEST:
+
                     model.reactions.get_by_id(
                         'EX_' + name + '_e_').lower_bound = \
                         -min(v_aa, conc[met]/xi)
+                    '''
+                    model.reactions.get_by_id(
+                        'EX_' + name + '_e_').lower_bound = -conc[met]/xi
+                    '''
             except KeyError:
                 if xi == 0:
                     model.reactions.get_by_id(
@@ -323,7 +326,7 @@ def exchanges_secretion(cobra_model, solution):
     return exports
 
 
-def osmolarity(model, solution, xi):
+def osmolarity(model, solution):
     '''
     'Osmolarity' for one steady state.
 
@@ -335,15 +338,11 @@ def osmolarity(model, solution, xi):
     imports = exchanges_consumption(model, solution)
     exports = exchanges_secretion(model, solution)
     for mol in imports:
-        if mol == 'dheas':  # Figure debug
-            print('dheas flux = ' + str(imports[mol]))
         if imports[mol] < -0.001:
             osmo[mol] = imports[mol]
             if mol not in permeable:
                 osmo['total'] += imports[mol]
     for mol in exports:
-        if mol == 'dheas':  # Figure debug
-            print('dheas flux = ' + str(exports[mol]))
         if exports[mol] > 0.001:
             osmo[mol] = exports[mol]
             if mol not in permeable:
