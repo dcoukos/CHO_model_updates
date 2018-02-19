@@ -1,6 +1,5 @@
 import os
 import sys
-import copy
 import json
 import pandas
 import numpy
@@ -61,7 +60,19 @@ def run_fba(model, updates, xi):
     model.reactions.DM_atp_c_.lower_bound = 1
     get_coefficients(updates, coef_forward, coef_backward)
     flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
+    m_coefs = mitochondrial_coefs(model, coef_forward, coef_backward)
+    flux_constraint(model, *m_coefs, enzyme_mass)
     return fba_and_min_enzyme(model, coef_forward, coef_backward)
+
+
+def mitochondrial_coefs(model, coef_forward, coef_backward):
+    m_coef_forward = {}
+    m_coef_backward = {}
+    for reaction in model.reactions:
+        if 'm' in reaction.compartments:
+            m_coef_forward[reaction.id] = coef_forward[reaction.id]
+            m_coef_backward[reaction.id] = coef_backward[reaction.id]
+    return coef_forward, coef_backward
 
 
 def subprocess(model, updates, min_xi, max_xi, slices, medium_osmolarity,
@@ -78,7 +89,6 @@ def subprocess(model, updates, min_xi, max_xi, slices, medium_osmolarity,
         try:
             sol = run_fba(model, updates, xi)
             osmo = osmolarity(model, sol, xi)
-            # CHANGED: now a dicitonary with many metabolites.
             xis.append(xi)
             to_append = {}
             for mol in osmo:
@@ -245,10 +255,8 @@ def constrain_uptakes(model, xi):
     '''Uptake is defined by culture conditions, but this should depend _only_
     on xi. We consider that the metabolite concentrations and such in the
     culture are at a steady state. '''
-    v_glc = 0.9*60  # mM/hour
-    v_glc = .1
-    v_aa = 0.09*60  # mM/hour
-    v_aa = .01 # Still infeasible when so high.
+    v_glc = 5*60  # mM/hour
+    v_aa = 0.5*60  # mM/hour
     # FIXME: Changing these values changes behavior of find_max_xi.
     # Bistable around min_xi = 0 and min_xi = 1200?
     # If v_glc and v_aa are bigger, program fails with xi = 0 infeasible...
@@ -322,7 +330,8 @@ def osmolarity(model, solution, xi):
     '''
     osmo = {}
     osmo['total'] = float(0)
-    permeable = ['o2_e', 'co2_e', 'h2o_e', 'h2o2_e']
+    # CHANGED : checking for reaction id's
+    permeable = ['EX_o2_e_', 'EX_co2_e_', 'EX_h2o_e_']
     imports = exchanges_consumption(model, solution)
     exports = exchanges_secretion(model, solution)
     for mol in imports:
