@@ -30,10 +30,12 @@ def find_max_xi(model, updates, tolerance=1):
         # FIXME: Why do I get an error why I comment the next two lines, and
         # why does the speed not change?
         print('.')
-        try:
+        sol = run_fba(model, updates, max_xi)
+        if sol.status == 'optimal':
             run_fba(model, updates, max_xi)
             max_xi *= 2
-        except Infeasible:
+        else:
+            assert sol.status == 'infeasible'
             max_undefined = False
     print("\nfinding max xi", end='')
     while max_xi - min_xi > tolerance:
@@ -196,10 +198,10 @@ def flux_constraint(cobra_model, coefficients_forward, coefficients_reverse,
     cobra_model.solver.update()
 
 
-def get_coefficients(model_updates, coef_forward, coef_backward, mult=1):
+def get_coefficients(model_updates, coef_forward, coef_backward, div=1):
     for reaction in model_updates:
-        coef_forward[reaction] = model_updates[reaction]['forward']*mult
-        coef_backward[reaction] = model_updates[reaction]['backward']*mult
+        coef_forward[reaction] = model_updates[reaction]['forward']/div
+        coef_backward[reaction] = model_updates[reaction]['backward']/div
 
 
 def fba_and_min_enzyme(cobra_model, coefficients_forward,
@@ -208,10 +210,13 @@ def fba_and_min_enzyme(cobra_model, coefficients_forward,
     Performs FBA follows by minimization of enzyme content
     """
     with cobra_model as model:
-        cobra.util.fix_objective_as_constraint(model)
+        model.objective = model.reactions.biomass_cho_producing
+        model.optimize(objective_sense='maximize')
+        model.reactions.biomass_cho_producing.lower_bound = model.reactions.biomass_cho_producing.flux
+        #cobra.util.fix_objective_as_constraint(model)
         set_enzymatic_objective(model, coefficients_forward,
                                 coefficients_reverse)
-        return model.optimize()
+        return model.optimize(objective_sense='minimize')
 
 
 def release_bounds(model):
@@ -255,7 +260,7 @@ def constrain_uptakes(model, xi):
     IMDM = pandas.read_table('IMDM.txt', comment='#', sep='\s+')
     conc = {}
     for index, row in IMDM.iterrows():
-        conc[row['id']] = row['mM']/1000  # mM -> M
+        conc[row['id']] = row['mM']
     for met in conc:
         if met == 'glc_D_e':
             if xi == 0:
