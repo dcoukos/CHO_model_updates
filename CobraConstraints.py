@@ -10,9 +10,6 @@ from optlang.symbolics import Zero
 from cobra.exceptions import Infeasible
 from progress.bar import Bar
 
-# FIXME: solver status is infeasible before any minimization
-# FIXME: python memory consumption out of hand. change backend?
-
 
 def main():
     k1_model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
@@ -27,8 +24,6 @@ def find_max_xi(model, updates, tolerance=1):
     max_undefined = True
     print("finding an infeasible xi")
     while max_undefined:
-        # FIXME: Why do I get an error why I comment the next two lines, and
-        # why does the speed not change?
         print('.')
         sol = run_fba(model, updates, max_xi)
         if sol.status == 'optimal':
@@ -62,7 +57,6 @@ def run_fba(model, updates, xi):
     get_coefficients(updates, coef_forward, coef_backward, 3.6E6)
     flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
     # m_coefs = mitochondrial_coefs(model, coef_forward, coef_backward)
-    # FIXME: second call to flux_constraint freezes find_max_xi.
     # flux_constraint(model, *m_coefs, enzyme_mass)
     return fba_and_min_enzyme(model, coef_forward, coef_backward)
 
@@ -212,8 +206,9 @@ def fba_and_min_enzyme(cobra_model, coefficients_forward,
     with cobra_model as model:
         model.objective = model.reactions.biomass_cho_producing
         model.optimize(objective_sense='maximize')
-        model.reactions.biomass_cho_producing.lower_bound = model.reactions.biomass_cho_producing.flux
-        #cobra.util.fix_objective_as_constraint(model)
+        model.reactions.biomass_cho_producing.lower_bound = \
+            model.reactions.biomass_cho_producing.flux
+        # cobra.util.fix_objective_as_constraint(model)
         set_enzymatic_objective(model, coefficients_forward,
                                 coefficients_reverse)
         return model.optimize(objective_sense='minimize')
@@ -256,7 +251,6 @@ def constrain_uptakes(model, xi):
     # FIXME: Changing these values changes behavior of find_max_xi.
     # Bistable around min_xi = 0 and min_xi = 1200?
     # If v_glc and v_aa are bigger, program fails with xi = 0 infeasible...
-    # TODO: On what time interval are uptakes defined in the model.
     IMDM = pandas.read_table('IMDM.txt', comment='#', sep='\s+')
     conc = {}
     for index, row in IMDM.iterrows():

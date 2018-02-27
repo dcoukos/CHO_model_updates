@@ -551,6 +551,7 @@ def applyBestData(model, updates, data_type):
             model_update[reaction].applyHighestTurnover()
     return model_update
 
+
 def getEcNumber(reaction):
     '''Gets EC number to make new Enzyme object. "Flat is better than nested"
     '''

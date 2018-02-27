@@ -10,7 +10,6 @@ import cobra.test
 from cobra import Reaction, Metabolite
 model = cobra.test.create_test_model('textbook')
 
-#Now I want to just add the two reactions in my dummy model.
 reaction = Reaction('CSND')
 reaction2 = Reaction('DHPM1')
 reaction.name = 'Test reaction 1'
@@ -43,12 +42,12 @@ ethylhydantoin = Metabolite(
 reaction.add_metabolites({
     cyt: -1.0,
     fluorocyt: 1.0,
-    unmatchable: 1.0   
+    unmatchable: 1.0
 })
 
 reaction2.add_metabolites({
     DL_p: 1.0,
-    ethylhydantoin: -1.0    
+    ethylhydantoin: -1.0
 })
 
 model.add_reaction(reaction)
