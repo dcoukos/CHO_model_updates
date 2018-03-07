@@ -18,6 +18,22 @@ def main():
 
 
 def find_max_xi(model, updates, tolerance=1):
+    """Returns the max ξ value for which the model is still feasible through a
+        bissection algorithm.
+
+    Parameters
+    ----------
+    model : cobra.model
+    updates : dictionary of specific activity values.
+    tolerance : tolerance defining when to stop searching
+        difference = high value - low value. If difference < tolerance, return
+        low value.
+
+    Returns
+    -------
+    float
+        Highest ξ for which the model is feasible.
+    """
     assert tolerance > 0
     min_xi = 0.
     max_xi = 1000.
@@ -44,16 +60,33 @@ def find_max_xi(model, updates, tolerance=1):
         except Infeasible:
             max_xi = avg_xi
     print('Returning ' + str(min_xi))
-    return min_xi
+    return float(min_xi)
 
 
 def run_fba(model, updates, xi):
+    """Adds the constraints to the model, releases bounds, and sets atp
+        maintenance before minimization.
+
+    Parameters
+    ----------
+    model : cobra.model
+    updates : dict
+        Specific activity updates.
+    xi : float
+        xi = D/X.
+
+    Returns
+    -------
+    cobra.solution
+        Solution object of the minimized model, to which enzymatic constraints
+        have been applied.
+    """
     enzyme_mass = float(sys.argv[1])
-    release_bounds(model)
-    constrain_uptakes(model, xi)
+    release_bounds(model)  # Give the model wiggle room.
+    constrain_uptakes(model, xi)  # Model competition between cells.
     coef_forward = {}
     coef_backward = {}
-    model.reactions.DM_atp_c_.lower_bound = 1
+    model.reactions.DM_atp_c_.lower_bound = 1  # atp maintenance.
     get_coefficients(updates, coef_forward, coef_backward, 3.6E6)
     flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
     # m_coefs = mitochondrial_coefs(model, coef_forward, coef_backward)
@@ -192,10 +225,29 @@ def flux_constraint(cobra_model, coefficients_forward, coefficients_reverse,
     cobra_model.solver.update()
 
 
-def get_coefficients(model_updates, coef_forward, coef_backward, div=1):
+def get_coefficients(model_updates, coef_forward, coef_backward, mult=1.):
+    """Reads specific activities and fills coeficient dictionaries.
+
+    Parameters
+    ----------
+    model_updates : cobra.Model
+    coef_forward : empty dict
+        Dictionary of enzyme costs of forward reactions.
+    coef_backward : empty dict
+        Dictionary of enzyme costs of backward reactions.
+    mult : int
+        mu
+
+    Returns
+    -------
+    type
+        Description of returned object.
+
+    """
+    # TODO: Is this division right?
     for reaction in model_updates:
-        coef_forward[reaction] = model_updates[reaction]['forward']/div
-        coef_backward[reaction] = model_updates[reaction]['backward']/div
+        coef_forward[reaction] = mult/model_updates[reaction]['forward']
+        coef_backward[reaction] = mult/model_updates[reaction]['backward']
 
 
 def fba_and_min_enzyme(cobra_model, coefficients_forward,
@@ -205,6 +257,7 @@ def fba_and_min_enzyme(cobra_model, coefficients_forward,
     """
     with cobra_model as model:
         model.objective = model.reactions.biomass_cho_producing
+        # TODO: Should the solution object be collected here?
         model.optimize(objective_sense='maximize')
         model.reactions.biomass_cho_producing.lower_bound = \
             model.reactions.biomass_cho_producing.flux
@@ -215,6 +268,16 @@ def fba_and_min_enzyme(cobra_model, coefficients_forward,
 
 
 def release_bounds(model):
+    """The iCHO model has experimental uptakes rigidly set to experimental
+        observations. Since our experimental conditions and modeling
+        constraints are different, it is important to give the model some
+        wiggle room.
+
+    Parameters
+    ----------
+    model : cobra.Model
+
+    """
     for rxn in model.reactions:
         if rxn.upper_bound == rxn.lower_bound:
             if rxn.upper_bound < 0:
@@ -225,6 +288,23 @@ def release_bounds(model):
 
 def set_enzymatic_objective(cobra_model, coefficients_forward,
                             coefficients_reverse):
+    """Short summary.
+
+    Parameters
+    ----------
+    cobra_model : type
+        Description of parameter `cobra_model`.
+    coefficients_forward : type
+        Description of parameter `coefficients_forward`.
+    coefficients_reverse : type
+        Description of parameter `coefficients_reverse`.
+
+    Returns
+    -------
+    type
+        Description of returned object.
+
+    """
     coefficients = {}
     for (bigg_id, cf) in coefficients_forward.items():
         rxn = cobra_model.reactions.get_by_id(bigg_id)
@@ -241,16 +321,19 @@ def set_enzymatic_objective(cobra_model, coefficients_forward,
 
 
 def constrain_uptakes(model, xi):
-    # TODO: Write mathematical representation of constraint.
-    '''Uptake is defined by culture conditions, but this should depend _only_
-    on xi. We consider that the metabolite concentrations and such in the
-    culture are at a steady state. '''
+    """When the cells are not competing (resource excess, high ξ) uptakes are
+        restricted by the limits of metabolite importers. When competion occurs
+        competiton is modeled by limiting uptakes to metabolite_concentration/ξ
+    Parameters
+    ----------
+    model : cobra.Model
+    xi : float
+        = D/X
+
+    """
+
     v_glc = .5  # mmol/gDW/h
     v_aa = 0.05
-
-    # FIXME: Changing these values changes behavior of find_max_xi.
-    # Bistable around min_xi = 0 and min_xi = 1200?
-    # If v_glc and v_aa are bigger, program fails with xi = 0 infeasible...
     IMDM = pandas.read_table('IMDM.txt', comment='#', sep='\s+')
     conc = {}
     for index, row in IMDM.iterrows():
@@ -260,14 +343,8 @@ def constrain_uptakes(model, xi):
             if xi == 0:
                     model.reactions.get_by_id('EX_glc_e_').lower_bound = -v_glc
             else:
-                # TEST:
-
                 model.reactions.get_by_id('EX_glc_e_').lower_bound = \
                     -min(v_glc, conc[met]/xi)
-                '''
-                model.reactions.get_by_id('EX_glc_e_').lower_bound = \
-                    -conc[met]/xi
-                '''
         else:
             try:
                 name = met.split('_')[0]
@@ -275,15 +352,9 @@ def constrain_uptakes(model, xi):
                     model.reactions.get_by_id(
                         'EX_' + name + '_e_').lower_bound = -v_aa
                 else:
-                    # TEST:
-
                     model.reactions.get_by_id(
                         'EX_' + name + '_e_').lower_bound = \
                         -min(v_aa, conc[met]/xi)
-                    '''
-                    model.reactions.get_by_id(
-                        'EX_' + name + '_e_').lower_bound = -conc[met]/xi
-                    '''
             except KeyError:
                 if xi == 0:
                     model.reactions.get_by_id(
@@ -304,7 +375,20 @@ def get_enzyme_mass(solution, coef_forward, coef_backward):
 
 
 def exchanges_consumption(cobra_model, solution):
-    "Subset of exchanges that consume."
+    """Get fluxes of reactions that consume metabolites. Only considers
+        exchanges
+
+    Parameters
+    ----------
+    cobra_model : cobra.Model
+    solution : cobra.Solution
+        Solution of optimized model.
+
+    Returns
+    -------
+    dictionary
+        keys are bigg ids of import reactions, values are fluxes.
+    """
     import_list = [rxn for rxn in cobra_model.exchanges if
                    not rxn.products and solution.fluxes[rxn.id] < 0 or
                    not rxn.reactants and solution.fluxes[rxn.id] > 0]
@@ -315,7 +399,20 @@ def exchanges_consumption(cobra_model, solution):
 
 
 def exchanges_secretion(cobra_model, solution):
-    "Subset of exchanges that secrete"
+    """Get fluxes of reactions that export metabolites. Only considers
+            exchanges
+
+    Parameters
+    ----------
+    cobra_model : cobra.Model
+    solution : cobra.Solution
+        Solution of optimized model.
+
+    Returns
+    -------
+    dictionary
+        keys are bigg ids of import reactions, values are fluxes.
+    """
     export_list = [rxn for rxn in cobra_model.exchanges if
                    not rxn.products and solution.fluxes[rxn.id] > 0 or
                    not rxn.reactants and solution.fluxes[rxn.id] < 0]
@@ -326,13 +423,11 @@ def exchanges_secretion(cobra_model, solution):
 
 
 def osmolarity(model, solution):
-    '''
-    'Osmolarity' for one steady state.
-
+    ''' Calculates a cell's contribution to osmolarity for a given steady
+        state defined by ξ and for an optmized model (thru solution object)
     '''
     osmo = {}
     osmo['total'] = float(0)
-    # CHANGED : checking for reaction id's
     permeable = ['EX_o2_e_', 'EX_co2_e_', 'EX_h2o_e_']
     imports = exchanges_consumption(model, solution)
     exports = exchanges_secretion(model, solution)
