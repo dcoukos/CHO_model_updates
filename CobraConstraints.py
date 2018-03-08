@@ -17,14 +17,17 @@ def main():
     population_osmolarities(k1_model, k1_updates)
 
 
-def find_max_xi(model, updates, tolerance=1):
+def find_max_xi(model, coef_forward, coef_backward, tolerance=1):
     """Returns the max ξ value for which the model is still feasible through a
         bissection algorithm.
 
     Parameters
     ----------
     model : cobra.model
-    updates : dictionary of specific activity values.
+    coef_forward : dict
+        Enzyme costs of forward reactions.
+    coef_backward: dict
+        Enzyme costs of reverse reactions.
     tolerance : tolerance defining when to stop searching
         difference = high value - low value. If difference < tolerance, return
         low value.
@@ -41,9 +44,9 @@ def find_max_xi(model, updates, tolerance=1):
     print("finding an infeasible xi")
     while max_undefined:
         print('.')
-        sol = run_fba(model, updates, max_xi)
+        sol = run_fba(model, coef_forward, coef_backward, max_xi)
         if sol.status == 'optimal':
-            run_fba(model, updates, max_xi)
+            run_fba(model, coef_forward, coef_backward, max_xi)
             max_xi *= 2
         else:
             assert sol.status == 'infeasible'
@@ -55,7 +58,7 @@ def find_max_xi(model, updates, tolerance=1):
         print('min_xi=', min_xi, ', max_xi=', max_xi, ', avg_xi=', avg_xi,
               flush=True)
         try:
-            run_fba(model, updates, avg_xi)
+            run_fba(model, coef_forward, coef_backward, avg_xi)
             min_xi = avg_xi
         except Infeasible:
             max_xi = avg_xi
@@ -63,15 +66,17 @@ def find_max_xi(model, updates, tolerance=1):
     return float(min_xi)
 
 
-def run_fba(model, updates, xi):
+def run_fba(model, coef_forward, coef_backward, xi):
     """Adds the constraints to the model, releases bounds, and sets atp
         maintenance before minimization.
 
     Parameters
     ----------
     model : cobra.model
-    updates : dict
-        Specific activity updates.
+    coef_forward : dict
+        Enzyme costs for the forward direction.
+    coef_backward : dict
+        Enzyme costs for the backward direction.
     xi : float
         xi = D/X.
 
@@ -84,10 +89,7 @@ def run_fba(model, updates, xi):
     enzyme_mass = float(sys.argv[1])
     release_bounds(model)  # Give the model wiggle room.
     constrain_uptakes(model, xi)  # Model competition between cells.
-    coef_forward = {}
-    coef_backward = {}
     model.reactions.DM_atp_c_.lower_bound = 1  # atp maintenance.
-    get_coefficients(updates, coef_forward, coef_backward, 3.6E6)
     flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
     # m_coefs = mitochondrial_coefs(model, coef_forward, coef_backward)
     # flux_constraint(model, *m_coefs, enzyme_mass)
@@ -104,19 +106,45 @@ def mitochondrial_coefs(model, coef_forward, coef_backward):
     return coef_forward, coef_backward
 
 
-def subprocess(model, updates, min_xi, max_xi, slices, medium_osmolarity,
-               process=4):
+def subprocess(model, coef_forward, coef_backward, min_xi, max_xi, slices,
+               medium_osmolarity, process=4):
+    """Main subprocesses where the model is optimized and osmolarity
+        contributions are calculated based on a given sub-range of ξ values.
+
+    Parameters
+    ----------
+    model : cobra.Model
+    coef_forward : dictionary
+        Enzyme costs of forward reactions
+    coef_backward : dictionary
+        Enzyme costs of backwards reactions
+    min_xi : type
+        Description of parameter `min_xi`.
+    max_xi : type
+        Description of parameter `max_xi`.
+    slices : type
+        Description of parameter `slices`.
+    medium_osmolarity : type
+        Description of parameter `medium_osmolarity`.
+    process : type
+        Description of parameter `process`.
+
+    Returns
+    -------
+    type
+        Description of returned object.
+
+    """
     if process == 1:
         bar = Bar('Calculating osmolarities: ', max=slices)
     exchanged = []
     osmolarities = []
     xis = []
     for xi in numpy.linspace(min_xi, max_xi, slices):
-        # model = copy.deepcopy(orig_model)
         if process == 1:
             bar.next()
         try:
-            sol = run_fba(model, updates, xi)
+            sol = run_fba(model, coef_forward, coef_backward, xi)
             osmo = osmolarity(model, sol)
             xis.append(xi)
             to_append = {}
@@ -139,13 +167,19 @@ def subprocess(model, updates, min_xi, max_xi, slices, medium_osmolarity,
 
 
 def population_osmolarities(model, updates, min_xi=0):
+    """Finds max feasible ξ, optimizes the model within this range, and plots
+        osmolarity contributions along these ξ values.
+    """
     # 1st infeasible value = 1202.9
     # max_xi = 1200/3
     enzyme_mass = sys.argv[1]
+    coef_forward = {}
+    coef_backward = {}
+    get_coefficients(updates, coef_forward, coef_backward, 3.6E6)
     if len(sys.argv) > 2:
         max_xi = float(sys.argv[2])
     else:
-        max_xi = find_max_xi(model, updates)
+        max_xi = find_max_xi(model, coef_forward, coef_backward)
     slices = (max_xi - min_xi)/50
     xis = []
     osmolarities = []
@@ -160,9 +194,9 @@ def population_osmolarities(model, updates, min_xi=0):
         print('Started pool.')
         for block in range(0, 4):
             print('Starting process ' + str(block + 1))
-            out.append(pool.apply_async(subprocess, (model, updates,
-                       quarters[block], quarters[block + 1], slices,
-                       medium_osmolarity, block,)))
+            out.append(pool.apply_async(subprocess, (model, coef_forward,
+                       coef_backward, quarters[block], quarters[block + 1],
+                       slices, medium_osmolarity, block,)))
         pool.close()
         pool.join()
     for output in out:
@@ -245,7 +279,7 @@ def get_coefficients(model_updates, coef_forward, coef_backward, mult=1.):
 
     """
     # TODO: Is this division right?
-    for reaction in model_updates:
+    for reaction in model_:
         coef_forward[reaction] = mult/model_updates[reaction]['forward']
         coef_backward[reaction] = mult/model_updates[reaction]['backward']
 
@@ -288,22 +322,16 @@ def release_bounds(model):
 
 def set_enzymatic_objective(cobra_model, coefficients_forward,
                             coefficients_reverse):
-    """Short summary.
+    """Set enzyme cost as a constraint for the cobra model, and tells it to
+        minimize this cost.
 
     Parameters
     ----------
-    cobra_model : type
-        Description of parameter `cobra_model`.
-    coefficients_forward : type
-        Description of parameter `coefficients_forward`.
-    coefficients_reverse : type
-        Description of parameter `coefficients_reverse`.
-
-    Returns
-    -------
-    type
-        Description of returned object.
-
+    cobra_model : cobra.Model
+    coefficients_forward : dict
+        Enzyme costs for forward reactions.
+    coefficients_reverse : dict
+        Enzyme costs for reverse reactions.
     """
     coefficients = {}
     for (bigg_id, cf) in coefficients_forward.items():
