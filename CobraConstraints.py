@@ -11,6 +11,9 @@ from cobra.exceptions import Infeasible
 from progress.bar import Bar
 
 
+# TODO: Change this file so that it reflects only the original model
+#       (without constraints)
+
 def main():
     k1_model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
     k1_updates = openJson('JSONs/k1_updates.json')
@@ -86,11 +89,11 @@ def run_fba(model, coef_forward, coef_backward, xi):
         Solution object of the minimized model, to which enzymatic constraints
         have been applied.
     """
-    enzyme_mass = float(sys.argv[1])
-    release_bounds(model)  # Give the model wiggle room.
-    constrain_uptakes(model, xi)  # Model competition between cells.
-    model.reactions.DM_atp_c_.lower_bound = 1  # atp maintenance.
-    flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
+    # enzyme_mass = float(sys.argv[1])
+    # release_bounds(model)  # Give the model wiggle room.
+    # constrain_uptakes(model, xi)  # Model competition between cells.
+    # model.reactions.DM_atp_c_.lower_bound = 1  # atp maintenance.
+    # flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
     # m_coefs = mitochondrial_coefs(model, coef_forward, coef_backward)
     # flux_constraint(model, *m_coefs, enzyme_mass)
     return fba_and_min_enzyme(model, coef_forward, coef_backward)
@@ -279,7 +282,7 @@ def get_coefficients(model_updates, coef_forward, coef_backward, mult=1.):
 
     """
     # TODO: Is this division right?
-    for reaction in model_:
+    for reaction in model_updates:
         coef_forward[reaction] = mult/model_updates[reaction]['forward']
         coef_backward[reaction] = mult/model_updates[reaction]['backward']
 
@@ -292,7 +295,7 @@ def fba_and_min_enzyme(cobra_model, coefficients_forward,
     with cobra_model as model:
         model.objective = model.reactions.biomass_cho_producing
         # TODO: Should the solution object be collected here?
-        model.optimize(objective_sense='maximize')
+        return model.optimize(objective_sense='maximize')
         model.reactions.biomass_cho_producing.lower_bound = \
             model.reactions.biomass_cho_producing.flux
         # cobra.util.fix_objective_as_constraint(model)
@@ -341,6 +344,7 @@ def set_enzymatic_objective(cobra_model, coefficients_forward,
         rxn = cobra_model.reactions.get_by_id(bigg_id)
         coefficients[rxn.reverse_variable] = cr
 
+    # TODO: Make sure that objectives aren't set twice
     cobra_model.objective = \
         cobra_model.problem.Objective(Zero, direction='min', sloppy=True,
                                       name="min_enzymatic")
