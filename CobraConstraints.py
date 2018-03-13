@@ -13,10 +13,15 @@ from progress.bar import Bar
 
 # TODO: Change this file so that it reflects only the original model
 #       (without constraints)
+# FIXME: Varying the enzymatic mass does not change the output behavior.
+# TODO: Check specific activities of central metabolism.
+# TODO: Did I invert specific activity in this branch?
+# TODO: Limit mass by compartment.
+# TODO: test the code without the updates.
 
 def main():
     k1_model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
-    k1_updates = openJson('JSONs/k1_updates.json')
+    k1_updates = openJson('JSONs/k1_updates.json')  # For testing: opened but not used.
     population_osmolarities(k1_model, k1_updates)
 
 
@@ -91,7 +96,7 @@ def run_fba(model, coef_forward, coef_backward, xi):
     """
     # enzyme_mass = float(sys.argv[1])
     # release_bounds(model)  # Give the model wiggle room.
-    # constrain_uptakes(model, xi)  # Model competition between cells.
+    constrain_uptakes(model, xi)  # Model competition between cells.
     # model.reactions.DM_atp_c_.lower_bound = 1  # atp maintenance.
     # flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
     # m_coefs = mitochondrial_coefs(model, coef_forward, coef_backward)
@@ -363,7 +368,6 @@ def constrain_uptakes(model, xi):
         = D/X
 
     """
-
     v_glc = .5  # mmol/gDW/h
     v_aa = 0.05
     IMDM = pandas.read_table('IMDM.txt', comment='#', sep='\s+')
