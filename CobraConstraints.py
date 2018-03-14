@@ -1,5 +1,4 @@
 import os
-import sys
 import json
 import pandas
 import numpy
@@ -33,7 +32,6 @@ FOR THIS BRANCH
 def main(args):
     k1_model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
     path = Path('%s_Figures_%s' % (args.preposition, args.enz_mass))
-    print(path)
     if path.exists():
         shutil.rmtree(path)
     # For testing: opened but not used.
@@ -67,14 +65,18 @@ def find_max_xi(model, coef_forward, coef_backward, args, tolerance=1):
     max_undefined = True
     print("finding an infeasible xi")
     while max_undefined:
-        print('.')
-        sol = run_fba(model, coef_forward, coef_backward, args, max_xi)
-        if sol.status == 'optimal':
-            run_fba(model, coef_forward, coef_backward, args, max_xi)
-            max_xi *= 2
-        else:
-            assert sol.status == 'infeasible'
+        try:
+            print('.')
+            sol = run_fba(model, coef_forward, coef_backward, args, max_xi)
+            if sol.status == 'optimal':
+                run_fba(model, coef_forward, coef_backward, args, max_xi)
+                max_xi *= 2
+            else:
+                assert sol.status == 'infeasible'
+                max_undefined = False
+        except Infeasible:
             max_undefined = False
+
     print("\nfinding max xi", end='')
     while max_xi - min_xi > tolerance:
         assert min_xi <= max_xi
@@ -110,11 +112,11 @@ def run_fba(model, coef_forward, coef_backward, args, xi):
         Solution object of the minimized model, to which enzymatic constraints
         have been applied.
     """
-    # enzyme_mass = float(args.enz_mass)
+    enzyme_mass = float(args.enz_mass)
     # release_bounds(model)  # Give the model wiggle room.
     constrain_uptakes(model, xi)  # Model competition between cells.
     model.reactions.DM_atp_c_.lower_bound = 1  # atp maintenance.
-    # flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
+    flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
     # m_coefs = mitochondrial_coefs(model, coef_forward, coef_backward)
     # flux_constraint(model, *m_coefs, enzyme_mass)
     return fba_and_min_enzyme(model, coef_forward, coef_backward)
@@ -196,7 +198,7 @@ def population_osmolarities(model, updates, args, min_xi=0):
     """
     # 1st infeasible value = 1202.9
     # max_xi = 1200/3
-    enzyme_mass = args.enz_mass
+    enzyme_mass = float(args.enz_mass)
     coef_forward = {}
     coef_backward = {}
     get_coefficients(updates, coef_forward, coef_backward, 3.6E6)
@@ -294,13 +296,36 @@ def fba_and_min_enzyme(cobra_model, coefficients_forward,
     with cobra_model as model:
         model.objective = model.reactions.biomass_cho_producing
         # TODO: Should the solution object be collected here?
-        return model.optimize(objective_sense='maximize')
+        model.optimize(objective_sense='maximize')
         model.reactions.biomass_cho_producing.lower_bound = \
             model.reactions.biomass_cho_producing.flux
         cobra.util.fix_objective_as_constraint(model)
         set_enzymatic_objective(model, coefficients_forward,
                                 coefficients_reverse)
         return model.optimize(objective_sense='minimize')
+
+
+def flux_constraint(cobra_model, coefficients_forward, coefficients_reverse,
+                    bound=1):
+    """
+    Adds a linear constrain of the form
+        0 <= cf[1] vf[1] + cb[1] vb[1] + ... <= bounds
+    where vf[i], vb[i] are the forward and reverse fluxes of reaction i, and
+    cf = coefficients_forward, cb = coefficients_backward are dictionaries
+    Author: Jorge Fernandez-de-Cossio-Diaz
+    """
+    coefficients = dict()
+    for (bigg_id, cf) in coefficients_forward.items():
+        rxn = cobra_model.reactions.get_by_id(bigg_id)
+        coefficients[rxn.forward_variable] = cf
+    for (bigg_id, cr) in coefficients_reverse.items():
+        rxn = cobra_model.reactions.get_by_id(bigg_id)
+        coefficients[rxn.reverse_variable] = cr
+    constraint = cobra_model.problem.Constraint(0, lb=0, ub=bound)
+    cobra_model.add_cons_vars(constraint)
+    cobra_model.solver.update()
+    constraint.set_linear_coefficients(coefficients=coefficients)
+    cobra_model.solver.update()
 
 
 def release_bounds(model):
@@ -480,8 +505,8 @@ if __name__ == '__main__':
         'CHO cell growth using updated specific activities and cobra.')
     parser.add_argument('-e', '--enz_mass', help='Enzymatic mass')
     parser.add_argument('-x', '--max_xi', help='Max ξ')
-    parser.add_argument('-p', '--preposition', help=
-                        'Figure directory preposition')
+    parser.add_argument('-p', '--preposition',
+                        help='Figure directory preposition')
     args = parser.parse_args()
     main(args)
     print()

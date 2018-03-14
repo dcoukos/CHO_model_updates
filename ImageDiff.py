@@ -8,9 +8,11 @@
 
 import os
 import argparse
+import shutil
 import numpy as np
 from PIL import Image
 from PIL import ImageChops
+from pathlib import Path
 
 
 def compare_images(path_one, path_two):
@@ -20,7 +22,10 @@ def compare_images(path_one, path_two):
     @param: path_one: The path to the first folder
     @param: path_two: The path to the second folder
     """
-    different = [['Metabolite', 'Directories']]
+    path = Path('diff')
+    if path.exists():
+        shutil.rmtree(path)
+    different = [['Δ Metabolite', 'Directories']]
     same = []
     print()
     directory = os.fsencode(path_one)
