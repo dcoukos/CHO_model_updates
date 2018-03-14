@@ -10,12 +10,14 @@ __pycache__/
 .Python
 env/
 build/
+Data/
 develop-eggs/
 dist/
 downloads/
 eggs/
 .eggs/
-Figures*/
+*Figures*/
+diff/
 lib/
 lib64/
 parts/
