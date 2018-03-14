@@ -36,10 +36,12 @@ def main(args):
     print(path)
     if path.exists():
         shutil.rmtree(path)
-    population_osmolarities(k1_model, args)
+    # For testing: opened but not used.
+    k1_updates = openJson('JSONs/k1_updates.json')
+    population_osmolarities(k1_model, k1_updates, args)
 
 
-def find_max_xi(model, args, tolerance=1):
+def find_max_xi(model, coef_forward, coef_backward, args, tolerance=1):
     """Returns the max ξ value for which the model is still feasible through a
         bissection algorithm.
 
@@ -66,9 +68,9 @@ def find_max_xi(model, args, tolerance=1):
     print("finding an infeasible xi")
     while max_undefined:
         print('.')
-        sol = run_fba(model, args, max_xi)
+        sol = run_fba(model, coef_forward, coef_backward, args, max_xi)
         if sol.status == 'optimal':
-            run_fba(model, args, max_xi)
+            run_fba(model, coef_forward, coef_backward, args, max_xi)
             max_xi *= 2
         else:
             assert sol.status == 'infeasible'
@@ -80,7 +82,7 @@ def find_max_xi(model, args, tolerance=1):
         print('min_xi=', min_xi, ', max_xi=', max_xi, ', avg_xi=', avg_xi,
               flush=True)
         try:
-            run_fba(model, args, avg_xi)
+            run_fba(model, coef_forward, coef_backward, args, avg_xi)
             min_xi = avg_xi
         except Infeasible:
             max_xi = avg_xi
@@ -88,7 +90,7 @@ def find_max_xi(model, args, tolerance=1):
     return float(min_xi)
 
 
-def run_fba(model, args, xi):
+def run_fba(model, coef_forward, coef_backward, args, xi):
     """Adds the constraints to the model, releases bounds, and sets atp
         maintenance before minimization.
 
@@ -112,14 +114,24 @@ def run_fba(model, args, xi):
     # release_bounds(model)  # Give the model wiggle room.
     constrain_uptakes(model, xi)  # Model competition between cells.
     model.reactions.DM_atp_c_.lower_bound = 1  # atp maintenance.
-    # flux_constraint(model, enzyme_mass)
-    # m_coefs = mitochondrial_coefs(model)
+    # flux_constraint(model, coef_forward, coef_backward, enzyme_mass)
+    # m_coefs = mitochondrial_coefs(model, coef_forward, coef_backward)
     # flux_constraint(model, *m_coefs, enzyme_mass)
-    return fba_and_min_enzyme(model)
+    return fba_and_min_enzyme(model, coef_forward, coef_backward)
 
 
-def subprocess(model, args, min_xi, max_xi, slices,
-               medium_osmolarity, process=4):
+def mitochondrial_coefs(model, coef_forward, coef_backward):
+    m_coef_forward = {}
+    m_coef_backward = {}
+    for reaction in model.reactions:
+        if 'm' in reaction.compartments:
+            m_coef_forward[reaction.id] = coef_forward[reaction.id]
+            m_coef_backward[reaction.id] = coef_backward[reaction.id]
+    return coef_forward, coef_backward
+
+
+def subprocess(model, coef_forward, coef_backward, args, min_xi, max_xi,
+               slices, medium_osmolarity, process=4):
     """Main subprocesses where the model is optimized and osmolarity
         contributions are calculated based on a given sub-range of ξ values.
 
@@ -156,7 +168,7 @@ def subprocess(model, args, min_xi, max_xi, slices,
         if process == 1:
             bar.next()
         try:
-            sol = run_fba(model, args, xi)
+            sol = run_fba(model, coef_forward, coef_backward, args, xi)
             osmo = osmolarity(model, sol)
             xis.append(xi)
             to_append = {}
@@ -178,17 +190,20 @@ def subprocess(model, args, min_xi, max_xi, slices,
     }
 
 
-def population_osmolarities(model, args, min_xi=0):
+def population_osmolarities(model, updates, args, min_xi=0):
     """Finds max feasible ξ, optimizes the model within this range, and plots
         osmolarity contributions along these ξ values.
     """
     # 1st infeasible value = 1202.9
     # max_xi = 1200/3
     enzyme_mass = args.enz_mass
+    coef_forward = {}
+    coef_backward = {}
+    get_coefficients(updates, coef_forward, coef_backward, 3.6E6)
     if args.max_xi is not None:
         max_xi = args.max_xi
     else:
-        max_xi = find_max_xi(model, args)
+        max_xi = find_max_xi(model, coef_forward, coef_backward, args)
     slices = (max_xi - min_xi)/50
     xis = []
     osmolarities = []
@@ -203,9 +218,10 @@ def population_osmolarities(model, args, min_xi=0):
         print('Started pool.')
         for block in range(0, 4):
             print('Starting process ' + str(block + 1))
-            out.append(pool.apply_async(subprocess, (model, args,
-                       quarters[block], quarters[block + 1],
-                       slices, medium_osmolarity, block,)))
+            out.append(pool.apply_async(subprocess, (model, coef_forward,
+                       coef_backward, args, quarters[block],
+                       quarters[block + 1], slices, medium_osmolarity,
+                       block,)))
         pool.close()
         pool.join()
     for output in out:
@@ -245,7 +261,33 @@ def openJson(path):
         return json.load(r)
 
 
-def fba_and_min_enzyme(cobra_model):
+def get_coefficients(model_updates, coef_forward, coef_backward, mult=1.):
+    """Reads specific activities and fills coeficient dictionaries.
+
+    Parameters
+    ----------
+    model_updates : cobra.Model
+    coef_forward : empty dict
+        Dictionary of enzyme costs of forward reactions.
+    coef_backward : empty dict
+        Dictionary of enzyme costs of backward reactions.
+    mult : int
+        mu
+
+    Returns
+    -------
+    type
+        Description of returned object.
+
+    """
+    # TODO: Is this division right?
+    for reaction in model_updates:
+        coef_forward[reaction] = mult/model_updates[reaction]['forward']
+        coef_backward[reaction] = mult/model_updates[reaction]['backward']
+
+
+def fba_and_min_enzyme(cobra_model, coefficients_forward,
+                       coefficients_reverse):
     """
     Performs FBA follows by minimization of enzyme content
     """
@@ -256,6 +298,8 @@ def fba_and_min_enzyme(cobra_model):
         model.reactions.biomass_cho_producing.lower_bound = \
             model.reactions.biomass_cho_producing.flux
         cobra.util.fix_objective_as_constraint(model)
+        set_enzymatic_objective(model, coefficients_forward,
+                                coefficients_reverse)
         return model.optimize(objective_sense='minimize')
 
 
