@@ -15,9 +15,6 @@ def main():
         ID = string.split(' ')[0]
         spectra_dict[ID] = int(spectra[index])
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 99a8dadb20aa8e52a2932c4f51ca615c38fabc67
 if __name__ == '__main__':
     main()
