@@ -34,9 +34,10 @@ def main(args):
     path = Path('%s_Figures_%s' % (args.preposition, args.enz_mass))
     if path.exists():
         shutil.rmtree(path)
-    path = Path('Debug/fluxes.json')
+    path = Path('Debug')
     if path.exists():
         shutil.rmtree(path)
+    os.mkdir(path)
     k1_updates = openJson('JSONs/k1_updates_cur.json')
     population_osmolarities(k1_model, k1_updates, args)
 
@@ -483,14 +484,15 @@ def write_fluxes(model, solution):
     path = Path('Debug/fluxes.json')
     json_data = []
     if path.exists():
-        with open('Debug/fluxes.json', 'r') as json_file:
-            json_data = json.load(json_file)
-            new_fluxes = []
-            for metabolite in fluxed:
-                if metabolite.id not in json_data:
-                    new_fluxes.append(metabolite.id)
-            json_data.extend(new_fluxes)
+        print('path exists...')
+        json_data = openJson(path)
+    new_fluxes = []
+    for metabolite in fluxed:
+        if metabolite not in json_data:
+            new_fluxes.append(metabolite)
+    json_data.extend(new_fluxes)
     with open('Debug/fluxes.json', 'w') as json_file:
+        print('writing...')
         json.dump(json_data, json_file)
 
 
