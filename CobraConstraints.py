@@ -34,8 +34,10 @@ def main(args):
     path = Path('%s_Figures_%s' % (args.preposition, args.enz_mass))
     if path.exists():
         shutil.rmtree(path)
-    # For testing: opened but not used.
-    k1_updates = openJson('JSONs/k1_updates.json')
+    path = Path('Debug/fluxes.json')
+    if path.exists():
+        shutil.rmtree(path)
+    k1_updates = openJson('JSONs/k1_updates_cur.json')
     population_osmolarities(k1_model, k1_updates, args)
 
 
@@ -157,8 +159,12 @@ def subprocess(model, coef_forward, coef_backward, args, min_xi, max_xi,
 
     Returns
     -------
-    type
-        Description of returned object.
+    dict
+        {
+            'xi': xis,
+            'osmolarities': osmolarities,
+            'ex': exchanged
+        }
 
     """
     if process == 1:
@@ -171,7 +177,7 @@ def subprocess(model, coef_forward, coef_backward, args, min_xi, max_xi,
             bar.next()
         try:
             sol = run_fba(model, coef_forward, coef_backward, args, xi)
-            osmo = osmolarity(model, sol)
+            osmo = osmolarity(model, sol, coef_forward, coef_backward)
             xis.append(xi)
             to_append = {}
             for mol in osmo:
@@ -201,7 +207,9 @@ def population_osmolarities(model, updates, args, min_xi=0):
     enzyme_mass = float(args.enz_mass)
     coef_forward = {}
     coef_backward = {}
-    get_coefficients(updates, coef_forward, coef_backward, 3.6E6)
+    # TEST
+    get_coefficients(updates, coef_forward, coef_backward, 280)
+    # get_coefficients(updates, coef_forward, coef_backward, 0.28)
     if args.max_xi is not None:
         max_xi = args.max_xi
     else:
@@ -251,10 +259,16 @@ def population_osmolarities(model, updates, args, min_xi=0):
         ax.set_ylabel(mol)
         ax.set_xlabel(r'$\xi$')
         ax.scatter(xis, ex_over_ss)
+
+        # FIXME Figures are being overwriten. Only 1/4 of the points appear?
+
         path = '%s_Figures_%s' % (args.preposition, enzyme_mass)
+        print(path)
         if not os.path.exists(path):
             os.mkdir(path)
-        fig.savefig(path + '/' + mol)
+        full_path = path + '/' + mol
+        fig.savefig(full_path)
+        print(full_path)
 
 
 def openJson(path):
@@ -284,8 +298,14 @@ def get_coefficients(model_updates, coef_forward, coef_backward, mult=1.):
     """
     # TODO: Is this division right?
     for reaction in model_updates:
-        coef_forward[reaction] = mult/model_updates[reaction]['forward']
-        coef_backward[reaction] = mult/model_updates[reaction]['backward']
+        try:
+            coef_forward[reaction] = mult/model_updates[reaction]['forward']
+        except ZeroDivisionError:
+            coef_forward[reaction] = 0
+        try:
+            coef_backward[reaction] = mult/model_updates[reaction]['backward']
+        except ZeroDivisionError:
+            coef_backward[reaction] = 0
 
 
 def fba_and_min_enzyme(cobra_model, coefficients_forward,
@@ -296,7 +316,7 @@ def fba_and_min_enzyme(cobra_model, coefficients_forward,
     with cobra_model as model:
         model.objective = model.reactions.biomass_cho_producing
         # TODO: Should the solution object be collected here?
-        model.optimize(objective_sense='maximize')
+        return model.optimize(objective_sense='maximize')
         model.reactions.biomass_cho_producing.lower_bound = \
             model.reactions.biomass_cho_producing.flux
         cobra.util.fix_objective_as_constraint(model)
@@ -453,6 +473,27 @@ def exchanges_consumption(cobra_model, solution):
     return imports
 
 
+def write_fluxes(model, solution):
+    '''Writes solutions to a debug file to compare with plots.'''
+    fluxed = []
+    for reactant in model.reactions:
+        if solution.fluxes[reactant.id] != 0.:
+            fluxed.append(reactant.id)
+    # quick and v. dirty solution to not pass data around just for debug.
+    path = Path('Debug/fluxes.json')
+    json_data = []
+    if path.exists():
+        with open('Debug/fluxes.json', 'r') as json_file:
+            json_data = json.load(json_file)
+            new_fluxes = []
+            for metabolite in fluxed:
+                if metabolite.id not in json_data:
+                    new_fluxes.append(metabolite.id)
+            json_data.extend(new_fluxes)
+    with open('Debug/fluxes.json', 'w') as json_file:
+        json.dump(json_data, json_file)
+
+
 def exchanges_secretion(cobra_model, solution):
     """Get fluxes of reactions that export metabolites. Only considers
             exchanges
@@ -477,7 +518,7 @@ def exchanges_secretion(cobra_model, solution):
     return exports
 
 
-def osmolarity(model, solution):
+def osmolarity(model, solution, coef_forward, coef_backward):
     ''' Calculates a cell's contribution to osmolarity for a given steady
         state defined by ξ and for an optmized model (thru solution object)
     '''
@@ -496,6 +537,10 @@ def osmolarity(model, solution):
             osmo[mol] = exports[mol]
             if mol not in permeable:
                 osmo['total'] += exports[mol]
+    # TODO: check if the units matter for get_enzyme_mass
+    osmo['enzyme mass'] = get_enzyme_mass(solution, coef_forward,
+                                          coef_backward)
+    write_fluxes(model, solution)
     return osmo
 
 
