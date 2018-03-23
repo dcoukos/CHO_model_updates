@@ -260,12 +260,10 @@ def population_osmolarities(model, updates, args, min_xi=0):
         # FIXME Figures are being overwriten. Only 1/4 of the points appear?
 
         path = '%s_Figures_%s' % (args.preposition, enzyme_mass)
-        print(path)
         if not os.path.exists(path):
             os.mkdir(path)
         full_path = path + '/' + mol
         fig.savefig(full_path)
-        print(full_path)
 
 
 def openJson(path):
@@ -480,7 +478,6 @@ def write_fluxes(model, solution):
     path = Path('Debug/fluxes.json')
     json_data = []
     if path.exists():
-        print('path exists...')
         json_data = openJson(path)
     new_fluxes = []
     for metabolite in fluxed:
@@ -488,7 +485,6 @@ def write_fluxes(model, solution):
             new_fluxes.append(metabolite)
     json_data.extend(new_fluxes)
     with open('Debug/fluxes.json', 'w') as json_file:
-        print('writing...')
         json.dump(json_data, json_file)
 
 
