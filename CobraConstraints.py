@@ -11,6 +11,7 @@ from matplotlib.pyplot import figure
 from optlang.symbolics import Zero
 from cobra.exceptions import Infeasible
 from progress.bar import Bar
+from DataTreatment import openJson
 
 '''
 GENERAL
@@ -23,15 +24,10 @@ GENERAL
 # TODO: Limit mass by compartment.
 # WARNING: You put an extra return statement in fba_and_min_enzyme
 
-"""
-FOR THIS BRANCH
-"""
-# TODO: test the code without the updates.
-
-
 def main(args):
     k1_model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
     path = Path('%s_Figures_%s' % (args.preposition, args.enz_mass))
+    # hydrogen: path = Path('cur_Figures_0.078')
     if path.exists():
         shutil.rmtree(path)
     path = Path('Debug')
