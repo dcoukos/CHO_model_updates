@@ -68,7 +68,7 @@ def simplifyBrendaOutput(output):
                             if (key == 'commentary') and 'wild' in value:
                                 wild_type = True
                                 commentary_treated = True
-                            elif (key == 'commentary') and 'mutant' in value:
+                            elif (key == 'commentary') and 'muta' in value:
                                 wild_type = False
                                 commentary_treated = True
                         print(ID)

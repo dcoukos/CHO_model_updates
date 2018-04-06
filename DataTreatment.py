@@ -104,13 +104,11 @@ def treatTurnoverData(path_to_brenda_output, path_to_keggs,
     wild-type, and magnitude) occur in functions called by
     treatTurnoverData().
     '''
-    # TODO: should the model be opened as a dict or as a cobra model?
     model = openModelAsDict('iCHOv1.xml')
 
     potential_updates = {}
 
     treated_output = openJson(path_to_brenda_output)
-    # brenda_keggs = correctJson(path_to_keggs)
     brenda_keggs = openJson('JSONs/brenda_keggs.json')
     loadKeggsIntoModel(model, path_to_iCHO_keggs)
     matchById(model, potential_updates, brenda_keggs, treated_output,
@@ -168,12 +166,6 @@ def matchById(model, potential_updates, brenda_keggs, treated_brenda_output,
         unmatched: dict of BRENDA metabolites that could not be matched by name
     '''
     unmatched = {}
-
-    # TODO: Things to check:
-
-    #   3. How does the program handle empty data so as to not add to handle
-    #       empty data correctly and not throw an error. (Remember not throwing
-    #       an error does not mean that the situation is handled correctly.)
     for bigg_ID in model:
         unmatched[bigg_ID] = []
         potential_updates[bigg_ID] = Enzyme(bigg_ID)
@@ -185,8 +177,6 @@ def matchById(model, potential_updates, brenda_keggs, treated_brenda_output,
                         bigg_ID][kegg]] != []:
                     name = brenda_keggs[bigg_ID][kegg]
                     bigg_name = model[bigg_ID].with_kegg['reactants'][kegg]
-                    # TODO: what if the name in the xml file does not match the
-                    #       name in the cobra model?
                     potential_updates[bigg_ID].forward[bigg_name] = []
                     data = getData(treated_brenda_output[bigg_ID],
                                    name, data_type)
@@ -231,7 +221,6 @@ def selectBestData(model_updates):
             be placed.
 
     '''
-    # FIXME: eliminate entries with turnover = -999
     filtered_by_organism = selectBestOrganismEntries(model_updates)
 
     filtered_by_wild_type = selectWildTypeEntries(filtered_by_organism)
@@ -239,9 +228,6 @@ def selectBestData(model_updates):
     filtered_by_magnitude = selectByTurnover(filtered_by_wild_type)
 
     return filtered_by_magnitude
-    # FIXME: Somewhere below, the elminated data is being recopied.
-    # -----Choose data according to magnitude preference.-----------------
-    # if data_type is DataType.turnover:
 
 
 def selectByTurnover(filtered_by_wild_type):
