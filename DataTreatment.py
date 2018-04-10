@@ -59,7 +59,9 @@ def medianTurnovers(model_update):
             turnovers.append(model_update[bigg_id].forward_turnover)
         if model_update[bigg_id].backward_turnover is not None:
             turnovers.append(model_update[bigg_id].backward_turnover)
-    return statistics.median(turnovers)
+    median = statistics.median(turnovers)
+    print('Median turnover: ', median)
+    return median
 
 
 def medianWeights(model_update):
@@ -68,7 +70,9 @@ def medianWeights(model_update):
     for bigg_id in model_update:
         if model_update[bigg_id].molecular_weight is not None:
             weights.append(model_update[bigg_id].molecular_weight)
-    return statistics.median(weights)
+    median = statistics.median(weights)
+    print('Median molecular weight: ', median)
+    return median
 
 
 def fillEmptyValues(model_update):
