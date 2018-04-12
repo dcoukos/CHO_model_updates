@@ -310,6 +310,9 @@ def selectWildTypeEntries(filtered_by_organism):
             if wild_type != []:
                 filtered_by_wild_type[reaction].forward[
                     metabolite_name] = wild_type
+            else:
+                filtered_by_wild_type[reaction].forward[metabolite_name] = \
+                    filtered_by_organism[reaction].forward[metabolite_name]
         for metabolite_name in filtered_by_organism[reaction].backward:
             wild_type = []
             for entry in filtered_by_organism[reaction].backward[
@@ -319,6 +322,9 @@ def selectWildTypeEntries(filtered_by_organism):
             if wild_type != []:
                 filtered_by_wild_type[reaction].backward[
                     metabolite_name] = wild_type
+            else:
+                filtered_by_wild_type[reaction].backward[metabolite_name] = \
+                    filtered_by_organism[reaction].backward[metabolite_name]
     return filtered_by_wild_type
 
 
