@@ -19,12 +19,16 @@ from enum import Enum, auto  # Enum breaks spyder autocomplete
 def importWeights(model_update):
     '''Adds molecular weights to model enzymes'''
     mol_info = openJson('JSONs/molecular_weights.json')
+    k1_to_v1 = {v: k for k, v in openJson('JSONs/v1_to_k1.json').items()}
     for bigg_id in mol_info:
-        if 'molecular_weights' in mol_info[bigg_id]:
-            if mol_info[bigg_id]['molecular_weights'] != []:
-                max_weight = max(mol_info[bigg_id]['molecular_weights'])
-                model_update[bigg_id].molecular_weight = max_weight
-                # TODO: should this be the min weight?
+        try:
+            model_update[bigg_id].molecular_weight = mol_info[bigg_id]
+        except KeyError:
+            try:
+                model_update[bigg_id].molecular_weight = mol_info[
+                                                         k1_to_v1[bigg_id]]
+            except KeyError:
+                continue
 
 
 def exportData(model_update):
@@ -88,7 +92,8 @@ def fillEmptyValues(model_update):
             model_update[bigg_id].forward_turnover = median_turnover
         if model_update[bigg_id].backward_turnover is None:
             model_update[bigg_id].backward_turnover = median_turnover
-        if model_update[bigg_id].molecular_weight is None:
+        if model_update[bigg_id].molecular_weight is None or \
+                model_update[bigg_id].molecular_weight == 0:
             model_update[bigg_id].molecular_weight = median_weight
 
 
