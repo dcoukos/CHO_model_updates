@@ -36,7 +36,6 @@ def weightsFromModel(ids, model, process):
     mol_weights = {}
     for id in ids:
         rules[id] = model.reactions.get_by_id(id).gene_reaction_rule
-    rules
     char_to_int = {'a': '0', 'b': '1', 'c': '2', 'd': '3', 'e': '4',
                    'f': '5', 'g': '6', 'h': '7', 'i': '8', 'j': '9'}
     if process == 1:
@@ -76,33 +75,37 @@ def weightsFromModel(ids, model, process):
                 continue
             else:
                 raise
+        clause_weights = []
         for clause in str(expr).replace('(', '').replace(')',
                                                          '').split(' | '):
+            comb_weight = 0
             split_rules = clause.split(' & ')
-        for entry in split_rules:
-            # print('#', end='')
-            for char in entry:
-                if char not in ['(', ')', '&', '|', ' ']:
-                    entry = entry.replace(char, char_to_int[char])
-            try:
-                # print('$', end='')
-                if entry in sequences:
-                    sequence = sequences[entry]
-                else:
-                    sequence = kegggene_to_sequence('cge', entry)
-                    sequences[entry] = sequence
-                    # TODO: do this sort of bug check with all 4 processes.
-                    # if process == 1:
-                    # print('\t|| ', id)
-                    # print('request')
-            except HTTPError:
-                # print('%', end='')
-                mess = 'Id: ' + id + ' || Address: cge:' + entry
-                add_not_found.append(mess)
-                continue
-            weights.append(sequence_weight(sequence))
-            # print('^', end='')
-        mol_weights[id] = minimum(weights)
+            for entry in split_rules:
+                # print('#', end='')
+
+                for char in entry:
+                    if char not in ['(', ')', '&', '|', ' ']:
+                        entry = entry.replace(char, char_to_int[char])
+                try:
+                    # print('$', end='')
+                    if entry in sequences:
+                        sequence = sequences[entry]
+                    else:
+                        sequence = kegggene_to_sequence('cge', entry)
+                        sequences[entry] = sequence
+                        # TODO: do this sort of bug check with all 4 processes.
+                        # if process == 1:
+                        # print('\t|| ', id)
+                        # print('request')
+                except HTTPError:
+                    # print('%', end='')
+                    mess = 'Id: ' + id + ' || Address: cge:' + entry
+                    add_not_found.append(mess)
+                    continue
+                comb_weight += sequence_weight(sequence)
+                # print('^', end='')
+            clause_weights.append(comb_weight)
+        mol_weights[id] = minimum(clause_weights)
     print('Process ', process, 'done finding minimum weights')
     return mol_weights
 
