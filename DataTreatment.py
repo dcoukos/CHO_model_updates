@@ -18,7 +18,7 @@ from enum import Enum, auto  # Enum breaks spyder autocomplete
 
 def importWeights(model_update):
     '''Adds molecular weights to model enzymes'''
-    mol_info = openJson('JSONs/molecular_weights.json')
+    mol_info = openJson('JSONs/molecular_weights_ave.json')
     k1_to_v1 = {v: k for k, v in openJson('JSONs/v1_to_k1.json').items()}
     for bigg_id in mol_info:
         try:

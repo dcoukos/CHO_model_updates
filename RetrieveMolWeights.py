@@ -12,6 +12,7 @@ Test: in command line:
 
 import cobra
 import argparse
+from statistics import mean
 from Bio.KEGG import REST
 from Bio.SeqUtils import molecular_weight
 import cobra_services as CS
@@ -60,7 +61,6 @@ def weightsFromModel(ids, model, process):
             for char in expr:
                 if char not in ['(', ')', '&', '|', ' ']:
                     expr = expr.replace(char, let[int(char)])
-            # TODO: Can the script handle the bad address this will generate?
             if '(' in expr or '&' in expr:
                 ors = len(expr.split('|'))
                 ands = len(expr.split('&'))
@@ -105,7 +105,7 @@ def weightsFromModel(ids, model, process):
                 comb_weight += sequence_weight(sequence)
                 # print('^', end='')
             clause_weights.append(comb_weight)
-        mol_weights[id] = minimum(clause_weights)
+        mol_weights[id] = mean(clause_weights)
     print('Process ', process, 'done finding minimum weights')
     return mol_weights
 
@@ -201,4 +201,4 @@ if __name__ == '__main__':
         mol_weights.update(mw3.get())
         mol_weights.update(mw4.get())
 
-    write('JSONs/molecular_weights.json', mol_weights)
+    write('JSONs/molecular_weights_ave.json', mol_weights)

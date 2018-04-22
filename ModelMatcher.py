@@ -10,6 +10,8 @@
 import sys
 import json
 import cobra
+import argparse
+from statistics import median
 from multiprocessing.pool import Pool
 from bs4 import BeautifulSoup as Soup
 from progress.bar import Bar
@@ -81,7 +83,16 @@ def mainSubProcess(reactions, process):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 1:
+    parser = argparse.ArgumentParser(
+        description='This is a script to match kegg codes and turnovers'
+        'between the CHO and CHO K1 models. ')
+    parser.add_argument('-s', '--search', help='Match bigg ids',
+                        action='store_true')
+    parser.add_argument('-m', '--match', help='Match turnovers',
+                        action='store_true')
+    args = parser.parse_args()
+
+    if args.search:
         print('Loading models....')
         bigg_model = cobra.io.read_sbml_model('iCHOv1.xml')
 
@@ -119,13 +130,16 @@ if __name__ == '__main__':
         v1_to_k1.update(lm_4.get())
 
         write('JSONs/v1_to_k1.json', v1_to_k1)
-    else:
+    elif args.match:
         conv_dict = openJson('JSONs/v1_to_k1.json')
         k1_to_v1 = {}
         updates = openJson('JSONS/model_updates.json')
         k1_model = cobra.io.read_sbml_model('iCHOv1_K1_final.xml')
         k1_updates = {}
-        median = 0.0045541255196209504
+        turn = []
+        for met in updates:
+            turn.extend(updates[met].values())
+        median = median(turn)
         for v1 in conv_dict:
             k1_id = conv_dict[v1]
             if k1_id is not None:
@@ -141,4 +155,4 @@ if __name__ == '__main__':
                 k1_updates[rxn_id] = {}
                 k1_updates[rxn_id]['forward'] = median
                 k1_updates[rxn_id]['backward'] = median
-        write('JSONs/k1_updates.json', k1_updates)
+        write('JSONs/k1_updates_ave.json', k1_updates)
